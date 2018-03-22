@@ -1,6 +1,6 @@
 package dataAccess.dbmodel;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ShowDTO {
     private int showId;

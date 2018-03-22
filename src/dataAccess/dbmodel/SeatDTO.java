@@ -1,12 +1,17 @@
 package dataAccess.dbmodel;
 
 public class SeatDTO {
-    private int seatid;
+    private int seatId;
     private String row;
     private int number;
 
-    public int getSeatid() {
-        return seatid;
+
+    public int getSeatId() {
+        return seatId;
+    }
+
+    public void setSeatId(int seatId) {
+        this.seatId = seatId;
     }
 
     public String getRow() {

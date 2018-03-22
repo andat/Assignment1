@@ -64,15 +64,14 @@ public class UserRepository implements IUserRepository {
     public int insert(UserDTO user){
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
-        String insertStatementString = "INSERT INTO user(user_id, username, password, is_admin) VALUES(?, ?, ?, ?)";
+        String insertStatementString = "INSERT INTO user(username, password, is_admin) VALUES(?, ?, ?)";
         int insertedId = -1;
 
         try {
             insertStatement = connection.prepareStatement(insertStatementString, Statement.RETURN_GENERATED_KEYS);
-            insertStatement.setInt(1, user.getUserId());
-            insertStatement.setString(2, user.getUsername());
-            insertStatement.setString(3, user.getPassword());
-            insertStatement.setBoolean(4, user.isAdmin());
+            insertStatement.setString(1, user.getUsername());
+            insertStatement.setString(2, user.getPassword());
+            insertStatement.setBoolean(3, user.isAdmin());
             insertStatement.executeUpdate();
 
             ResultSet rs = insertStatement.getGeneratedKeys();
@@ -92,8 +91,8 @@ public class UserRepository implements IUserRepository {
     public int update(UserDTO user) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE user SET username = ?, password=?, is_admin=? WHERE user_id = ?";
-        int insertedId = -1;
+        String updateStatementString = "UPDATE user SET user_id = ? username = ?, password=?, is_admin=? WHERE user_id = ?";
+        int updatedRows = 0;
 
         try {
             updateStatement = connection.prepareStatement(updateStatementString, Statement.RETURN_GENERATED_KEYS);
@@ -101,24 +100,34 @@ public class UserRepository implements IUserRepository {
             updateStatement.setString(2, user.getPassword());
             updateStatement.setBoolean(3, user.isAdmin());
             updateStatement.setInt(4, user.getUserId());
-            updateStatement.executeUpdate();
-
-            ResultSet rs = updateStatement.getGeneratedKeys();
-            if (rs.next()) {
-                insertedId = rs.getInt(1);
-            }
+            updatedRows = updateStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             ConnectionFactory.close(updateStatement);
             ConnectionFactory.close(connection);
         }
-        return insertedId;
+        return updatedRows;
     }
 
     @Override
-    public void delete(int id) {
+    public int delete(int id) {
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement deleteStatement= null;
+        String deleteStatementString = "DELETE FROM user WHERE user_id = ?";
+        int rowsDeleted=0;
 
+        try{
+            deleteStatement = connection.prepareStatement(deleteStatementString);
+            deleteStatement.setInt(1, id);
+            rowsDeleted = deleteStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionFactory.close(deleteStatement);
+            ConnectionFactory.close(connection);
+        }
+        return rowsDeleted;
     }
 
 

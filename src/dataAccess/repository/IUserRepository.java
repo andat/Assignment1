@@ -9,5 +9,5 @@ public interface IUserRepository {
     public UserDTO findById(int id);
     public int insert(UserDTO user);
     public int update(UserDTO user);
-    public void delete(int id);
+    public int delete(int id);
 }
