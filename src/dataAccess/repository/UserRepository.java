@@ -20,7 +20,7 @@ public class UserRepository implements IUserRepository {
         List<UserDTO> users = new ArrayList<UserDTO>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM user";
+            String sql = "SELECT * FROM `user`";
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
@@ -37,7 +37,7 @@ public class UserRepository implements IUserRepository {
     public UserDTO findById(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement findStatement = null;
-        String findStatementString = "SELECT * FROM user WHERE user_id = ?";
+        String findStatementString = "SELECT * FROM `user` WHERE user_id = ?";
         ResultSet rs = null;
         UserDTO user = null;
 
@@ -64,7 +64,7 @@ public class UserRepository implements IUserRepository {
     public int insert(UserDTO user){
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
-        String insertStatementString = "INSERT INTO user(username, password, is_admin) VALUES(?, ?, ?)";
+        String insertStatementString = "INSERT INTO `user` (username, password, is_admin) VALUES(?, ?, ?)";
         int insertedId = -1;
 
         try {
@@ -91,7 +91,7 @@ public class UserRepository implements IUserRepository {
     public int update(UserDTO user) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE user SET user_id = ? username = ?, password=?, is_admin=? WHERE user_id = ?";
+        String updateStatementString = "UPDATE `user` SET user_id = ? username = ?, password=?, is_admin=? WHERE user_id = ?";
         int updatedRows = 0;
 
         try {
@@ -114,7 +114,7 @@ public class UserRepository implements IUserRepository {
     public int delete(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement deleteStatement= null;
-        String deleteStatementString = "DELETE FROM user WHERE user_id = ?";
+        String deleteStatementString = "DELETE FROM `user` WHERE user_id = ?";
         int rowsDeleted=0;
 
         try{

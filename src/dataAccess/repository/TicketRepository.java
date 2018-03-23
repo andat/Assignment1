@@ -20,7 +20,7 @@ public class TicketRepository implements ITicketRepository{
         List<TicketDTO> tickets = new ArrayList<TicketDTO>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM ticket";
+            String sql = "SELECT * FROM `ticket`";
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
@@ -37,7 +37,7 @@ public class TicketRepository implements ITicketRepository{
     public TicketDTO findById(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement findStatement = null;
-        String findStatementString = "SELECT * FROM ticket WHERE ticket_id = ?";
+        String findStatementString = "SELECT * FROM `ticket` WHERE ticket_id = ?";
         TicketDTO ticket = null;
         ResultSet rs = null;
 
@@ -64,7 +64,7 @@ public class TicketRepository implements ITicketRepository{
     public int insert(TicketDTO ticket) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
-        String insertStatementString = "INSERT INTO ticket(show_id, seat_id, booked) VALUES(?, ?, ?)";
+        String insertStatementString = "INSERT INTO `ticket` (show_id, seat_id, booked) VALUES(?, ?, ?)";
         int insertedId = -1;
 
         try {
@@ -91,7 +91,7 @@ public class TicketRepository implements ITicketRepository{
     public int update(TicketDTO ticket) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE ticket SET show_id = ?, seat_id=?, booked=? WHERE ticket_id = ?";
+        String updateStatementString = "UPDATE `ticket` SET show_id = ?, seat_id=?, booked=? WHERE ticket_id = ?";
         int updatedRows = 0;
 
         try {
@@ -114,7 +114,7 @@ public class TicketRepository implements ITicketRepository{
     public int delete(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement deleteStatement= null;
-        String deleteStatementString = "DELETE FROM ticket WHERE ticket_id = ?";
+        String deleteStatementString = "DELETE FROM `ticket` WHERE ticket_id = ?";
         int rowsDeleted=0;
 
         try{

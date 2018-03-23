@@ -17,27 +17,27 @@ public class ShowRepository implements IShowRepository{
     @Override
     public List<ShowDTO> findAll() {
         Connection connection = connectionFactory.getConnection();
-        List<ShowDTO> users = new ArrayList<ShowDTO>();
+        List<ShowDTO> shows = new ArrayList<ShowDTO>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM show";
+            String sql = "SELECT * FROM `show`";
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
-                users.add(getShowFromResultSet(rs));
+                shows.add(getShowFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return users;
+        return shows;
     }
 
     @Override
     public ShowDTO findById(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement findStatement = null;
-        String findStatementString = "SELECT * FROM show WHERE show_id = ?";
+        String findStatementString = "SELECT * FROM `show` WHERE show_id = ?";
         ShowDTO show = null;
         ResultSet rs = null;
 
@@ -64,7 +64,7 @@ public class ShowRepository implements IShowRepository{
     public int insert(ShowDTO show) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
-        String insertStatementString = "INSERT INTO show(title, genre, distribution, date, no_of_tickets) VALUES(?, ?, ?, ?, ?)";
+        String insertStatementString = "INSERT INTO `show` (title, genre, distribution, date, no_of_tickets) VALUES(?, ?, ?, ?, ?)";
         int insertedId = -1;
 
         try {
@@ -93,7 +93,7 @@ public class ShowRepository implements IShowRepository{
     public int update(ShowDTO show) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE show SET title = ?, genre=?, distribution=?, date = ?, no_of_tickets =?  WHERE ticket_id = ?";
+        String updateStatementString = "UPDATE `show` SET title = ?, genre=?, distribution=?, date = ?, no_of_tickets =?  WHERE ticket_id = ?";
         int updatedRows = 0;
 
         try {
@@ -118,7 +118,7 @@ public class ShowRepository implements IShowRepository{
     public int delete(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement deleteStatement= null;
-        String deleteStatementString = "DELETE FROM show WHERE show_id = ?";
+        String deleteStatementString = "DELETE FROM `show` WHERE show_id = ?";
         int rowsDeleted=0;
 
         try{

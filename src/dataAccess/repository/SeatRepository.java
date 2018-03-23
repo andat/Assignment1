@@ -20,7 +20,7 @@ public class SeatRepository implements ISeatRepository{
         List<SeatDTO> seats = new ArrayList<SeatDTO>();
         try {
             Statement statement = connection.createStatement();
-            String sql = "SELECT * FROM seat";
+            String sql = "SELECT * FROM `seat`";
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
@@ -37,7 +37,7 @@ public class SeatRepository implements ISeatRepository{
     public SeatDTO findById(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement findStatement = null;
-        String findStatementString = "SELECT * FROM seat WHERE seat_id = ?";
+        String findStatementString = "SELECT * FROM `seat` WHERE seat_id = ?";
         ResultSet rs = null;
         SeatDTO seat = null;
 
@@ -64,7 +64,7 @@ public class SeatRepository implements ISeatRepository{
     public int insert(SeatDTO seat){
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
-        String insertStatementString = "INSERT INTO seat(row, number) VALUES(?, ?)";
+        String insertStatementString = "INSERT INTO `seat` (row, number) VALUES(?, ?)";
         int insertedId = -1;
 
         try {
@@ -90,7 +90,7 @@ public class SeatRepository implements ISeatRepository{
     public int update(SeatDTO seat) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE seat SET row = ?, number = ? WHERE seat_id = ?";
+        String updateStatementString = "UPDATE `seat` SET row = ?, number = ? WHERE seat_id = ?";
         int updatedRows = 0;
 
         try {
@@ -112,7 +112,7 @@ public class SeatRepository implements ISeatRepository{
     public int delete(int id) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement deleteStatement= null;
-        String deleteStatementString = "DELETE FROM seat WHERE seat_id = ?";
+        String deleteStatementString = "DELETE FROM `seat` WHERE seat_id = ?";
         int rowsDeleted=0;
 
         try{
