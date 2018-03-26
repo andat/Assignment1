@@ -11,6 +11,10 @@ public class SeatModel {
         this.number = number;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public String getRow() {
         return row;
     }

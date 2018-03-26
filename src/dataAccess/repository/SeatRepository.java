@@ -130,10 +130,8 @@ public class SeatRepository implements ISeatRepository{
 
 
     private SeatDTO getSeatFromResultSet(ResultSet rs) throws SQLException {
-        SeatDTO seat = new SeatDTO();
-        seat.setSeatId(rs.getInt("seat_id"));
-        seat.setRow(rs.getString("row"));
-        seat.setNumber(rs.getInt("number"));
+        SeatDTO seat = new SeatDTO(rs.getInt("seat_id"), rs.getString("row"),
+                            rs.getInt("number"));
         return seat;
     }
 }

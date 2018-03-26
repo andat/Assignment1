@@ -61,6 +61,33 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
+    public UserDTO findByUsername(String username){
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        String findStatementString = "SELECT * FROM `user` WHERE username = ?";
+        ResultSet rs = null;
+        UserDTO user = null;
+
+        try {
+            findStatement = connection.prepareStatement(findStatementString);
+            findStatement.setString(1, username);
+            rs = findStatement.executeQuery();
+
+            if(rs.next())
+                user = getUserFromResultSet(rs);
+            //TODO: warning
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionFactory.close(rs);
+            connectionFactory.close(findStatement);
+            connectionFactory.close(connection);
+        }
+        return user;
+    }
+
+    @Override
     public int insert(UserDTO user){
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
@@ -132,11 +159,10 @@ public class UserRepository implements IUserRepository {
 
 
     private UserDTO getUserFromResultSet(ResultSet rs) throws SQLException {
-        UserDTO user = new UserDTO();
-        user.setUserId(rs.getInt("user_id"));
-        user.setUsername(rs.getString("username"));
-        user.setPassword(rs.getString("password"));
-        user.setIsAdmin(rs.getBoolean("is_admin"));
+        UserDTO user = new UserDTO(rs.getInt("user_id"),
+                    rs.getString("username"),
+                    rs.getString("password"),
+                    rs.getBoolean("is_admin"));
         return user;
     }
 }

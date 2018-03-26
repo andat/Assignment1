@@ -2,15 +2,15 @@ package business.model;
 
 public class UserModel {
     private int id;
-    private String password;
     private String username;
-    private boolean is_admin;
+    private String password;
+    private boolean isAdmin;
 
-    public UserModel(int id, String password, String username, boolean is_admin) {
+    public UserModel(int id, String username, String password, boolean isAdmin) {
         this.id = id;
         this.password = password;
         this.username = username;
-        this.is_admin = is_admin;
+        this.isAdmin = isAdmin;
     }
 
     public int getId() {
@@ -37,11 +37,11 @@ public class UserModel {
         this.username = username;
     }
 
-    public boolean isIs_admin() {
-        return is_admin;
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
-    public void setIs_admin(boolean is_admin) {
-        this.is_admin = is_admin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

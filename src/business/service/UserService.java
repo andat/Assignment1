@@ -11,6 +11,7 @@ import java.util.List;
 
 public class UserService implements IUserService{
     private final IUserRepository repository;
+    private PasswordEncryptionUtil encryptionUtil;
 
     public UserService() {
         this.repository = new UserRepository(ConnectionFactory.getSingleInstance());
@@ -27,7 +28,6 @@ public class UserService implements IUserService{
         return result;
     }
 
-
     @Override
     public UserModel findById(int id) {
         UserDTO u = repository.findById(id);
@@ -36,19 +36,44 @@ public class UserService implements IUserService{
     }
 
     @Override
+    //adds a user to the database, after encrypting the entered password
     public boolean addUser(UserModel user) {
-        UserDTO u = new UserDTO();
-        u.setUserId(user.getId());
-        return false;
+        String encryptedPass = encryptionUtil.encryptPasswordSHA256(user.getPassword());
+        UserDTO u = new UserDTO(user.getId(), user.getUsername(), encryptedPass,
+                user.isAdmin());
+        int insertedId = repository.insert(u);
+        return (insertedId != -1);
     }
 
     @Override
-    public boolean editUser(int user_id, String username, String password, boolean is_admin) {
-        return false;
+    public boolean editUser(UserModel user) {
+        String encryptedPass = encryptionUtil.encryptPasswordSHA256(user.getPassword());
+        UserDTO u = new UserDTO(user.getId(), user.getUsername(), encryptedPass,
+                user.isAdmin());
+        int updatedRows = repository.update(u);
+
+        return (updatedRows != 0);
     }
 
     @Override
-    public boolean deleteUser(UserModel user) {
-        return false;
+    public boolean deleteUser(int id) {
+        int deletedRows = repository.delete(id);
+
+        return (deletedRows != 0);
+    }
+
+    @Override
+    public boolean checkCredentials(String username, String password) {
+        UserDTO u = repository.findByUsername(username);
+        if(u == null)
+            return false;
+        String storedPassword = u.getPassword();
+        System.out.println("stored: " + storedPassword);
+        return encryptionUtil.validatePassword(password, storedPassword);
+    }
+
+    public static void main(String args[]){
+        UserService us = new UserService();
+        us.addUser(new UserModel(-1, "viorelp", "hahaha", true));
     }
 }
