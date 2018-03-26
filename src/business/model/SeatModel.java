@@ -1,22 +1,14 @@
-package dataAccess.dbmodel;
+package business.model;
 
-public class SeatDTO {
-    private int seatId;
+public class SeatModel {
+    private int id;
     private String row;
     private int number;
 
-    public SeatDTO(int seatId, String row, int number) {
-        this.seatId = seatId;
+    public SeatModel(int id, String row, int number) {
+        this.id = id;
         this.row = row;
         this.number = number;
-    }
-
-    public int getSeatId() {
-        return seatId;
-    }
-
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
     }
 
     public String getRow() {

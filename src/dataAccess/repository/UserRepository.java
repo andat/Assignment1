@@ -53,9 +53,9 @@ public class UserRepository implements IUserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ConnectionFactory.close(rs);
-            ConnectionFactory.close(findStatement);
-            ConnectionFactory.close(connection);
+            connectionFactory.close(rs);
+            connectionFactory.close(findStatement);
+            connectionFactory.close(connection);
         }
         return user;
     }
@@ -81,8 +81,8 @@ public class UserRepository implements IUserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ConnectionFactory.close(insertStatement);
-            ConnectionFactory.close(connection);
+            connectionFactory.close(insertStatement);
+            connectionFactory.close(connection);
         }
         return insertedId;
     }
@@ -104,8 +104,8 @@ public class UserRepository implements IUserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ConnectionFactory.close(updateStatement);
-            ConnectionFactory.close(connection);
+            connectionFactory.close(updateStatement);
+            connectionFactory.close(connection);
         }
         return updatedRows;
     }
@@ -124,8 +124,8 @@ public class UserRepository implements IUserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            ConnectionFactory.close(deleteStatement);
-            ConnectionFactory.close(connection);
+            connectionFactory.close(deleteStatement);
+            connectionFactory.close(connection);
         }
         return rowsDeleted;
     }

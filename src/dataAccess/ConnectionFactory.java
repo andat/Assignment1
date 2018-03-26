@@ -37,11 +37,16 @@ public class ConnectionFactory {
         return connection;
     }
 
-    public static Connection getConnection() {
+    public static ConnectionFactory getSingleInstance(){
+        return singleInstance;
+    }
+
+    public Connection getConnection() {
         return singleInstance.createConnection();
     }
 
-    public static void close(Connection connection) {
+
+    public void close(Connection connection) {
         if (connection != null) {
             try {
                 connection.close();
@@ -51,7 +56,7 @@ public class ConnectionFactory {
         }
     }
 
-    public static void close(Statement statement) {
+    public void close(Statement statement) {
         if (statement != null) {
             try {
                 statement.close();
@@ -61,7 +66,7 @@ public class ConnectionFactory {
         }
     }
 
-    public static void close(ResultSet resultSet) {
+    public void close(ResultSet resultSet) {
         if (resultSet != null) {
             try {
                 resultSet.close();
