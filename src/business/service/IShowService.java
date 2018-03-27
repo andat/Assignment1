@@ -15,6 +15,7 @@ public interface IShowService {
     public boolean cancelBooking(TicketModel ticket);
     public List<TicketModel> findSoldTickets(ShowModel show);
     public List<TicketModel> findAvailableTickets(ShowModel show);
+    public int getNoOfRemainingTickets(int showId);
     public void exportSoldTickets(ShowModel show, FormatType format);
 
 }

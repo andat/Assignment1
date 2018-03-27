@@ -9,6 +9,7 @@ import dataAccess.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserService implements IUserService{
     private final IUserRepository repository;
@@ -27,6 +28,11 @@ public class UserService implements IUserService{
             result.add(new UserModel(u.getUserId(), u.getUsername(), u.getPassword(), u.isAdmin()));
         }
         return result;
+    }
+
+    @Override
+    public List<UserModel> findAllCashiers() {
+        return this.findAll().stream().filter(u -> u.isAdmin() == false).collect(Collectors.toList());
     }
 
     @Override
@@ -49,8 +55,7 @@ public class UserService implements IUserService{
     @Override
     public boolean editUser(UserModel user) {
         String encryptedPass = encryptionUtil.encryptPasswordSHA256(user.getPassword());
-        UserDTO u = new UserDTO(user.getId(), user.getUsername(), encryptedPass,
-                user.isAdmin());
+        UserDTO u = new UserDTO(user.getId(), user.getUsername(), encryptedPass, user.isAdmin());
         int updatedRows = repository.update(u);
 
         return (updatedRows != 0);

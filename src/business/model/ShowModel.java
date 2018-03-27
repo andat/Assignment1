@@ -19,6 +19,15 @@ public class ShowModel {
         this.noOfTickets = noOfTickets;
     }
 
+    @Override
+    public String toString() {
+        return "title= " + title +
+                ", genre= " + genre +
+                " , distribution= " + distribution +
+                ", date= " + date +
+                ", id=" + id;
+    }
+
     public int getId() {
         return id;
     }

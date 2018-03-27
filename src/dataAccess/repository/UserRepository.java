@@ -118,7 +118,7 @@ public class UserRepository implements IUserRepository {
     public int update(UserDTO user) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE `user` SET user_id = ? username = ?, password=?, is_admin=? WHERE user_id = ?";
+        String updateStatementString = "UPDATE `user` SET username = ?, password=?, is_admin=? WHERE user_id = ?";
         int updatedRows = 0;
 
         try {

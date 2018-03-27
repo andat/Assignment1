@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -61,6 +62,7 @@ public class TheatreApp extends Application {
         loginScene = new Scene(grid, 300, 250);
         window.setScene(loginScene);
         window.show();
+        window.toBack();
     }
 
     private void login(TextField userInput, TextField passInput){
@@ -77,10 +79,13 @@ public class TheatreApp extends Application {
                 AlertBox.display("Invalid username or password",
                         "Invalid username or password. Please try again." );
             } else {
-                if(u.isAdmin())
-                    window.setScene(new AdminScene(u));
-                else
-                    window.setScene(new CashierScene(u));
+                if(u.isAdmin()) {
+                    window.setScene(new AdminScene(new BorderPane(), u, window, loginScene));
+                    window.setTitle("Admin");
+                } else {
+                    window.setScene(new CashierScene(new BorderPane(), u, window, loginScene));
+                    window.setTitle("Cashier");
+                }
             }
         }
     }

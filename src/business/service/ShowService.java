@@ -8,19 +8,21 @@ import dataAccess.dbmodel.TicketDTO;
 import dataAccess.repository.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShowService implements IShowService{
     private final IShowRepository repository;
     private final ITicketRepository ticketRepository;
-    private final int maxNoOfTickets;
-    private int remainingTickets;
+    private Map<Integer, Integer> maxNoOfTickets;
+    private Map<Integer, Integer> remainingTickets;
 
     public ShowService(){
         this.repository = new ShowRepository(ConnectionFactory.getSingleInstance());
         this.ticketRepository = new TicketRepositoryCache(new TicketRepository(ConnectionFactory.getSingleInstance()));
-        this.maxNoOfTickets = SeatService.getHallCapacity();
-        this.remainingTickets = this.maxNoOfTickets;
+        this.maxNoOfTickets = new HashMap<Integer, Integer>();
+        this.remainingTickets = new HashMap<Integer, Integer>();
     }
 
 
@@ -45,8 +47,11 @@ public class ShowService implements IShowService{
 
     @Override
     public boolean addShow(ShowModel show) {
+        int maxCapacity = SeatService.getHallCapacity();
+        this.remainingTickets.put(show.getId(), maxCapacity);
+        this.maxNoOfTickets.put(show.getId(), maxCapacity);
         ShowDTO s = new ShowDTO(show.getId(), show.getTitle(), show.getGenre(), show.getDistribution(), show.getDate(),
-                this.maxNoOfTickets);
+                maxCapacity);
         int insertedId = repository.insert(s);
         return (insertedId != -1);
     }
@@ -66,10 +71,11 @@ public class ShowService implements IShowService{
 
     @Override
     public boolean sellTicket(TicketModel ticket) throws Exception {
-        if (remainingTickets != 0){
+        int remaining = remainingTickets.get(ticket.getShowid());
+        if (remaining != 0){
             TicketDTO t = new TicketDTO(ticket.getId(), ticket.getShowid(), ticket.getSeatid(), true);
             int insertedId = ticketRepository.insert(t);
-            this.remainingTickets --;
+            this.remainingTickets.put(ticket.getShowid(), remaining - 1);
             return (insertedId != -1);
         } else{
             throw new Exception("Number of tickets exceeded! Show is sold out!");
@@ -83,7 +89,7 @@ public class ShowService implements IShowService{
             return false;
         TicketDTO t = new TicketDTO(ticket.getId(), ticket.getShowid(), ticket.getSeatid(), false);
         //update number of remaining tickets
-        this.remainingTickets ++;
+        this.remainingTickets.put(ticket.getId(), this.remainingTickets.get(ticket.getId()) + 1);
         int updatedRows = ticketRepository.update(t);
         return (updatedRows != 0);
     }
@@ -106,6 +112,11 @@ public class ShowService implements IShowService{
             tickets.add(new TicketModel(t.getTicketId(), t.getShowId(), t.getSeatId(), t.isBooked()));
         }
         return tickets;
+    }
+
+    @Override
+    public int getNoOfRemainingTickets(int showId) {
+        return this.remainingTickets.get(showId);
     }
 
     @Override

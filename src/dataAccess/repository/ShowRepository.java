@@ -93,7 +93,7 @@ public class ShowRepository implements IShowRepository{
     public int update(ShowDTO show) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement updateStatement = null;
-        String updateStatementString = "UPDATE `show` SET title = ?, genre=?, distribution=?, date = ?, no_of_tickets =?  WHERE ticket_id = ?";
+        String updateStatementString = "UPDATE `show` SET title = ?, genre=?, distribution=?, date = ?, no_of_tickets =?  WHERE show_id = ?";
         int updatedRows = 0;
 
         try {
