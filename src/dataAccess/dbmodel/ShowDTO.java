@@ -10,6 +10,15 @@ public class ShowDTO {
     private Date date;
     private int noOfTickets;
 
+    public ShowDTO(int showId, String title, String genre, String distribution, Date date, int noOfTickets) {
+        this.showId = showId;
+        this.title = title;
+        this.genre = genre;
+        this.distribution = distribution;
+        this.date = date;
+        this.noOfTickets = noOfTickets;
+    }
+
     public int getShowId() {
         return showId;
     }

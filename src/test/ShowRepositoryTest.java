@@ -13,8 +13,7 @@ public class ShowRepositoryTest {
 
     @org.junit.Before
     public void setUp() throws Exception {
-        ConnectionFactory connectionFactory = null;
-        showRepo = new ShowRepository(connectionFactory);
+        showRepo = new ShowRepository(ConnectionFactory.getSingleInstance());
     }
 
     @org.junit.Test
@@ -29,13 +28,8 @@ public class ShowRepositoryTest {
     @org.junit.Test
     public void insertShowTitledKean() {
         String dateString = String.format("%d-%02d-%02d", 2018, 4, 6);
-        ShowDTO show = new ShowDTO();
-        show.setTitle("Kean");
-        show.setGenre("Drama");
-        show.setDistribution("Kean: Mihai-Florian Nițu");
-        show.setDate(Date.valueOf(dateString));
-        show.setNoOfTickets(928);
-
+        ShowDTO show = new ShowDTO(-1, "Kean","Drama","Kean: Mihai-Florian Nițu",
+                Date.valueOf(dateString), 928);
         assertNotEquals(showRepo.insert(show), -1);
     }
 

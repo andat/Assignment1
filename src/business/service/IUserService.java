@@ -10,5 +10,5 @@ public interface IUserService {
     public boolean addUser(UserModel user);
     public boolean editUser(UserModel user);
     public boolean deleteUser(int id);
-    public boolean checkCredentials(String username, String password);
+    public UserModel checkCredentials(String username, String password);
 }

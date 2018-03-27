@@ -6,6 +6,13 @@ public class TicketDTO {
     private int seatId;
     private boolean booked;
 
+    public TicketDTO(int ticketId, int showId, int seatId, boolean booked) {
+        this.ticketId = ticketId;
+        this.showId = showId;
+        this.seatId = seatId;
+        this.booked = booked;
+    }
+
     public int getTicketId() {
         return ticketId;
     }

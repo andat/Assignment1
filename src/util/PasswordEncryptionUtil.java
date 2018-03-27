@@ -1,4 +1,4 @@
-package business.service;
+package util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +11,7 @@ public class PasswordEncryptionUtil {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             byte[] digest = messageDigest.digest(password.getBytes());
             encryptedPass = bytesToHexa(digest);
+            //encryptedPass = new String(digest);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

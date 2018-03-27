@@ -1,5 +1,6 @@
 package business.service;
 
+import util.PasswordEncryptionUtil;
 import business.model.UserModel;
 import dataAccess.ConnectionFactory;
 import dataAccess.dbmodel.UserDTO;
@@ -63,17 +64,21 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public boolean checkCredentials(String username, String password) {
+    public UserModel checkCredentials(String username, String password) {
         UserDTO u = repository.findByUsername(username);
-        if(u == null)
-            return false;
-        String storedPassword = u.getPassword();
-        System.out.println("stored: " + storedPassword);
-        return encryptionUtil.validatePassword(password, storedPassword);
+        UserModel user = null;
+
+        if(u != null){
+            String storedPassword = u.getPassword();
+            //System.out.println("stored: " + storedPassword);
+            if(encryptionUtil.validatePassword(password, storedPassword))
+                user =  new UserModel(u.getUserId(), u.getUsername(), u.getPassword(), u.isAdmin());
+        }
+        return user;
     }
 
-    public static void main(String args[]){
-        UserService us = new UserService();
-        us.addUser(new UserModel(-1, "viorelp", "hahaha", true));
-    }
+//    public static void main(String args[]){
+//        UserService us = new UserService();
+//        us.addUser(new UserModel(-1, "anda", "master", true));
+//    }
 }

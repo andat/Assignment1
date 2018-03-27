@@ -18,12 +18,8 @@ public class SeatService implements ISeatService {
         this.repository = new SeatRepository(ConnectionFactory.getSingleInstance());
     }
 
-    public int getNoOfRows(){
-        return NO_OF_ROWS;
-    }
-
-    public int getNoOfSeatsOnRow(){
-        return NO_OF_SEATS_ON_ROW;
+    public static int getHallCapacity(){
+        return NO_OF_ROWS * NO_OF_SEATS_ON_ROW;
     }
 
     @Override

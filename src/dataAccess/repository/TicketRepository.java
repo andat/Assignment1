@@ -61,6 +61,60 @@ public class TicketRepository implements ITicketRepository{
     }
 
     @Override
+    public TicketDTO findBySeat(int showId, int seatId) {
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        String findStatementString = "SELECT * FROM `ticket` WHERE show_id = ? AND seat_id = ?";
+        TicketDTO ticket = null;
+        ResultSet rs = null;
+
+        try {
+            findStatement = connection.prepareStatement(findStatementString);
+            findStatement.setInt(1, showId);
+            findStatement.setInt(1, seatId);
+            rs = findStatement.executeQuery();
+
+            if(rs.next())
+                ticket = getTicketFromResultSet(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionFactory.close(rs);
+            connectionFactory.close(findStatement);
+            connectionFactory.close(connection);
+        }
+        return ticket;
+    }
+
+    @Override
+    public List<TicketDTO> findTicketsSold(int showId, boolean sold) {
+        Connection connection = connectionFactory.getConnection();
+        PreparedStatement findStatement = null;
+        String findStatementString = "SELECT * FROM `ticket` WHERE show_id = ? AND booked = ?";
+        List<TicketDTO> tickets = new ArrayList<>();
+        ResultSet rs = null;
+
+        try {
+            findStatement = connection.prepareStatement(findStatementString);
+            findStatement.setInt(1, showId);
+            findStatement.setBoolean(2, sold);
+            rs = findStatement.executeQuery();
+
+            while (rs.next()) {
+                tickets.add(getTicketFromResultSet(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            connectionFactory.close(rs);
+            connectionFactory.close(findStatement);
+            connectionFactory.close(connection);
+        }
+        return tickets;
+    }
+
+    @Override
     public int insert(TicketDTO ticket) {
         Connection connection = connectionFactory.getConnection();
         PreparedStatement insertStatement = null;
@@ -131,11 +185,8 @@ public class TicketRepository implements ITicketRepository{
     }
 
     private TicketDTO getTicketFromResultSet(ResultSet rs) throws SQLException {
-        TicketDTO ticket = new TicketDTO();
-        ticket.setTicketId(rs.getInt("ticket_id"));
-        ticket.setShowId(rs.getInt("show_id"));
-        ticket.setSeatId(rs.getInt("seat_id"));
-        ticket.setBooked(rs.getBoolean("booked"));
+        TicketDTO ticket = new TicketDTO(rs.getInt("ticket_id"), rs.getInt("show_id"),
+                rs.getInt("seat_id"), rs.getBoolean("booked"));
         return ticket;
     }
 }

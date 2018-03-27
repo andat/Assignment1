@@ -1,5 +1,6 @@
 package presentation;
 
+import business.model.UserModel;
 import business.service.IUserService;
 import business.service.UserService;
 import javafx.application.Application;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 
 public class TheatreApp extends Application {
     private Stage window;
-    private Scene loginScene, cashierView, adminView;
+    private Scene loginScene, cashierScene, adminScene;
     private IUserService userService = new UserService();
 
     public static void main(String[] args) {
@@ -24,7 +25,7 @@ public class TheatreApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;
-        window.setTitle("Login");
+        window.setTitle("Theatre management app");
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10,10,10,10));
@@ -54,6 +55,7 @@ public class TheatreApp extends Application {
         Button loginButton = new Button("Log in");
         loginButton.setOnAction(e -> login(usernameInput, passwordInput));
         GridPane.setConstraints(loginButton, 1, 5);
+
         grid.getChildren().addAll(label, usernameLabel, usernameInput, passLabel, passwordInput, loginButton);
 
         loginScene = new Scene(grid, 300, 250);
@@ -69,10 +71,17 @@ public class TheatreApp extends Application {
             AlertBox.display("Empty fields",
                     "Please enter both your username and password." );
         }
-        else if(userService.checkCredentials(username, pass))
-            System.out.println("correct");
-        else
-            AlertBox.display("Invalid username or password",
-                    "Invalid username or password. Please try again." );
+        else {
+            UserModel u = userService.checkCredentials(username, pass);
+            if(u == null){
+                AlertBox.display("Invalid username or password",
+                        "Invalid username or password. Please try again." );
+            } else {
+                if(u.isAdmin())
+                    window.setScene(new AdminScene(u));
+                else
+                    window.setScene(new CashierScene(u));
+            }
+        }
     }
 }

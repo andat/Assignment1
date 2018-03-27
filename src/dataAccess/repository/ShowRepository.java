@@ -135,13 +135,12 @@ public class ShowRepository implements IShowRepository{
     }
 
     private ShowDTO getShowFromResultSet(ResultSet rs) throws SQLException {
-        ShowDTO show = new ShowDTO();
-        show.setShowId(rs.getInt("show_id"));
-        show.setTitle(rs.getString("title"));
-        show.setGenre(rs.getString("genre"));
-        show.setDistribution(rs.getString("distribution"));
-        show.setDate(rs.getDate("date"));
-        show.setNoOfTickets(rs.getInt("no_of_tickets"));
+        ShowDTO show = new ShowDTO(rs.getInt("show_id"),
+                            rs.getString("title"),
+                            rs.getString("genre"),
+                            rs.getString("distribution"),
+                            rs.getDate("date"),
+                            rs.getInt("no_of_tickets"));
         return show;
     }
 }

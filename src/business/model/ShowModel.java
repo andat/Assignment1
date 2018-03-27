@@ -1,23 +1,22 @@
 package business.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class ShowModel {
-    private enum Genre {Opera, Theatre, Concert, Ballet }
     private int id;
     private String title;
-    private Genre genre;
-    private Date date;
+    private String genre;
     private String distribution;
-    private int no_of_tickets;
+    private Date date;
+    private int noOfTickets;
 
-    public ShowModel(int id, String title, Genre genre, Date date, String distribution, int no_of_tickets) {
+    public ShowModel(int id, String title, String genre, String distribution, Date date, int noOfTickets) {
         this.id = id;
         this.title = title;
         this.genre = genre;
         this.date = date;
         this.distribution = distribution;
-        this.no_of_tickets = no_of_tickets;
+        this.noOfTickets = noOfTickets;
     }
 
     public int getId() {
@@ -36,11 +35,11 @@ public class ShowModel {
         this.title = title;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
@@ -60,11 +59,11 @@ public class ShowModel {
         this.distribution = distribution;
     }
 
-    public int getNo_of_tickets() {
-        return no_of_tickets;
+    public int getNoOfTickets() {
+        return noOfTickets;
     }
 
-    public void setNo_of_tickets(int no_of_tickets) {
-        this.no_of_tickets = no_of_tickets;
+    public void setNoOfTickets(int noOfTickets) {
+        this.noOfTickets = noOfTickets;
     }
 }
