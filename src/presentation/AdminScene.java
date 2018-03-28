@@ -242,17 +242,18 @@ public class AdminScene  extends Scene {
         TextField dateField = new TextField();
         dateField.setPromptText("date");
 
-        TextField nrField = new TextField();
-        nrField.setPromptText("no of tickets");
-
-        this.fieldBox.getChildren().setAll(titleField, genreField, distribField, dateField, nrField, addBtn);
+//        TextField nrField = new TextField();
+//        nrField.setPromptText("no of tickets");
+        Button exportButton = new Button("Export sold tickets");
+        exportButton.setOnAction(e -> export());
+        this.fieldBox.getChildren().setAll(titleField, genreField, distribField, dateField, addBtn, exportButton);
         this.addBtn.setOnAction(e -> {
             String title = titleField.getText();
             String genre = genreField.getText();
             String distrib = distribField.getText();
             java.sql.Date sqlDate = stringToSQlDate(dateField.getText());
-            int nr = Integer.parseInt(nrField.getText());
-            ShowModel show = new ShowModel(-1, title, genre, distrib, sqlDate, nr);
+            //int nr = Integer.parseInt(nrField.getText());
+            ShowModel show = new ShowModel(-1, title, genre, distrib, sqlDate, 0);
 
             this.showService.addShow(show);
             table.setItems(FXCollections.observableArrayList(showService.findAll()));
@@ -302,6 +303,11 @@ public class AdminScene  extends Scene {
             this.showService.edit(selectedShows.get(0));
             table.setItems(FXCollections.observableArrayList(showService.findAll()));
         }
+    }
+
+    private void export(){
+        ObservableList<ShowModel> selectedShows = table.getSelectionModel().getSelectedItems();
+        ShowModel show = selectedShows.get(0);
     }
 
 }

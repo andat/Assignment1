@@ -11,6 +11,11 @@ public class SeatModel {
         this.number = number;
     }
 
+    @Override
+    public String toString() {
+        return row + number;
+    }
+
     public int getId() {
         return this.id;
     }

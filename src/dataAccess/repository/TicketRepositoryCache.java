@@ -3,8 +3,8 @@ package dataAccess.repository;
 import dataAccess.dbmodel.TicketDTO;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 public class TicketRepositoryCache implements ITicketRepository{
     private ITicketRepository repository;
@@ -37,7 +37,13 @@ public class TicketRepositoryCache implements ITicketRepository{
     public TicketDTO findBySeat(int showId, int seatId) {
         if(cache.hasResult()) {
             List<TicketDTO> tickets = cache.load();
-            return tickets.stream().filter(t -> (t.getShowId() == showId && t.getSeatId() == seatId)).findFirst().get();
+            TicketDTO ticket;
+            try {
+               ticket = tickets.stream().filter(t -> (t.getShowId() == showId && t.getSeatId() == seatId)).findFirst().get();
+            } catch (NoSuchElementException e){
+                return null;
+            }
+            return ticket;
         } else
             return repository.findBySeat(showId, seatId);
     }
@@ -46,7 +52,7 @@ public class TicketRepositoryCache implements ITicketRepository{
     public List<TicketDTO> findTicketsSold(int showId, boolean sold) {
         if(cache.hasResult()) {
             List<TicketDTO> tickets = cache.load();
-            return tickets.stream().filter(t -> (t.getShowId() == showId && t.isBooked() == sold)).collect(toList());
+            return tickets.stream().filter(t -> (t.getShowId() == showId && t.isBooked() == sold)).collect(Collectors.toList());
         } else
             return repository.findTicketsSold(showId, sold);
     }

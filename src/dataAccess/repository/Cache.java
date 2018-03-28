@@ -16,7 +16,7 @@ public class Cache<T> {
     }
 
     public boolean hasResult() {
-        return cachedData.isEmpty();
+        return (!cachedData.isEmpty());
     }
 
     public List<T> load() {

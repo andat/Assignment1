@@ -71,7 +71,7 @@ public class TicketRepository implements ITicketRepository{
         try {
             findStatement = connection.prepareStatement(findStatementString);
             findStatement.setInt(1, showId);
-            findStatement.setInt(1, seatId);
+            findStatement.setInt(2, seatId);
             rs = findStatement.executeQuery();
 
             if(rs.next())

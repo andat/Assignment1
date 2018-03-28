@@ -42,8 +42,8 @@ public class SeatService implements ISeatService {
     @Override
     public boolean addAllSeats() {
         int count = 0;
-        for(int row = 0 ; row < NO_OF_ROWS; row ++) {
-            for (int nr = 0; nr < NO_OF_SEATS_ON_ROW; nr++) {
+        for(int row = 1 ; row <= NO_OF_ROWS; row ++) {
+            for (int nr = 1; nr <= NO_OF_SEATS_ON_ROW; nr++) {
                 String r = "R" + row;
                 if (repository.insert(new SeatDTO(-1, r, nr)) == -1) {
                     System.out.println("Not all seats were added.");
