@@ -13,7 +13,7 @@ public class SeatModel {
 
     @Override
     public String toString() {
-        return row + number;
+        return row + " " + number;
     }
 
     public int getId() {

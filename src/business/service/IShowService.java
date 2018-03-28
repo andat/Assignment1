@@ -17,6 +17,6 @@ public interface IShowService {
     public List<TicketModel> findSoldTickets(ShowModel show);
     public List<TicketModel> findAvailableTickets(ShowModel show);
     public int getNoOfRemainingTickets(ShowModel show);
-    public void exportSoldTickets(ShowModel show, FormatType format);
+    public void exportSoldTickets(ShowModel show, FormatType format, String filename);
 
 }

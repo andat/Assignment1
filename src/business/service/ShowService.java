@@ -7,6 +7,8 @@ import dataAccess.ConnectionFactory;
 import dataAccess.dbmodel.ShowDTO;
 import dataAccess.dbmodel.TicketDTO;
 import dataAccess.repository.*;
+import util.exporter.TicketExporter;
+import util.exporter.ExporterFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,10 +16,12 @@ import java.util.List;
 public class ShowService implements IShowService{
     private final IShowRepository repository;
     private final ITicketRepository ticketRepository;
+    private final ExporterFactory exporterFactory;
 
     public ShowService(){
         this.repository = new ShowRepository(ConnectionFactory.getSingleInstance());
         this.ticketRepository = new TicketRepositoryCache(new TicketRepository(ConnectionFactory.getSingleInstance()));
+        this.exporterFactory = new ExporterFactory();
     }
 
 
@@ -121,7 +125,9 @@ public class ShowService implements IShowService{
     }
 
     @Override
-    public void exportSoldTickets(ShowModel show, FormatType format) {
+    public void exportSoldTickets(ShowModel show, FormatType format, String filename) {
         List<TicketModel> sold = this.findSoldTickets(show);
+        TicketExporter ticketExporter = this.exporterFactory.createExporter(format);
+        ticketExporter.export(sold, filename);
     }
 }

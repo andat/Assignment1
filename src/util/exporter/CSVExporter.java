@@ -5,8 +5,8 @@ import business.model.TicketModel;
 import java.io.*;
 import java.util.List;
 
-public class CSVExporter extends ExporterFactory{
-    private static final String SEPARATOR = ",";
+public class CSVExporter extends TicketExporter {
+    private static final String SEPARATOR = ", ";
 
     @Override
     public void export(List<TicketModel> entries, String filename) {
@@ -14,6 +14,8 @@ public class CSVExporter extends ExporterFactory{
         BufferedWriter bw = null;
         try {
             bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile), "UTF-8"));
+            bw.write("id, show_id, seat_id, booked");
+            bw.newLine();
             for (TicketModel t : entries)
             {
                 StringBuffer line = new StringBuffer();
@@ -27,6 +29,7 @@ public class CSVExporter extends ExporterFactory{
                 bw.write(line.toString());
                 bw.newLine();
             }
+            System.out.println("Wrote csv to " + csvFile);
             bw.flush();
             bw.close();
         } catch (UnsupportedEncodingException e) {

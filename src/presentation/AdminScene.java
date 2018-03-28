@@ -2,10 +2,7 @@ package presentation;
 
 import business.model.ShowModel;
 import business.model.UserModel;
-import business.service.IShowService;
-import business.service.IUserService;
-import business.service.ShowService;
-import business.service.UserService;
+import business.service.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -242,11 +239,27 @@ public class AdminScene  extends Scene {
         TextField dateField = new TextField();
         dateField.setPromptText("date");
 
-//        TextField nrField = new TextField();
-//        nrField.setPromptText("no of tickets");
-        Button exportButton = new Button("Export sold tickets");
-        exportButton.setOnAction(e -> export());
-        this.fieldBox.getChildren().setAll(titleField, genreField, distribField, dateField, addBtn, exportButton);
+        //format
+        TextField fileField = new TextField();
+        fileField.setPromptText("filename");
+
+        Button exportButton = new Button("Export CSV");
+        exportButton.setOnAction(e -> {
+            String filename = fileField.getText();
+            if(filename != "")
+                export(filename, FormatType.CSV);
+        });
+
+        Button exportXMLButton = new Button("Export XML");
+        exportXMLButton.setOnAction(e -> {
+            String filename = fileField.getText();
+            if(filename != "")
+                export(filename, FormatType.XML);
+        });
+
+
+
+        this.fieldBox.getChildren().setAll(titleField, genreField, distribField, dateField, addBtn, fileField, exportButton, exportXMLButton);
         this.addBtn.setOnAction(e -> {
             String title = titleField.getText();
             String genre = genreField.getText();
@@ -305,9 +318,11 @@ public class AdminScene  extends Scene {
         }
     }
 
-    private void export(){
+    private void export(String filename, FormatType type){
+        System.out.println(filename);
         ObservableList<ShowModel> selectedShows = table.getSelectionModel().getSelectedItems();
-        ShowModel show = selectedShows.get(0);
+        if(!selectedShows.isEmpty())
+            this.showService.exportSoldTickets(selectedShows.get(0), type, filename);
     }
 
 }
