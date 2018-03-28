@@ -1,4 +1,4 @@
-package business.service;
+package util;
 
 public enum FormatType {
     XML,

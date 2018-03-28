@@ -1,8 +1,8 @@
 package util.exporter;
 
-import business.service.FormatType;
+import util.FormatType;
 
-public class ExporterFactory {
+public class ExporterFactory{
 
     public TicketExporter createExporter(FormatType format){
         if(format.equals(FormatType.CSV))

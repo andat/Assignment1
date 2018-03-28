@@ -7,6 +7,7 @@ import dataAccess.ConnectionFactory;
 import dataAccess.dbmodel.ShowDTO;
 import dataAccess.dbmodel.TicketDTO;
 import dataAccess.repository.*;
+import util.FormatType;
 import util.exporter.TicketExporter;
 import util.exporter.ExporterFactory;
 
