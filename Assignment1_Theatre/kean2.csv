@@ -1,0 +1,4 @@
+id, show_id, seat_id, booked
+7, 13, 4401, true
+11, 13, 4419, true
+12, 13, 4412, true
