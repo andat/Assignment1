@@ -14459,7 +14459,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFioXbvfEwd4zk="
 							},
-							"name": "number",
+							"name": "labNumber",
 							"type": "INTEGER",
 							"length": 0,
 							"primaryKey": false,
