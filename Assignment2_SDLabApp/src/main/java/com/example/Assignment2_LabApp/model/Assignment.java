@@ -3,10 +3,11 @@ package com.example.Assignment2_LabApp.model;
 import javax.persistence.*;
 import java.sql.Date;
 
+@Entity
 public class Assignment {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")

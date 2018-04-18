@@ -1,6 +1,5 @@
 package com.example.Assignment2_LabApp.model;
 
-import jdk.nashorn.internal.ir.Assignment;
 
 import javax.persistence.*;
 import java.sql.Date;
