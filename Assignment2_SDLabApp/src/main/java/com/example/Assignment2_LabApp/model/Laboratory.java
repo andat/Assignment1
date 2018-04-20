@@ -4,6 +4,7 @@ package com.example.Assignment2_LabApp.model;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Laboratory {
@@ -27,8 +28,12 @@ public class Laboratory {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "laboratory")
+    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
     private List<Assignment> assignments;
+
+    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
+    private List<Attendance> attendance;
+
 
     public Laboratory(int labNumber, Date date, String title, String curricula, String description, List<Assignment> assignments) {
         this.labNumber = labNumber;
@@ -65,5 +70,9 @@ public class Laboratory {
 
     public List<Assignment> getAssignments() {
         return assignments;
+    }
+
+    public List<Attendance> getAttendance() {
+        return attendance;
     }
 }

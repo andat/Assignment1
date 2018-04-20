@@ -9,9 +9,11 @@ public class Attendance {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @JoinColumn(name = "lab_id")
+    @ManyToOne
+    @JoinColumn(name="lab_id")
     private Laboratory laboratory;
 
+    @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
 

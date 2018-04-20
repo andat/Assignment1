@@ -2,6 +2,7 @@ package com.example.Assignment2_LabApp.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 public class Assignment {
@@ -19,9 +20,12 @@ public class Assignment {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lab_id")
+    @ManyToOne
+    @JoinColumn(name="lab_id")
     private Laboratory laboratory;
+
+    @OneToMany(mappedBy="assignment")
+    private Set<Submission> submissions;
 
     public Assignment(String name, Date deadline, String description, Laboratory laboratory) {
         this.name = name;
@@ -48,5 +52,9 @@ public class Assignment {
 
     public Laboratory getLaboratory() {
         return laboratory;
+    }
+
+    public Set<Submission> getSubmissions() {
+        return submissions;
     }
 }
