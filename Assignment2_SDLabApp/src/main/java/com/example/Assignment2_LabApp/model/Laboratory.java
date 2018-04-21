@@ -13,8 +13,8 @@ public class Laboratory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "labNumber", unique = true, nullable = false)
-    private int labNumber;
+    @Column(name = "number", unique = true, nullable = false)
+    private int number;
 
     @Column(name = "date", nullable = false)
     private Date date;
@@ -34,22 +34,12 @@ public class Laboratory {
     @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
     private List<Attendance> attendance;
 
-
-    public Laboratory(int labNumber, Date date, String title, String curricula, String description, List<Assignment> assignments) {
-        this.labNumber = labNumber;
-        this.date = date;
-        this.title = title;
-        this.curricula = curricula;
-        this.description = description;
-        this.assignments = assignments;
-    }
-
     public int getId() {
         return id;
     }
 
-    public int getLabNumber() {
-        return labNumber;
+    public int getNumber() {
+        return number;
     }
 
     public Date getDate() {

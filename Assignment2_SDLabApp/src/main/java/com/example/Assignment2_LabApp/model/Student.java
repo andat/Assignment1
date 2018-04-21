@@ -6,10 +6,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 public class Student extends User{
 
-    @Column(name = "group", nullable = false)
-    private String group;
+    @Column(name = "group_name", nullable = false)
+    private String groupName;
 
     @Column(name = "hobby")
     private String hobby;
@@ -20,14 +21,8 @@ public class Student extends User{
     @OneToMany(mappedBy = "student")
     private List<Submission> submissions;
 
-    public Student(String username, String password, String fullName, String email, String group, String hobby) {
-        super(username, password, fullName, email, false);
-        this.group = group;
-        this.hobby = hobby;
-    }
-
-    public String getGroup() {
-        return group;
+    public String getGroupName() {
+        return groupName;
     }
 
     public String getHobby() {

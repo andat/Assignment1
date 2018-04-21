@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -15,7 +16,6 @@ public class User {
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @JsonIgnore
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -27,14 +27,6 @@ public class User {
 
     @Column(name = "is_teacher", nullable = false)
     private boolean isTeacher;
-
-    public User(String username, String password, String fullName, String email, boolean isTeacher) {
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.isTeacher = isTeacher;
-    }
 
     public int getId() {
         return id;

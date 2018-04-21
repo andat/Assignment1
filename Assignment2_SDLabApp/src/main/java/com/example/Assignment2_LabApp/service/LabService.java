@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LabService {
+public class LabService implements ILabService{
 
     @Autowired
     private LabRepository labRepository;
@@ -27,7 +27,7 @@ public class LabService {
         labRepository.save(lab);
     }
 
-    public void updateLaboratory(Laboratory lab, int id){
+    public void updateLaboratory(Laboratory lab){
         labRepository.save(lab);
     }
 
@@ -35,6 +35,11 @@ public class LabService {
         Optional<Laboratory> lab = labRepository.findById(id);
         if(lab.isPresent())
             labRepository.delete(lab.get());
+    }
+
+    @Override
+    public List<Laboratory> filterByKeyword(String keyword) {
+        return labRepository.findAllByCurriculaContainsOrDescriptionContains(keyword, keyword);
     }
 
 }
