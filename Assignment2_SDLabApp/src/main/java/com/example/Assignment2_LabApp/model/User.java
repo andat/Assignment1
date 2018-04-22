@@ -3,6 +3,7 @@ package com.example.Assignment2_LabApp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -22,6 +23,7 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
+    @Email
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -51,4 +53,10 @@ public class User {
     public boolean isTeacher() {
         return isTeacher;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
 }

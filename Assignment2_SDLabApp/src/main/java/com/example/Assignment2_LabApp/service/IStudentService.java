@@ -10,4 +10,5 @@ public interface IStudentService {
     public void addStudent(Student student);
     public void updateStudent(Student student);
     public void deleteStudent(int id);
+    public void changePassword(Student student, String password);
 }

@@ -1,5 +1,7 @@
 package com.example.Assignment2_LabApp.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,20 +13,16 @@ public class Attendance {
 
     @ManyToOne
     @JoinColumn(name="lab_id")
+    @JsonManagedReference
     private Laboratory laboratory;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
+    @JsonManagedReference
     private Student student;
 
     @Column(name = "present")
     private boolean present;
-
-    public Attendance(Laboratory laboratory, Student student, boolean present) {
-        this.laboratory = laboratory;
-        this.student = student;
-        this.present = present;
-    }
 
     public int getId() {
         return id;
@@ -40,5 +38,9 @@ public class Attendance {
 
     public boolean isPresent() {
         return present;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

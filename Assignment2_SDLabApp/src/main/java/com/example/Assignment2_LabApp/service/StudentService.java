@@ -3,6 +3,8 @@ package com.example.Assignment2_LabApp.service;
 import com.example.Assignment2_LabApp.model.Laboratory;
 import com.example.Assignment2_LabApp.model.Student;
 import com.example.Assignment2_LabApp.repository.StudentRepository;
+//import com.example.Assignment2_LabApp.util.PasswordEncoder;
+import com.example.Assignment2_LabApp.util.PasswordEncryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class StudentService implements IStudentService{
     }
 
     public void addStudent(Student student){
+        //TODO generate token
+        student.setPassword(PasswordEncryptionUtil.encryptPasswordSHA256(student.getPassword()));
         studentRepository.save(student);
     }
 
@@ -36,5 +40,11 @@ public class StudentService implements IStudentService{
         Optional<Student> student = studentRepository.findById(id);
         if(student.isPresent())
             studentRepository.delete(student.get());
+    }
+
+    @Override
+    public void changePassword(Student student, String password) {
+       student.setPassword(PasswordEncryptionUtil.encryptPasswordSHA256(password));
+        studentRepository.save(student);
     }
 }

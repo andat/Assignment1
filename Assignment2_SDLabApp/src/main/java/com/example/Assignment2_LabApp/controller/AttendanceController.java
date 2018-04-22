@@ -3,11 +3,15 @@ package com.example.Assignment2_LabApp.controller;
 import com.example.Assignment2_LabApp.model.Attendance;
 import com.example.Assignment2_LabApp.service.IAttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -25,23 +29,45 @@ public class AttendanceController {
     }
 
     @RequestMapping(method = GET, value = "/{id}")
-    public Attendance getAttendanceById(@PathVariable int id){
-        return attendanceService.getAttendanceById(id);
+    public ResponseEntity getAttendanceById(@PathVariable int id){
+        Attendance a = attendanceService.getAttendanceById(id);
+        if(a == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Attendance not found.");
+        else
+            return ResponseEntity.ok(a);
     }
 
     @RequestMapping(method = POST)
-    public void addAttendance(@RequestBody Attendance attendance){
+    public ResponseEntity addAttendance(@Validated @RequestBody Attendance attendance){
         attendanceService.addAttendance(attendance);
+        return ResponseEntity.ok("New attendance added.");
     }
 
     @RequestMapping(method = PUT, value = "/{id}")
-    public void updateAttendance(@RequestBody Attendance attendance, @PathVariable int id){
-        //TODO check if user exists
-        attendanceService.updateAttendance(attendance);
+    public ResponseEntity updateAttendance(@Validated @RequestBody Attendance attendance, @PathVariable int id){
+        Attendance a = attendanceService.getAttendanceById(id);
+        if(a == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Attendance not found.");
+        else {
+            attendance.setId(id);
+            attendanceService.updateAttendance(attendance);
+            return ResponseEntity.ok("Attendance updated.");
+        }
     }
 
     @RequestMapping(method = DELETE, value = "/{id}")
-    public void deleteAttendance(@PathVariable int id){
-        attendanceService.deleteAttendance(id);
+    public ResponseEntity deleteAttendance(@PathVariable int id){
+        Attendance a = attendanceService.getAttendanceById(id);
+        if(a == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Attendance not found.");
+        else {
+            attendanceService.deleteAttendance(id);
+            return ResponseEntity.ok("Attendance deleted.");
+        }
+    }
+
+    @RequestMapping(method = GET, value = "/labs/{labId}")
+    public List<Attendance> getAttendanceByLabId(@PathVariable int labId){
+        return attendanceService.getAttendanceByLabId(labId);
     }
 }

@@ -3,11 +3,14 @@ package com.example.Assignment2_LabApp.controller;
 import com.example.Assignment2_LabApp.model.Assignment;
 import com.example.Assignment2_LabApp.service.IAssignmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -25,24 +28,44 @@ public class AssignmentController {
     }
 
     @RequestMapping(method = GET, value = "/{id}")
-    public Assignment getAssignmentById(@PathVariable int id){
-        return assignmentService.getAssignmentById(id);
+    public ResponseEntity getAssignmentById(@PathVariable int id){
+        Assignment a =  assignmentService.getAssignmentById(id);
+        if(a == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Assignment not found.");
+        else
+            return ResponseEntity.ok(a);
     }
 
     @RequestMapping(method = POST)
-    public void addAssignment(@RequestBody Assignment assignment){
+    public ResponseEntity addAssignment(@Valid @RequestBody Assignment assignment){
         assignmentService.addAssignment(assignment);
+        return ResponseEntity.ok().body("New assignment added.");
     }
 
     @RequestMapping(method = PUT, value = "/{id}")
-    public void updateAssignment(@RequestBody Assignment assignment, @PathVariable int id){
-        //TODO check if assignment exists
-        assignmentService.updateAssignment(assignment);
+    public ResponseEntity updateAssignment(@Valid @RequestBody Assignment assignment, @PathVariable int id){
+        Assignment a = assignmentService.getAssignmentById(id);
+        if(a != null){
+            assignment.setId(id);
+            assignmentService.updateAssignment(assignment);
+            return ResponseEntity.accepted().body("Updated.");
+        } else
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Assignment not found.");
     }
 
     @RequestMapping(method = DELETE, value = "/{id}")
-    public void deleteAssignment(@PathVariable int id){
-        assignmentService.deleteAssignment(id);
+    public ResponseEntity deleteAssignment(@PathVariable int id){
+        Assignment a = assignmentService.getAssignmentById(id);
+        if( a == null)
+            return ResponseEntity.notFound().build();
+        else {
+            assignmentService.deleteAssignment(id);
+            return ResponseEntity.ok().body("Assignment deleted");
+        }
     }
 
+    @RequestMapping(method = GET, value = "/labs/{labId}")
+    public List<Assignment> getAssignmentsByLabId(@PathVariable int labId){
+        return assignmentService.getAssignmentsByLabId(labId);
+    }
 }

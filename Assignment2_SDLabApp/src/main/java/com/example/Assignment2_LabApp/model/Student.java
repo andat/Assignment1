@@ -1,5 +1,6 @@
 package com.example.Assignment2_LabApp.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -16,9 +17,11 @@ public class Student extends User{
     private String hobby;
 
     @OneToMany(mappedBy = "student")
+    @JsonBackReference
     private List<Attendance> attendances;
 
     @OneToMany(mappedBy = "student")
+    @JsonBackReference
     private List<Submission> submissions;
 
     public String getGroupName() {

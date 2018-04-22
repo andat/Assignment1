@@ -35,4 +35,9 @@ public class SubmissionService implements ISubmissionService {
         if(submission.isPresent())
             submissionRepository.delete(submission.get());
     }
+
+    @Override
+    public List<Submission> getSubmissionsByAssignmentId(int assignmentId) {
+        return submissionRepository.getSubmissionsByAssignmentId(assignmentId);
+    }
 }

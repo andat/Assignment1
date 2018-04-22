@@ -10,4 +10,5 @@ public interface IAttendanceService {
     public void addAttendance(Attendance attendance);
     public void updateAttendance(Attendance attendance);
     public void deleteAttendance(int id);
+    public List<Attendance> getAttendanceByLabId(int labId);
 }

@@ -1,7 +1,12 @@
 package com.example.Assignment2_LabApp.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.sql.Date;
 import java.util.List;
 import java.util.Set;
@@ -29,9 +34,11 @@ public class Laboratory {
     private String description;
 
     @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Assignment> assignments;
 
     @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Attendance> attendance;
 
     public int getId() {
@@ -64,5 +71,29 @@ public class Laboratory {
 
     public List<Attendance> getAttendance() {
         return attendance;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCurricula(String curricula) {
+        this.curricula = curricula;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

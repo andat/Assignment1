@@ -38,4 +38,9 @@ public class AssignmentService implements IAssignmentService{
         if(assignment.isPresent())
             assignmentRepository.delete(assignment.get());
     }
+
+    @Override
+    public List<Assignment> getAssignmentsByLabId(int labId) {
+        return assignmentRepository.getAssignmentsByLaboratoryId(labId);
+    }
 }

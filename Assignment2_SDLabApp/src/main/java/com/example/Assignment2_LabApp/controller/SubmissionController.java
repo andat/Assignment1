@@ -44,4 +44,9 @@ public class SubmissionController {
     public void deleteSubmission(@PathVariable int id){
         submissionService.deleteSubmission(id);
     }
+
+    @RequestMapping(method = GET, value = "/assignments/{assignmentId}")
+    public List<Submission> getSubmissionsByAssignmentId(@PathVariable int assignmentId){
+        return submissionService.getSubmissionsByAssignmentId(assignmentId);
+    }
 }

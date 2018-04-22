@@ -37,4 +37,9 @@ public class AttendanceService implements IAttendanceService {
         if(attendance.isPresent())
             attendanceRepository.delete(attendance.get());
     }
+
+    @Override
+    public List<Attendance> getAttendanceByLabId(int labId) {
+        return attendanceRepository.getAttendanceByLaboratoryId(labId);
+    }
 }

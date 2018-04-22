@@ -44,4 +44,9 @@ public class StudentController {
     public void deleteStudent(@PathVariable int id){
         studentService.deleteStudent(id);
     }
+
+//    @RequestMapping(method = PUT, value = "/{id}/password")
+//    public void changePassword(@PathVariable id, ){
+//        studentService.changePassword(password);
+//    }
 }

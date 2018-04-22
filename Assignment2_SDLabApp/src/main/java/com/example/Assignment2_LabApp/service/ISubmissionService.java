@@ -10,4 +10,5 @@ public interface ISubmissionService {
     public void addSubmission(Submission submission);
     public void updateSubmission(Submission submission);
     public void deleteSubmission(int id);
+    public List<Submission> getSubmissionsByAssignmentId(int assignmentId);
 }
