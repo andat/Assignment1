@@ -27,8 +27,8 @@ public class AttendanceController {
     @Autowired
     private IAttendanceService attendanceService;
 
-    //TODO solve dependency injection for model mapper
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping(method = GET)
     public List<AttendanceResponseModel> getAllAttendances(){

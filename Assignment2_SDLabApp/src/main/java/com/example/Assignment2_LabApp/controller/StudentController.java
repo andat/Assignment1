@@ -27,7 +27,8 @@ public class StudentController {
     @Autowired
     private IStudentService studentService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping(method = GET)
     public List<StudentResponseModel> getAllStudents(){
