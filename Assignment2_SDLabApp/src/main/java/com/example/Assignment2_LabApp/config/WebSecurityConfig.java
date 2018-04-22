@@ -12,9 +12,9 @@
 //
 //    private static final String[] AUTH_WHITELIST = {
 //
-//            // -- swagger ui
-//            "/swagger-resources/**",
-//            "/swagger-ui.html",
+//            // -- config ui
+//            "/config-resources/**",
+//            "/config-ui.html",
 //            "/v2/api-docs",
 //            "/webjars/**"
 //    };

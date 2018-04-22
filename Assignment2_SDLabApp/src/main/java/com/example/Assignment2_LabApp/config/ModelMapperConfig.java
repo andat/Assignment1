@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.swagger;
+package com.example.Assignment2_LabApp.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

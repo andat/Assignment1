@@ -1,12 +1,21 @@
 package com.example.Assignment2_LabApp.apimodel;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.sql.Date;
+
 public class AttendanceResponseModel {
 
     private int id;
 
-    private int laboratoryId;
+    private int laboratoryNumber;
 
-    private int studentId;
+    private String laboratoryTitle;
+
+    private String studentUsername;
+
+    @JsonFormat(pattern = "YYYY-MM-DD")
+    private Date laboratoryDate;
 
     private boolean present;
 
@@ -18,20 +27,36 @@ public class AttendanceResponseModel {
         this.id = id;
     }
 
-    public int getlaboratoryId() {
-        return laboratoryId;
+    public int getLaboratoryNumber() {
+        return laboratoryNumber;
     }
 
-    public void setlaboratoryId(int laboratoryId) {
-        this.laboratoryId = laboratoryId;
+    public void setLaboratoryNumber(int laboratoryNumber) {
+        this.laboratoryNumber = laboratoryNumber;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public String getLaboratoryTitle() {
+        return laboratoryTitle;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setLaboratoryTitle(String laboratoryTitle) {
+        this.laboratoryTitle = laboratoryTitle;
+    }
+
+    public String getStudentUsername() {
+        return studentUsername;
+    }
+
+    public void setStudentUsername(String studentUsername) {
+        this.studentUsername = studentUsername;
+    }
+
+    public Date getLaboratoryDate() {
+        return laboratoryDate;
+    }
+
+    public void setLaboratoryDate(Date laboratoryDate) {
+        this.laboratoryDate = laboratoryDate;
     }
 
     public boolean isPresent() {
