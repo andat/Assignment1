@@ -19,7 +19,7 @@
 //    private String description;
 //
 //    @NotNull
-//    private LabDTO labDTO;
+//    private LabRequestModel labDTO;
 //
 //    public String getName() {
 //        return name;
