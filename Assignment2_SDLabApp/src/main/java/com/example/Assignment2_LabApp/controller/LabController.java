@@ -5,6 +5,7 @@ import com.example.Assignment2_LabApp.apimodel.LabResponseModel;
 import com.example.Assignment2_LabApp.model.Laboratory;
 import com.example.Assignment2_LabApp.service.ILabService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,8 @@ public class LabController {
     @Autowired
     private ILabService labService;
 
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping(method = GET)
     public List<LabResponseModel> getLaboratories(@RequestParam (value = "keyword", required = false) String keyword){

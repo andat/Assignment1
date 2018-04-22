@@ -43,4 +43,16 @@ public class Attendance {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setLaboratory(Laboratory laboratory) {
+        this.laboratory = laboratory;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void setPresent(boolean present) {
+        this.present = present;
+    }
 }

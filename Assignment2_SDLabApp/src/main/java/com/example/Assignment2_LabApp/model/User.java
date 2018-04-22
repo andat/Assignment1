@@ -23,7 +23,7 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
-    @Email
+
     @Column(name = "email", nullable = false)
     private String email;
 
@@ -58,5 +58,23 @@ public class User {
         this.password = password;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setIsTeacher(boolean teacher) {
+        isTeacher = teacher;
+    }
 }

@@ -31,4 +31,28 @@ public class Student extends User{
     public String getHobby() {
         return hobby;
     }
+
+    public List<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public void setAttendances(List<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
+    }
 }
