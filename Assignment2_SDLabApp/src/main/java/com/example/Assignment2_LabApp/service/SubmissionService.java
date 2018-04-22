@@ -5,6 +5,7 @@ import com.example.Assignment2_LabApp.repository.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,11 @@ public class SubmissionService implements ISubmissionService {
         submissionRepository.save(submission);
     }
 
+    public void gradeSubmission(Submission submission, int grade){
+        submission.setGrade(grade);
+        submissionRepository.save(submission);
+    }
+
     public void deleteSubmission(int id){
         Optional<Submission> submission = submissionRepository.findById(id);
         if(submission.isPresent())
@@ -39,5 +45,15 @@ public class SubmissionService implements ISubmissionService {
     @Override
     public List<Submission> getSubmissionsByAssignmentId(int assignmentId) {
         return submissionRepository.getSubmissionsByAssignmentId(assignmentId);
+    }
+
+
+    @Override
+    public boolean checkValidSubmission(Submission submission, java.sql.Date deadline) {
+        Date date = new Date(System.currentTimeMillis());
+        if(date.after(deadline))
+            return false;
+        else
+            return true;
     }
 }

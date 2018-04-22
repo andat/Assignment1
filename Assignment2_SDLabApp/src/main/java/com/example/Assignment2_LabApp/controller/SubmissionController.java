@@ -1,14 +1,28 @@
 package com.example.Assignment2_LabApp.controller;
 
+import com.example.Assignment2_LabApp.apimodel.SubmissionRequestModel;
+import com.example.Assignment2_LabApp.apimodel.SubmissionResponseModel;
 import com.example.Assignment2_LabApp.model.Submission;
+import com.example.Assignment2_LabApp.service.IAssignmentService;
 import com.example.Assignment2_LabApp.service.ISubmissionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -19,34 +33,80 @@ public class SubmissionController {
     @Autowired
     private ISubmissionService submissionService;
 
+    @Autowired
+    private IAssignmentService assignmentService;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
     @RequestMapping(method = GET)
-    public List<Submission> getAllSubmissions(){
-        return submissionService.getAllSubmissions();
+    public List<SubmissionResponseModel> getAllSubmissions(){
+        return submissionService.getAllSubmissions().stream()
+                                                    .map(s -> modelMapper.map(s, SubmissionResponseModel.class))
+                                                    .collect(Collectors.toList());
     }
 
     @RequestMapping(method = GET, value = "/{id}")
-    public Submission getSubmissionById(@PathVariable int id){
-        return submissionService.getSubmissionById(id);
+    public ResponseEntity getSubmissionById(@PathVariable int id){
+        Submission s = submissionService.getSubmissionById(id);
+        if(s == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Submission not found");
+        else
+            return ResponseEntity.ok().body(modelMapper.map(s, SubmissionResponseModel.class));
     }
 
     @RequestMapping(method = POST)
-    public void addSubmission(@RequestBody Submission submission){
-        submissionService.addSubmission(submission);
+    public ResponseEntity addSubmission(@RequestBody SubmissionRequestModel submission){
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        Submission sub = modelMapper.map(submission, Submission.class);
+        Date deadline = assignmentService.getAssignmentById(sub.getAssignment().getId()).getDeadline();
+
+        if(submissionService.checkValidSubmission(sub, deadline)){
+            sub.setDate(new Date(System.currentTimeMillis()));
+            submissionService.addSubmission(sub);
+            return ResponseEntity.ok().body("New submission added.");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Submission is not valid. Assignment deadline passed.");
+
     }
 
     @RequestMapping(method = PUT, value = "/{id}")
-    public void updateSubmission(@RequestBody Submission submission, @PathVariable int id){
-        //TODO check if user exists
-        submissionService.updateSubmission(submission);
+    public ResponseEntity updateSubmission(@RequestBody SubmissionRequestModel submission, @PathVariable int id){
+        Submission oldSubmission = submissionService.getSubmissionById(id);
+        if(oldSubmission != null){
+            Submission s = modelMapper.map(submission, Submission.class);
+            s.setId(id);
+            s.setDate(oldSubmission.getDate());
+            submissionService.updateSubmission(s);
+            return  ResponseEntity.ok().body("Submission updated.");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Submission not found");
+
+    }
+
+    @RequestMapping(method = PUT, value ="/{id}/{grade}")
+    public ResponseEntity gradeSubmission(@PathVariable int id, @PathVariable @Min(1) @Max(10) int grade){
+        Submission sub = submissionService.getSubmissionById(id);
+        if(sub != null){
+            submissionService.gradeSubmission(sub, grade);
+            return ResponseEntity.ok().body("Submission graded.");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Submission not found");
     }
 
     @RequestMapping(method = DELETE, value = "/{id}")
-    public void deleteSubmission(@PathVariable int id){
-        submissionService.deleteSubmission(id);
+    public ResponseEntity deleteSubmission(@PathVariable int id){
+        if(submissionService.getSubmissionById(id)!= null){
+            submissionService.deleteSubmission(id);
+            return ResponseEntity.ok().body("Submission deleted.");
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Submission not found");
     }
 
     @RequestMapping(method = GET, value = "/assignments/{assignmentId}")
-    public List<Submission> getSubmissionsByAssignmentId(@PathVariable int assignmentId){
-        return submissionService.getSubmissionsByAssignmentId(assignmentId);
+    public List<SubmissionResponseModel> getSubmissionsByAssignmentId(@PathVariable int assignmentId){
+        return submissionService.getSubmissionsByAssignmentId(assignmentId).stream()
+                                                                           .map(s -> modelMapper.map(s, SubmissionResponseModel.class))
+                                                                           .collect(Collectors.toList());
     }
 }

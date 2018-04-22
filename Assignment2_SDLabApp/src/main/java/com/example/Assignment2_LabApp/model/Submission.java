@@ -24,11 +24,11 @@ public class Submission {
     @JsonManagedReference
     private Student student;
 
-    @Min(1) @Max(10)
+    @Min(0) @Max(10)
     @Column(name = "grade")
     private int grade;
 
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+
     @Column(name = "date")
     private Date date;
 
@@ -57,5 +57,29 @@ public class Submission {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setAssignment(Assignment assignment) {
+        this.assignment = assignment;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
