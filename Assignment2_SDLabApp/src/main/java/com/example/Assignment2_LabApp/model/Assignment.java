@@ -37,20 +37,40 @@ public class Assignment {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDeadline() {
         return deadline;
     }
 
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Laboratory getLaboratory() {
         return laboratory;
+    }
+
+    public void setLaboratory(Laboratory laboratory) {
+        this.laboratory = laboratory;
     }
 
     public Set<Submission> getSubmissions() {
@@ -59,9 +79,5 @@ public class Assignment {
 
     public void setSubmissions(Set<Submission> submissions) {
         this.submissions = submissions;
-    }
-
-    public void setId(int id){
-        this.id = id;
     }
 }

@@ -34,11 +34,11 @@ public class Laboratory {
     private String description;
 
     @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private List<Assignment> assignments;
 
     @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
-    //@JsonBackReference
+    @JsonBackReference
     private List<Attendance> attendance;
 
     public int getId() {
