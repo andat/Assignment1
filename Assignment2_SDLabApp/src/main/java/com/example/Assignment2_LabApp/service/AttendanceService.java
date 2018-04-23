@@ -39,6 +39,16 @@ public class AttendanceService implements IAttendanceService {
     }
 
     @Override
+    public boolean checkIfAlreadyExists(Attendance attendance) {
+        int labId = attendance.getLaboratory().getId();
+        int studentId = attendance.getStudent().getId();
+        if(attendanceRepository.getAttendanceByLaboratoryIdAndStudentId(labId, studentId) != null)
+            return true;
+        else
+            return false;
+    }
+
+    @Override
     public List<Attendance> getAttendanceByLabId(int labId) {
         return attendanceRepository.getAttendanceByLaboratoryId(labId);
     }

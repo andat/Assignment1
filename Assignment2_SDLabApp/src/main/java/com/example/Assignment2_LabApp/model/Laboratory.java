@@ -33,7 +33,7 @@ public class Laboratory {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="laboratory", orphanRemoval = true)//cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Assignment> assignments;
 

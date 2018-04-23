@@ -50,8 +50,12 @@ public class AttendanceController {
     public ResponseEntity addAttendance(@RequestBody AttendanceRequestModel attendance){
         modelMapper.getConfiguration().setAmbiguityIgnored(true);
         Attendance a = modelMapper.map(attendance, Attendance.class);
-        attendanceService.addAttendance(a);
-        return ResponseEntity.ok("New attendance added.");
+        if(attendanceService.checkIfAlreadyExists(a)){
+            return ResponseEntity.badRequest().body("Attendance already exists.");
+        } else {
+            attendanceService.addAttendance(a);
+            return ResponseEntity.ok("New attendance added.");
+        }
     }
 
     @RequestMapping(method = PUT, value = "/{id}")

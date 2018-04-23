@@ -10,7 +10,7 @@ public class AssignmentResponseModel {
 
     private String name;
 
-    @JsonFormat(pattern = "YYYY-MM-DD")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
 
     private String description;

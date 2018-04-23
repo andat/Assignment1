@@ -13,7 +13,7 @@ public class SubmissionResponseModel {
 
     private int grade;
 
-    @JsonFormat(pattern = "YYYY-MM-DD")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String description;

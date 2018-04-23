@@ -8,7 +8,7 @@ public class AssignmentRequestModel {
 
     private String name;
 
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deadline;
 
     private String description;

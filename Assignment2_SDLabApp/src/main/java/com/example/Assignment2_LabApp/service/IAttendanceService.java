@@ -1,6 +1,7 @@
 package com.example.Assignment2_LabApp.service;
 
 import com.example.Assignment2_LabApp.model.Attendance;
+import com.example.Assignment2_LabApp.model.Submission;
 
 import java.util.List;
 
@@ -10,5 +11,6 @@ public interface IAttendanceService {
     public void addAttendance(Attendance attendance);
     public void updateAttendance(Attendance attendance);
     public void deleteAttendance(int id);
+    public boolean checkIfAlreadyExists(Attendance attendance);
     public List<Attendance> getAttendanceByLabId(int labId);
 }

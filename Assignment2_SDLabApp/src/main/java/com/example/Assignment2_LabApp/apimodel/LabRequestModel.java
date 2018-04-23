@@ -12,10 +12,7 @@ public class LabRequestModel {
     @Min(1) @Max(14)
     private int number;
 
-    //TODO figure out why json format for day is not correct
-
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String title;

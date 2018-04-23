@@ -14,7 +14,7 @@ public class AttendanceResponseModel {
 
     private String studentUsername;
 
-    @JsonFormat(pattern = "YYYY-MM-DD")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date laboratoryDate;
 
     private boolean present;

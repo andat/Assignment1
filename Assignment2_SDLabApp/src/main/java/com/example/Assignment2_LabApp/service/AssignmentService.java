@@ -7,6 +7,7 @@ import com.example.Assignment2_LabApp.repository.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,9 @@ public class AssignmentService implements IAssignmentService{
 
     public void deleteAssignment(int id){
         Optional<Assignment> assignment = assignmentRepository.findById(id);
-        if(assignment.isPresent())
+        if(assignment.isPresent()) {
             assignmentRepository.delete(assignment.get());
+        }
     }
 
     @Override

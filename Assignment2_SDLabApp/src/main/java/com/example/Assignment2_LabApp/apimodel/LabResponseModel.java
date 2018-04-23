@@ -10,10 +10,7 @@ public class LabResponseModel {
 
     private int number;
 
-    //TODO figure out why json format for day is not correct
-
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "YYYY-MM-DD")
     private Date date;
 
     private String title;
