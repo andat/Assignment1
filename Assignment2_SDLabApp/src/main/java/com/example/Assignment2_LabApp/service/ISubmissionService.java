@@ -14,4 +14,5 @@ public interface ISubmissionService {
     public void deleteSubmission(int id);
     public List<Submission> getSubmissionsByAssignmentId(int assignmentId);
     public boolean checkValidSubmission(Submission submission, Date deadline);
+    public boolean checkMaxNoOfSubmissionsReached(Submission submission, int max);
 }

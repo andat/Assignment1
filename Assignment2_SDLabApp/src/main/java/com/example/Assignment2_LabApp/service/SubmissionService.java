@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @Service
 public class SubmissionService implements ISubmissionService {
+
     @Autowired
     private SubmissionRepository submissionRepository;
 
@@ -55,5 +56,16 @@ public class SubmissionService implements ISubmissionService {
             return false;
         else
             return true;
+    }
+
+    @Override
+    public boolean checkMaxNoOfSubmissionsReached(Submission s, int max) {
+        int assignmentId = s.getAssignment().getId();
+        int studentId = s.getStudent().getId();
+        int noOfSubmissions = submissionRepository.getSubmissionsByAssignmentIdAndStudentId(assignmentId, studentId)
+                                                  .size();
+        if(noOfSubmissions >= max)
+            return true;
+        return false;
     }
 }

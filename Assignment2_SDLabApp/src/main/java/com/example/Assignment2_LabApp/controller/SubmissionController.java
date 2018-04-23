@@ -29,6 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @RestController
 @RequestMapping("/submissions")
 public class SubmissionController {
+    private static int MAX_SUBMISSION_NO = 3;
 
     @Autowired
     private ISubmissionService submissionService;
@@ -62,9 +63,14 @@ public class SubmissionController {
         Date deadline = assignmentService.getAssignmentById(sub.getAssignment().getId()).getDeadline();
 
         if(submissionService.checkValidSubmission(sub, deadline)){
-            sub.setDate(new Date(System.currentTimeMillis()));
-            submissionService.addSubmission(sub);
-            return ResponseEntity.ok().body("New submission added.");
+            //check if new submission can be added
+            if(submissionService.checkMaxNoOfSubmissionsReached(sub, MAX_SUBMISSION_NO))
+                return ResponseEntity.badRequest().body("Maximum number of submissions reached.");
+            else{
+                sub.setDate(new Date(System.currentTimeMillis()));
+                submissionService.addSubmission(sub);
+                return ResponseEntity.ok().body("New submission added.");
+            }
         } else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Submission is not valid. Assignment deadline passed.");
 
