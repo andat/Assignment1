@@ -1,5 +1,6 @@
 package com.example.Assignment2_LabApp.service;
 
+import com.example.Assignment2_LabApp.apimodel.Role;
 import com.example.Assignment2_LabApp.model.User;
 import com.example.Assignment2_LabApp.repository.UserRepository;
 import com.example.Assignment2_LabApp.util.PasswordEncryptionUtil;
@@ -18,8 +19,17 @@ public class UserService implements IUserService{
     public boolean login(String username, String password) throws LoginException {
         User user = userRepository.getUserByUsername(username);
         if(user == null)
-            throw new LoginException("Incorrect username! The user does not exist.");
+            throw new LoginException("Invalid username.");
         else
             return PasswordEncryptionUtil.validatePassword(password, user.getPassword());
+    }
+
+    @Override
+    public Role getRole(String username) {
+        User user = userRepository.getUserByUsername(username);
+        if(user.isTeacher())
+            return Role.TEACHER;
+        else
+            return Role.STUDENT;
     }
 }

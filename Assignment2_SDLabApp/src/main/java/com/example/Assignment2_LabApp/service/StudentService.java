@@ -27,8 +27,8 @@ public class StudentService implements IStudentService{
         return result.orElse(null);
     }
 
-    public void addStudent(Student student){
-        student.setPassword(TokenGenerator.generateToken());
+    public void addStudent(Student student, String token){
+        student.setPassword(PasswordEncryptionUtil.encryptPasswordSHA256(token));
         studentRepository.save(student);
     }
 

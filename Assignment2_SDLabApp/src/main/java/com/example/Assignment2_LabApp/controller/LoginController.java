@@ -1,6 +1,7 @@
 package com.example.Assignment2_LabApp.controller;
 
 import com.example.Assignment2_LabApp.apimodel.LoginModel;
+import com.example.Assignment2_LabApp.apimodel.Role;
 import com.example.Assignment2_LabApp.model.User;
 import com.example.Assignment2_LabApp.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,14 @@ public class LoginController {
     @RequestMapping(method = POST, value = "/{username}")
     public ResponseEntity login(@Validated @RequestBody LoginModel l){
         try {
-            if(userService.login(l.getUsername(), l.getPassword()))
-                return ResponseEntity.ok("Login successful.");
+            if(userService.login(l.getUsername(), l.getPassword())){
+                Role role = userService.getRole(l.getUsername());
+                return ResponseEntity.ok(role);
+            }
             else
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials.");
         } catch (LoginException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-
-
     }
-
-
 }
