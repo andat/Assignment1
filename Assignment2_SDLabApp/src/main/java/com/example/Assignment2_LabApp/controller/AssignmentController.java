@@ -64,7 +64,6 @@ public class AssignmentController {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Assignment not found.");
     }
 
-    //TODO fix delete
     @RequestMapping(method = DELETE, value = "/{id}")
     public ResponseEntity deleteAssignment(@PathVariable int id){
         if(assignmentService.getAssignmentById(id) == null)
