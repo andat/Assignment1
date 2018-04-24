@@ -1,8 +1,8 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.apimodel.AssignmentRequestModel;
-import com.example.Assignment2_LabApp.apimodel.AssignmentResponseModel;
-import com.example.Assignment2_LabApp.model.Assignment;
+import com.example.Assignment2_LabApp.model.request.AssignmentRequestModel;
+import com.example.Assignment2_LabApp.model.response.AssignmentResponseModel;
+import com.example.Assignment2_LabApp.model.entity.Assignment;
 import com.example.Assignment2_LabApp.service.IAssignmentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

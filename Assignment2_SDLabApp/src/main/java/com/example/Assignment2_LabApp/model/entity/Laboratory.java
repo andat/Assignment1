@@ -1,15 +1,11 @@
-package com.example.Assignment2_LabApp.model;
+package com.example.Assignment2_LabApp.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import java.sql.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Laboratory {

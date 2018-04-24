@@ -1,16 +1,17 @@
-package com.example.Assignment2_LabApp.apimodel;
+package com.example.Assignment2_LabApp.model.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.sql.Date;
 
-public class LabResponseModel {
+public class LabRequestModel {
 
-    private int id;
-
+    @Min(1) @Max(14)
     private int number;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private String title;
@@ -18,14 +19,6 @@ public class LabResponseModel {
     private String curricula;
 
     private String description;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public int getNumber() {
         return number;

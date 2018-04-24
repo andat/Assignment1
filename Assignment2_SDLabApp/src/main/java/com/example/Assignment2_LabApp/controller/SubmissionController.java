@@ -1,15 +1,14 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.apimodel.SubmissionRequestModel;
-import com.example.Assignment2_LabApp.apimodel.SubmissionResponseModel;
-import com.example.Assignment2_LabApp.model.Submission;
+import com.example.Assignment2_LabApp.model.request.SubmissionRequestModel;
+import com.example.Assignment2_LabApp.model.response.SubmissionResponseModel;
+import com.example.Assignment2_LabApp.model.entity.Submission;
 import com.example.Assignment2_LabApp.service.IAssignmentService;
 import com.example.Assignment2_LabApp.service.ISubmissionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.model;
+package com.example.Assignment2_LabApp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

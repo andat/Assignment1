@@ -1,11 +1,10 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.apimodel.PasswordModel;
-import com.example.Assignment2_LabApp.apimodel.StudentRequestModel;
-import com.example.Assignment2_LabApp.apimodel.StudentResponseModel;
-import com.example.Assignment2_LabApp.model.Student;
+import com.example.Assignment2_LabApp.model.PasswordModel;
+import com.example.Assignment2_LabApp.model.request.StudentRequestModel;
+import com.example.Assignment2_LabApp.model.response.StudentResponseModel;
+import com.example.Assignment2_LabApp.model.entity.Student;
 import com.example.Assignment2_LabApp.service.IStudentService;
-import com.example.Assignment2_LabApp.service.IUserService;
 import com.example.Assignment2_LabApp.util.TokenGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;

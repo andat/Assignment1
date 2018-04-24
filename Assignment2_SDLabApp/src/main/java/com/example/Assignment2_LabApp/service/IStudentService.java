@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.service;
 
-import com.example.Assignment2_LabApp.model.Student;
+import com.example.Assignment2_LabApp.model.entity.Student;
 
 import java.util.List;
 

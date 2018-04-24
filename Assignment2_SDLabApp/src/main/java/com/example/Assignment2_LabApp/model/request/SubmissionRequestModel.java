@@ -1,8 +1,4 @@
-package com.example.Assignment2_LabApp.apimodel;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.sql.Date;
+package com.example.Assignment2_LabApp.model.request;
 
 public class SubmissionRequestModel {
 

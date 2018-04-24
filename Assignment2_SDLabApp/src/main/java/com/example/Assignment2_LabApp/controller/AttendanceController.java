@@ -1,8 +1,8 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.apimodel.AttendanceRequestModel;
-import com.example.Assignment2_LabApp.apimodel.AttendanceResponseModel;
-import com.example.Assignment2_LabApp.model.Attendance;
+import com.example.Assignment2_LabApp.model.request.AttendanceRequestModel;
+import com.example.Assignment2_LabApp.model.response.AttendanceResponseModel;
+import com.example.Assignment2_LabApp.model.entity.Attendance;
 import com.example.Assignment2_LabApp.service.IAttendanceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 

@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.apimodel;
+package com.example.Assignment2_LabApp.model.response;
 
 public class StudentResponseModel {
     private int id;

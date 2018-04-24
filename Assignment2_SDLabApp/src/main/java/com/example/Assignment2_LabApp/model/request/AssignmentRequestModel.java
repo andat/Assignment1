@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.apimodel;
+package com.example.Assignment2_LabApp.model.request;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

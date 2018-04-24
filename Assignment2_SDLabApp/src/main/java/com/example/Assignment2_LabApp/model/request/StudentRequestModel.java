@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.apimodel;
+package com.example.Assignment2_LabApp.model.request;
 
 import javax.validation.constraints.Email;
 

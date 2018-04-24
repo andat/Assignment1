@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.service;
 
-import com.example.Assignment2_LabApp.model.Submission;
+import com.example.Assignment2_LabApp.model.entity.Submission;
 
 import java.sql.Date;
 import java.util.List;

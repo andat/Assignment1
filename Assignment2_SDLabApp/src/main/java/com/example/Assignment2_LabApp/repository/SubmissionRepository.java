@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.repository;
 
-import com.example.Assignment2_LabApp.model.Submission;
+import com.example.Assignment2_LabApp.model.entity.Submission;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

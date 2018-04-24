@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.service;
 
-import com.example.Assignment2_LabApp.model.Laboratory;
+import com.example.Assignment2_LabApp.model.entity.Laboratory;
 import com.example.Assignment2_LabApp.repository.LabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

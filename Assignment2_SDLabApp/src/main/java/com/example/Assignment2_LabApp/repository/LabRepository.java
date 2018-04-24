@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.repository;
 
-import com.example.Assignment2_LabApp.model.Laboratory;
+import com.example.Assignment2_LabApp.model.entity.Laboratory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
