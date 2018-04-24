@@ -1,7 +1,7 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.model.LoginModel;
-import com.example.Assignment2_LabApp.model.Role;
+import com.example.Assignment2_LabApp.model.login.LoginModel;
+import com.example.Assignment2_LabApp.model.login.Role;
 import com.example.Assignment2_LabApp.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

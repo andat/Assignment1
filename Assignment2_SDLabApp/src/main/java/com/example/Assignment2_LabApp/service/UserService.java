@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.service;
 
-import com.example.Assignment2_LabApp.model.Role;
+import com.example.Assignment2_LabApp.model.login.Role;
 import com.example.Assignment2_LabApp.model.entity.User;
 import com.example.Assignment2_LabApp.repository.UserRepository;
 import com.example.Assignment2_LabApp.util.PasswordEncryptionUtil;

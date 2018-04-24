@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -51,12 +52,33 @@ public class StudentControllerTest {
         s.setEmail("student@gmail.com");
         List<Student> students = Arrays.asList(s);
 
-        given(studentService.getAllStudents()).willReturn(students);
+
+        //given(studentService.getAllStudents()).willReturn(students);
+        when(studentService.getAllStudents()).thenReturn(students);
 
         mvc.perform(get("http://localhost:8080/students")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].username", is(s.getUsername())));
+    }
+
+    @Test
+    public void whenGivenStudents_returnsStudentWithId1() throws Exception {
+        Student s = new Student();
+        s.setId(1);
+        s.setFullName("student");
+        s.setUsername("student");
+        s.setEmail("student@gmail.com");
+        List<Student> students = Arrays.asList(s);
+
+        int id = 1;
+        given(studentService.getStudentById(1)).willReturn(s);
+
+        mvc.perform(get("http://localhost:8080/students/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(s.getId())));
     }
 }

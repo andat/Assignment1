@@ -1,6 +1,6 @@
 package com.example.Assignment2_LabApp.controller;
 
-import com.example.Assignment2_LabApp.model.PasswordModel;
+import com.example.Assignment2_LabApp.model.login.PasswordModel;
 import com.example.Assignment2_LabApp.model.request.StudentRequestModel;
 import com.example.Assignment2_LabApp.model.response.StudentResponseModel;
 import com.example.Assignment2_LabApp.model.entity.Student;

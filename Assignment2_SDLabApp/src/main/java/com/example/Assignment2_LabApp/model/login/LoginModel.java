@@ -1,4 +1,4 @@
-package com.example.Assignment2_LabApp.model;
+package com.example.Assignment2_LabApp.model.login;
 
 import javax.validation.constraints.NotNull;
 
