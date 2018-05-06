@@ -62,6 +62,7 @@ public class AttendanceController {
         if(attendanceService.getAttendanceById(id) == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Attendance not found.");
         else {
+            modelMapper.getConfiguration().setAmbiguityIgnored(true);
             Attendance a = modelMapper.map(attendance, Attendance.class);
             a.setId(id);
             attendanceService.updateAttendance(a);

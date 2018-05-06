@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TeacherController">
+   <top>
+      <FlowPane prefHeight="70.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="CENTER" prefHeight="60.0" prefWidth="309.0" text="Software Design Laboratory Application" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets left="10.0" />
+               </opaqueInsets>
+               <FlowPane.margin>
+                  <Insets left="10.0" top="10.0" />
+               </FlowPane.margin>
+            </Label>
+         </children>
+      </FlowPane>
+   </top>
+   <left>
+      <VBox alignment="CENTER_LEFT" prefHeight="149.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+          <children>
+              <Button fx:id="studentsBtn" onAction="#studentsBtnClicked" prefHeight="25.0" prefWidth="112.0" text="Students" />
+              <Button fx:id="laboratoriesBtn" onAction="#laboratoriesBtnClicked" text="Laboratory classes" />
+              <Button fx:id="attendanceBtn" onAction="#attendanceBtnClicked" prefHeight="25.0" prefWidth="112.0" text="Attendance" />
+              <Button fx:id="assignmentsBtn" onAction="#assignmentsBtnClicked" prefHeight="25.0" prefWidth="112.0" text="Assignments" />
+              <Button fx:id="submissionsBtn" onAction="#submissionsBtnClicked" prefHeight="25.0" prefWidth="112.0" text="Submissions" />
+          </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </left>
+</BorderPane>
