@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -14,46 +16,28 @@ public class TeacherController {
     private Parent studentsView;
 
     @FXML
-    Button studentsBtn;
+    Button logOutBtn;
 
     @FXML
-    Button laboratoriesBtn;
+    Tab studentsTab;
 
     @FXML
-    Button attendanceBtn;
+    Tab labsTab;
 
     @FXML
-    Button assignmentsBtn;
+    Tab attendanceTab;
 
     @FXML
-    Button submissionsBtn;
+    Tab assignmentsTab;
 
     @FXML
-    SubScene centerScene;
+    Tab submissionsTab;
 
     @FXML
-    public void studentsBtnClicked() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TeacherView.fxml"));
-        this.studentsView = loader.load();
-    }
+    TabPane teacherTabPane;
 
     @FXML
-    public void laboratoriesBtnClicked(){
-
-    }
-
-    @FXML
-    public void attendanceBtnClicked(){
-
-    }
-
-    @FXML
-    public void assignmentsBtnClicked(){
-
-    }
-
-    @FXML
-    public void submissionsBtnClicked(){
+    public void logOutBtnClicked(){
 
     }
 }

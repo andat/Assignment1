@@ -20,7 +20,7 @@ public class SDLabClientApp extends Application {
         Parent root = loader.load();
 
         primaryStage.setTitle("SD Laboratory Application");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 900, 600));
         primaryStage.show();
     }
 }

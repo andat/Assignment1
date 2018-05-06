@@ -1,9 +1,13 @@
+package client;
+
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -11,35 +15,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class HttpClient implements IHttpClient{
+public class HttpClient{
+    private static String host = "http://localhost:8080";
 
-    @Override
-    public HttpResponse getRequest(String url) throws IOException{
+    public static String getRequest(String url) throws IOException{
             try(CloseableHttpClient client = HttpClients.createDefault()){
-                HttpGet httpGet = new HttpGet(url);
+                HttpGet httpGet = new HttpGet(host + url);
                 HttpResponse response = client.execute(httpGet);
 
-                //TODO comment out
-                System.out.println("GET - response code: " + response.getStatusLine().getStatusCode());
-
-                BufferedReader rd = new BufferedReader(
-                        new InputStreamReader(response.getEntity().getContent()));
-
-                StringBuffer result = new StringBuffer();
-                String line = "";
-                while ((line = rd.readLine()) != null) {
-                    result.append(line);
-                }
-
-                System.out.println(result);
-                return response;
+                ResponseHandler<String> responseHandler=new BasicResponseHandler();
+                String responseBody = client.execute(httpGet, responseHandler);
+                return responseBody;
             }
     }
 
-    @Override
-    public HttpResponse postRequest(String url, StringEntity body) throws IOException{
+    public static HttpResponse postRequest(String url, StringEntity body) throws IOException{
         try(CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPost httpPost = new HttpPost(url);
+            HttpPost httpPost = new HttpPost(host + url);
             httpPost.setEntity(body);
             HttpResponse response = client.execute(httpPost);
 
@@ -49,10 +41,9 @@ public class HttpClient implements IHttpClient{
         }
     }
 
-    @Override
-    public HttpResponse putRequest(String url, StringEntity body) throws IOException {
+    public static HttpResponse putRequest(String url, StringEntity body) throws IOException {
         try(CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpPut httpPut = new HttpPut(url);
+            HttpPut httpPut = new HttpPut(host + url);
             httpPut.setEntity(body);
             HttpResponse response = client.execute(httpPut);
 
@@ -61,14 +52,17 @@ public class HttpClient implements IHttpClient{
         }
     }
 
-    @Override
-    public HttpResponse deleteRequest(String url) throws IOException {
+
+    public static boolean deleteRequest(String url) throws IOException {
         try(CloseableHttpClient client = HttpClients.createDefault()) {
-            HttpDelete httpDelete = new HttpDelete(url);
+            HttpDelete httpDelete = new HttpDelete(host + url);
             HttpResponse response = client.execute(httpDelete);
 
             System.out.println("DELETE - response: " + response.getStatusLine());
-            return response;
+            if(response.getStatusLine().getStatusCode() == 200)
+                return true;
+            else
+                return false;
         }
     }
 }
