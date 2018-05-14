@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,7 @@ public class Assignment {
 
     @OneToMany(mappedBy="assignment")
     @JsonBackReference
-    private Set<Submission> submissions;
+    private List<Submission> submissions;
 
     public int getId() {
         return id;
@@ -72,11 +73,11 @@ public class Assignment {
         this.laboratory = laboratory;
     }
 
-    public Set<Submission> getSubmissions() {
+    public List<Submission> getSubmissions() {
         return submissions;
     }
 
-    public void setSubmissions(Set<Submission> submissions) {
+    public void setSubmissions(List<Submission> submissions) {
         this.submissions = submissions;
     }
 }

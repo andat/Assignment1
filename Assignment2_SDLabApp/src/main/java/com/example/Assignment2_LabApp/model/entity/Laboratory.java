@@ -29,7 +29,7 @@ public class Laboratory {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy="laboratory", orphanRemoval = true)//cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Assignment> assignments;
 
@@ -91,5 +91,14 @@ public class Laboratory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setAssignments(List<Assignment> assignments) {
+        this.assignments.clear();
+        this.assignments.addAll(assignments);
+    }
+
+    public void setAttendance(List<Attendance> attendance) {
+        this.attendance = attendance;
     }
 }

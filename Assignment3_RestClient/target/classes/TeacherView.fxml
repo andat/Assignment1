@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -41,22 +40,22 @@
             </Tab>
           <Tab fx:id="labsTab" text="Laboratory classes">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include fx:id="labView" source="LabTableView.fxml" />
             </content>
           </Tab>
             <Tab fx:id="attendanceTab" text="Attendance">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <fx:include fx:id="attendanceView" source="AttendanceTableView.fxml" />
               </content>
             </Tab>
             <Tab fx:id="assignmentsTab" text="Assignments">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <fx:include fx:id="assignView" source="AssignmentsTableView.fxml" />
               </content>
             </Tab>
             <Tab fx:id="submissionsTab" text="Submissions">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <fx:include fx:id="submissionView" source="SubmissionTableView.fxml" />
               </content>
             </Tab>
         </tabs>

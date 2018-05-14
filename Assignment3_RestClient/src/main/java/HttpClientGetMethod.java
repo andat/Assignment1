@@ -1,13 +1,6 @@
-import controller.StudentTableController;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import service.StudentService;
+import consumer.StudentConsumer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class HttpClientGetMethod {
 
@@ -30,7 +23,7 @@ public class HttpClientGetMethod {
 //
 //            System.out.println(result);
 //        }
-        StudentService service = new StudentService();
+        StudentConsumer service = new StudentConsumer();
         service.getAllStudents();
     }
 }

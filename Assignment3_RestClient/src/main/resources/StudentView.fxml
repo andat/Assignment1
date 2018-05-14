@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.StudentController"
-      prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentController">
     <children>
         <HBox spacing="20.0">
             <children>
@@ -18,13 +17,15 @@
                     <HBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
                 </Label>
+            <Button fx:id="passBtn" mnemonicParsing="false" text="Change Password">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
                 <Button fx:id="logOutBtn" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#logOutBtnClicked" prefHeight="24.0" prefWidth="57.0" text="Log out" textAlignment="CENTER">
                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Button>
             </children>
@@ -39,17 +40,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
-                <Tab fx:id="attendanceTab" text="Attendance">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
                 <Tab fx:id="assignmentsTab" text="Assignments">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
-                <Tab fx:id="submissionsTab" text="Add submission">
+                <Tab fx:id="attendanceTab" text="Attendance">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
@@ -59,7 +55,6 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" />
             </opaqueInsets>
         </TabPane>
-        <HBox prefHeight="60.0" prefWidth="459.0" />
     </children>
 
 </VBox>

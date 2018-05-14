@@ -29,26 +29,34 @@ public class HttpClient{
             }
     }
 
-    public static HttpResponse postRequest(String url, StringEntity body) throws IOException{
+    public static boolean postRequest(String url, StringEntity body) throws IOException{
         try(CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(host + url);
             httpPost.setEntity(body);
+            httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPost);
 
             //TODO comment out
             System.out.println("POST - response code: " + response.getStatusLine().getStatusCode());
-            return response;
+            if(response.getStatusLine().getStatusCode() == 200)
+                return true;
+            else
+                return false;
         }
     }
 
-    public static HttpResponse putRequest(String url, StringEntity body) throws IOException {
+    public static boolean putRequest(String url, StringEntity body) throws IOException {
         try(CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPut httpPut = new HttpPut(host + url);
             httpPut.setEntity(body);
+            httpPut.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPut);
 
             System.out.println("PUT - response: " + response.getStatusLine());
-            return response;
+            if(response.getStatusLine().getStatusCode() == 200)
+                return true;
+            else
+                return false;
         }
     }
 

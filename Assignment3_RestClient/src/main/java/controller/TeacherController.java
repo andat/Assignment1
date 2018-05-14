@@ -40,4 +40,26 @@ public class TeacherController {
     public void logOutBtnClicked(){
 
     }
+
+    public void studentsTabSelected(){
+    }
+
+    public void assignmentsTabSelected(){
+
+    }
+
+    public void labsTabSelected() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LabTableView.fxml"));
+        loader.load();
+        LabTableController ctrl = loader.getController();
+        ctrl.refreshTable();
+    }
+
+    public void attendanceTabSelected(){
+
+    }
+
+    public void submissionTabSelected(){
+
+    }
 }

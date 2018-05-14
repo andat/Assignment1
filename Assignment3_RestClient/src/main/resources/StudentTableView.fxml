@@ -15,46 +15,44 @@
 
 <VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentTableController">
    <children>
-      <TableView fx:id="studentTable" editable="true" prefHeight="369.0" prefWidth="580.0">
+      <TableView fx:id="studentTable" editable="true" onMouseClicked="#rowSelected" prefHeight="369.0" prefWidth="580.0">
         <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
         <columns>
-            <TableColumn fx:id="usernameCol" onEditCommit="#editUsernameCell" prefWidth="75.0" text="Username">
+            <TableColumn fx:id="usernameCol" prefWidth="75.0" text="Username">
                 <cellValueFactory>
                     <PropertyValueFactory property="username" />
                 </cellValueFactory>
             </TableColumn>
-          <TableColumn fx:id="nameCol" onEditCommit="#editFullNameCell" prefWidth="75.0" text="Full name">
+          <TableColumn fx:id="nameCol" prefWidth="75.0" text="Full name">
             <cellValueFactory>
                 <PropertyValueFactory property="fullName" />
             </cellValueFactory>
           </TableColumn>
-          <TableColumn fx:id="emailCol" onEditCommit="#editEmailCell" prefWidth="75.0" text="E-mail">
+          <TableColumn fx:id="emailCol" prefWidth="75.0" text="E-mail">
               <cellValueFactory>
                   <PropertyValueFactory property="email" />
               </cellValueFactory>
           </TableColumn>
-          <TableColumn fx:id="groupCol" onEditCommit="#editGroupCell" prefWidth="75.0" text="Group">
+          <TableColumn fx:id="groupCol" prefWidth="75.0" text="Group">
               <cellValueFactory>
                   <PropertyValueFactory property="groupName" />
               </cellValueFactory>
           </TableColumn>
-          <TableColumn fx:id="hobbyCol" onEditCommit="#editHobbyCell" prefWidth="75.0" text="Hobby">
+          <TableColumn fx:id="hobbyCol" prefWidth="75.0" text="Hobby">
             <cellValueFactory>
                 <PropertyValueFactory property="hobby" />
             </cellValueFactory>
           </TableColumn>
         </columns>
+         <VBox.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
       </TableView>
       <HBox spacing="30.0">
          <children>
-            <Button fx:id="viewStudentBtn" mnemonicParsing="false" onAction="#viewBtnClicked" text="View">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </Button>
-            <Button fx:id="editStudentBtn" alignment="CENTER" mnemonicParsing="false" onAction="#editBtnClicked" text="Edit">
+            <Button fx:id="viewStudentBtn" mnemonicParsing="false" onAction="#viewBtnClicked" text="View all">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -91,11 +89,6 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="addStudentBtn" alignment="CENTER" mnemonicParsing="false" onAction="#addBtnClicked" text=" Add student" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Button>
             <TextField fx:id="hobbyField" promptText="hobby" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -106,6 +99,15 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
             </ComboBox>
+            <HBox prefHeight="37.0" prefWidth="290.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="editStudentBtn" alignment="CENTER" mnemonicParsing="false" onAction="#editBtnClicked" text="Edit" />
+                  <Button fx:id="addStudentBtn" alignment="CENTER" mnemonicParsing="false" onAction="#addBtnClicked" text=" Add student" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

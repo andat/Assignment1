@@ -3,16 +3,22 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.Student;
-import service.StudentService;
-import serviceContracts.IStudentService;
+import consumer.StudentConsumer;
+import consumerContracts.IStudentConsumer;
+import model.request.StudentRequestModel;
 
-import java.util.List;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class StudentTableController {
-    private IStudentService studentService;
+public class StudentTableController implements Initializable{
+
+    private IStudentConsumer studentConsumer;
 
     @FXML
     TableView<Student> studentTable;
@@ -32,8 +38,29 @@ public class StudentTableController {
     @FXML
     TableColumn<Student, String> hobbyCol;
 
+    @FXML
+    ComboBox groupComboBox;
+
+    @FXML
+    TextField emailField;
+
+    @FXML
+    TextField nameField;
+
+    @FXML
+    TextField userField;
+
+    @FXML
+    TextField hobbyField;
+
     public StudentTableController(){
-        this.studentService = new StudentService();
+        this.studentConsumer = new StudentConsumer();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> groups = FXCollections.observableArrayList("30431", "30432", "30433", "30434");
+        this.groupComboBox.setItems(groups);
     }
 
     @FXML
@@ -43,49 +70,68 @@ public class StudentTableController {
 
     @FXML
     public void editBtnClicked(){
-
+        StudentRequestModel stud = getStudentFromFields();
+        int id = studentTable.getSelectionModel().getSelectedItem().getId();
+        studentConsumer.editStudent(stud, id);
+        //System.out.println(id);
+        refreshTable();
+        clearFields();
     }
 
     @FXML
     public void addBtnClicked(){
+        studentConsumer.addStudent(getStudentFromFields());
+        refreshTable();
+        clearFields();
+    }
 
+    private void clearFields(){
+        nameField.clear();
+        emailField.clear();
+        userField.clear();
+        hobbyField.clear();
+    }
+
+    private StudentRequestModel getStudentFromFields(){
+        String name = nameField.getText();
+        String email = emailField.getText();
+        String username = userField.getText();
+        String hobby = hobbyField.getText();
+        String group = (String) groupComboBox.getValue();
+
+        //TODO validate fields
+        return new StudentRequestModel(username, name, email, group, hobby);
+    }
+
+    @FXML
+    public void rowSelected() {
+        Student selected = studentTable.getSelectionModel().getSelectedItem();
+
+        if (selected != null) {
+            String name = selected.getFullName();
+            String group = selected.getGroupName();
+            String username = selected.getUsername();
+            String email = selected.getEmail();
+            String hobby = selected.getHobby();
+
+            this.nameField.setText(name);
+            this.groupComboBox.setValue(group);
+            this.userField.setText(username);
+            this.emailField.setText(email);
+            this.hobbyField.setText(hobby);
+        }
     }
 
     @FXML
     public void deleteBtnClicked(){
         Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
         if(selectedStudent != null){
-            studentService.deleteStudent(selectedStudent.getId());
+            studentConsumer.deleteStudent(selectedStudent.getId());
         }
         refreshTable();
     }
 
     private void refreshTable(){
-        studentTable.setItems(FXCollections.observableArrayList(studentService.getAllStudents()));
-    }
-
-    @FXML
-    public void editUsernameCell(){
-
-    }
-
-    @FXML
-    public void editFullNameCell(){
-
-    }
-
-    @FXML
-    public void editEmailCell(){
-
-    }
-
-    @FXML
-    public void editGroupCell(){
-
-    }
-
-    @FXML
-    public void editHobbyCell(){
-
+        studentTable.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents()));
     }
 }

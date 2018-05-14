@@ -56,7 +56,7 @@ public class StudentController {
     }
 
     @RequestMapping(method = PUT, value = "/{id}")
-    public ResponseEntity updateStudent(@RequestBody StudentRequestModel student, int id){
+    public ResponseEntity updateStudent(@RequestBody StudentRequestModel student, @PathVariable int id){
         Student oldStud = studentService.getStudentById(id);
         if(oldStud != null) {
             Student newStud= modelMapper.map(student, Student.class);
