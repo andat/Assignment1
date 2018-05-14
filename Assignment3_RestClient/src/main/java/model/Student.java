@@ -60,4 +60,8 @@ public class Student {
     public void setHobby(String hobby) {
         this.hobby = hobby;
     }
+
+    public String toString(){
+        return "username: " + username + " name: " + fullName + " group: " + groupName;
+    }
 }

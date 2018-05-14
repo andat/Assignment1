@@ -29,6 +29,18 @@ public class SubmissionConsumer implements ISubmissionConsumer {
         return submissions;
     }
 
+    @Override
+    public boolean gradeSubmission(int id, int grade) {
+        boolean graded = false;
+        String url = "/submissions/" + id + "/" + grade;
+        try{
+            graded = HttpClient.putRequest(url);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return graded;
+    }
+
     public boolean addSubmission(SubmissionRequestModel sub){
         boolean added = false;
         String url = "/submissions";

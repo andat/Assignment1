@@ -3,19 +3,23 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import model.Submission;
 import consumer.SubmissionConsumer;
 import consumerContracts.ISubmissionConsumer;
 
 public class SubmissionController {
 
-    private ISubmissionConsumer submissionService;
+    private ISubmissionConsumer submissionConsumer;
 
     @FXML
-    TableView submissionTable;
+    TableView<Submission> submissionTable;
+
+    @FXML
+    TextField gradeField;
 
     public SubmissionController(){
-        this.submissionService = new SubmissionConsumer();
+        this.submissionConsumer = new SubmissionConsumer();
     }
 
     @FXML
@@ -24,24 +28,31 @@ public class SubmissionController {
     }
 
     @FXML
-    public void editBtnClicked(){
-
-    }
-
-    @FXML
     public void deleteBtnClicked(){
         Submission s = (Submission) submissionTable.getSelectionModel().getSelectedItem();
         if(s != null)
-            submissionService.deleteSubmission(s.getId());
+            submissionConsumer.deleteSubmission(s.getId());
+        refreshTable();
+    }
+
+
+    @FXML
+    public void gradeBtnClicked(){
+        int id  = submissionTable.getSelectionModel().getSelectedItem().getId();
+        int grade = Integer.parseInt(gradeField.getText());
+        if(grade >= 1 && grade <= 10){
+            submissionConsumer.gradeSubmission(id, grade);
+        }
         refreshTable();
     }
 
     @FXML
-    public void addBtnClicked(){
-
+    public void rowSelected(){
+        int grade = submissionTable.getSelectionModel().getSelectedItem().getGrade();
+        gradeField.setText(Integer.toString(grade));
     }
 
     private void refreshTable(){
-        submissionTable.setItems(FXCollections.observableArrayList(submissionService.getAllSubmissions()));
+        submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getAllSubmissions()));
     }
 }

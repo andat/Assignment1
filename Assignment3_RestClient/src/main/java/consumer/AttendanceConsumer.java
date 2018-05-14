@@ -42,14 +42,40 @@ public class AttendanceConsumer implements IAttendanceConsumer {
     }
 
     @Override
+    public boolean editAttendance(AttendanceRequestModel att, int id) {
+        boolean added = false;
+        String url = "/attendances/" + id;
+        try{
+            String body = mapper.writeValueAsString(att);
+            added = HttpClient.putRequest(url, new StringEntity(body));
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        return added;
+    }
+
+    @Override
     public boolean deleteAttendance(int id) {
        boolean deleted = false;
-       String url = "/attendance/" + id;
+       String url = "/attendances/" + id;
        try {
            deleted = HttpClient.deleteRequest(url);
        } catch (IOException e) {
            e.printStackTrace();
        }
         return deleted;
+    }
+
+    @Override
+    public List<Attendance> getAttendanceByLabId(int labId) {
+        String url = "/attendances/labs/" + labId;
+        List<Attendance> attendance = new ArrayList<>();
+        try{
+            String response = HttpClient.getRequest(url);
+            attendance = Arrays.asList(mapper.readValue(response, Attendance[].class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return attendance;
     }
 }

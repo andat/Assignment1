@@ -62,4 +62,8 @@ public class Laboratory {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String toString(){
+        return "title: " + title + " date: " + date + " number: " + number;
+    }
 }

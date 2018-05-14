@@ -60,6 +60,20 @@ public class HttpClient{
         }
     }
 
+    public static boolean putRequest(String url) throws IOException {
+        try(CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPut httpPut = new HttpPut(host + url);
+            httpPut.setHeader("Content-type", "application/json");
+            HttpResponse response = client.execute(httpPut);
+
+            System.out.println("PUT - response: " + response.getStatusLine());
+            if(response.getStatusLine().getStatusCode() == 200)
+                return true;
+            else
+                return false;
+        }
+    }
+
 
     public static boolean deleteRequest(String url) throws IOException {
         try(CloseableHttpClient client = HttpClients.createDefault()) {
