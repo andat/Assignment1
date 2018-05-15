@@ -30,6 +30,19 @@ public class SubmissionConsumer implements ISubmissionConsumer {
     }
 
     @Override
+    public List<Submission> getSubmissionByAssignmentId(int assignId) {
+        String url = "/submissions/assignments/" + assignId;
+        List<Submission> submissions = new ArrayList<>();
+        try{
+            String response = HttpClient.getRequest(url);
+            submissions = Arrays.asList(objectMapper.readValue(response, Submission[].class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return submissions;
+    }
+
+    @Override
     public boolean gradeSubmission(int id, int grade) {
         boolean graded = false;
         String url = "/submissions/" + id + "/" + grade;

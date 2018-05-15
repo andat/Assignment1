@@ -2,6 +2,8 @@ package com.example.Assignment2_LabApp.model.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -29,7 +31,7 @@ public class Laboratory {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="laboratory", orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonBackReference
     private List<Assignment> assignments;
 

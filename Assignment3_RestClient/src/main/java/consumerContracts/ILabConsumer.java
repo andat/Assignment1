@@ -8,6 +8,7 @@ import java.util.List;
 public interface ILabConsumer {
     public List<Laboratory> getAllLaboratories();
     public List<Laboratory> getFilteredLaboratories(String keyword);
+    public Laboratory getLaboratoryById(int id);
     public boolean addLaboratory(LabRequestModel lab);
     public boolean editLab(LabRequestModel lab, int id);
     public boolean deleteLab(int id);

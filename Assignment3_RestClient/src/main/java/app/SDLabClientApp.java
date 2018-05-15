@@ -16,7 +16,8 @@ public class SDLabClientApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/TeacherView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudentView.fxml"));
+        //FXMLLoader loader = new FXMLLoader(getClass().getResource("/LoginView.fxml"));
         Parent root = loader.load();
 
         primaryStage.setTitle("SD Laboratory Application");

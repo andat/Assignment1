@@ -54,6 +54,7 @@ public class LabTableController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         this.numberComboBox.setItems(numbers);
         DateUtil.setupDatePicker(datePicker);
+        refreshTable();
     }
 
     @FXML

@@ -52,4 +52,9 @@ public class Assignment {
     public void setLaboratoryNumber(int laboratoryNumber) {
         this.laboratoryNumber = laboratoryNumber;
     }
+
+    @Override
+    public String toString() {
+        return name + " deadline: " + deadline + "lab number: " + laboratoryNumber;
+    }
 }

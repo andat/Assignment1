@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SubmissionController">
+<VBox prefHeight="474.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SubmissionController">
     <children>
         <TableView fx:id="submissionTable" editable="true" onMouseClicked="#rowSelected" prefHeight="369.0" prefWidth="580.0">
             <columnResizePolicy>
@@ -49,13 +50,14 @@
                 <Insets left="10.0" right="10.0" top="10.0" />
             </VBox.margin>
         </TableView>
-      <GridPane>
+      <GridPane prefWidth="580.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -93,6 +95,18 @@
                <GridPane.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </GridPane.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
+               <children>
+                  <ComboBox fx:id="assignmentComboBox" onMouseClicked="#updateAssignComboBox" prefWidth="150.0" promptText="select assignment" />
+                  <Button fx:id="gradesBtn" mnemonicParsing="false" onAction="#viewGradesForAssignment" text="View grades" />
+               </children>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+               </GridPane.margin>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
          </children>
          <VBox.margin>

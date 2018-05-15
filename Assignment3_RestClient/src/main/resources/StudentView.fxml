@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentController">
     <children>
         <HBox spacing="20.0">
             <children>
@@ -33,18 +33,23 @@
                 <Insets />
             </VBox.margin>
         </HBox>
-        <TabPane fx:id="teacherTabPane" prefHeight="200.0" prefWidth="459.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="studentTabPane" prefHeight="550.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="labsTab" text="Laboratory classes">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="labView" source="LabStudentView.fxml" />
                     </content>
                 </Tab>
                 <Tab fx:id="assignmentsTab" text="Assignments">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="assignmentsView" source="AssignmentStudentView.fxml" />
                     </content>
                 </Tab>
+            <Tab text="Submissions">
+                <content>
+                    <fx:include fx:id="submissionsView" source="SubmissionsStudentView.fxml" />
+                </content>
+            </Tab>
                 <Tab fx:id="attendanceTab" text="Attendance">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

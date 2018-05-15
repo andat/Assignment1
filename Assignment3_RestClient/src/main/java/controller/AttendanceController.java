@@ -55,6 +55,7 @@ public class AttendanceController implements Initializable{
         this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
         this.labComboBox1.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
         this.studentComboBox.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents()));
+        refreshTable();
     }
 
     @FXML
@@ -77,9 +78,12 @@ public class AttendanceController implements Initializable{
     @FXML
     public void editBtnClicked(){
         AttendanceRequestModel att = getAttendanceFromFields();
-        int id = attendanceTable.getSelectionModel().getSelectedItem().getId();
-        attendanceConsumer.editAttendance(att, id);
-        refreshTable();
+        Attendance a = attendanceTable.getSelectionModel().getSelectedItem();
+        if(a != null){
+            int id = a.getId();
+            attendanceConsumer.editAttendance(att, id);
+            refreshTable();
+        }
     }
 
     @FXML

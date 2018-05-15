@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="479.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SubmissionsStudentViewController">
+    <children>
+    <TableView fx:id="submissionTable" editable="true" prefHeight="369.0" prefWidth="580.0">
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+        </columnResizePolicy>
+        <columns>
+            <TableColumn fx:id="nameCol" prefWidth="75.0" text="Assignment name">
+                <cellValueFactory>
+                    <PropertyValueFactory property="assignmentName" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="userCol" prefWidth="75.0" text="Student username">
+                <cellValueFactory>
+                    <PropertyValueFactory property="studentUsername" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="gradeCol" prefWidth="75.0" text="Grade">
+                <cellValueFactory>
+                    <PropertyValueFactory property="grade" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date">
+                <cellValueFactory>
+                    <PropertyValueFactory property="date" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="descriptionCol" prefWidth="75.0" text="Description">
+                <cellValueFactory>
+                    <PropertyValueFactory property="description" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+        <VBox.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+        </VBox.margin>
+    </TableView>
+    <GridPane prefHeight="85.0" prefWidth="580.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="290.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="290.0" minWidth="10.0" prefWidth="290.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                <children>
+                    <Button fx:id="viewBtn" mnemonicParsing="false" onAction="#viewBtnClicked" text="View all">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Button>
+                    <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteBtnClicked" text="Delete">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                    </Button>
+                </children>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+               <children>
+                    <ComboBox fx:id="assignmentComboBox" onMouseClicked="#updateAssignComboBox" prefWidth="150.0" promptText="select assignment">
+                     <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                     </HBox.margin></ComboBox>
+                  <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitBtnClicked" text="Submit">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                </GridPane.margin>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+            </HBox>
+            <TextArea fx:id="descriptionArea" prefHeight="200.0" prefWidth="200.0" promptText="description" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+               </GridPane.margin>
+            </TextArea>
+        </children>
+        <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        </VBox.margin>
+    </GridPane>
+    </children>
+</VBox>

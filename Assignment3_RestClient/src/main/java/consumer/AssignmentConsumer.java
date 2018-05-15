@@ -28,6 +28,20 @@ public class AssignmentConsumer implements IAssignmentConsumer {
         return assignmentList;
     }
 
+    @Override
+    public List<Assignment> getAssignmentsByLabId(int labId) {
+        String url = "/assignments/labs/" + labId;
+        List<Assignment> assignmentList = null;
+        try{
+            String response = HttpClient.getRequest(url);
+            Assignment[] assignments = objectMapper.readValue(response, Assignment[].class);
+            assignmentList = Arrays.asList(assignments);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return assignmentList;
+    }
+
     public boolean addAssignment(AssignmentRequestModel assign){
         boolean added = false;
         String url = "/assignments";
@@ -41,9 +55,22 @@ public class AssignmentConsumer implements IAssignmentConsumer {
     }
 
     @Override
+    public boolean editAssignment(AssignmentRequestModel a, int id) {
+        boolean edited = false;
+        String url = "/assignments/" + id;
+        try{
+            String body = objectMapper.writeValueAsString(a);
+            edited = HttpClient.putRequest(url, new StringEntity(body));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return edited;
+    }
+
+    @Override
     public boolean deleteAssignment(int id) {
         boolean deleted = false;
-        String url = "assignments/" + id;
+        String url = "/assignments/" + id;
         try{
             deleted = HttpClient.deleteRequest(url);
         } catch (IOException e) {

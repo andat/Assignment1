@@ -28,6 +28,12 @@ public class LabConsumer implements ILabConsumer {
         return getLaboratories(url);
     }
 
+    @Override
+    public Laboratory getLaboratoryById(int id) {
+        String url = "/laboratories/" + id;
+        return getLaboratories(url).get(0);
+    }
+
     private List<Laboratory> getLaboratories(String url){
         List<Laboratory> labs = new ArrayList<>();
         try{

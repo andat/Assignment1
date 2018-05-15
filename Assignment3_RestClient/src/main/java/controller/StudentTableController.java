@@ -61,6 +61,7 @@ public class StudentTableController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> groups = FXCollections.observableArrayList("30431", "30432", "30433", "30434");
         this.groupComboBox.setItems(groups);
+        refreshTable();
     }
 
     @FXML
