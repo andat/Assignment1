@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.security.auth.login.LoginException;
+import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -22,8 +23,9 @@ public class LoginController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(method = POST, value = "/{username}")
+    @RequestMapping(method = POST)
     public ResponseEntity login(@Validated @RequestBody LoginModel l){
+        System.out.println(l);
         try {
             if(userService.login(l.getUsername(), l.getPassword())){
                 Role role = userService.getRole(l.getUsername());

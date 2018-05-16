@@ -2,14 +2,15 @@ package consumerContracts;
 
 import model.Laboratory;
 import model.request.LabRequestModel;
+import model.request.LoginModel;
 
 import java.util.List;
 
 public interface ILabConsumer {
-    public List<Laboratory> getAllLaboratories();
-    public List<Laboratory> getFilteredLaboratories(String keyword);
-    public Laboratory getLaboratoryById(int id);
-    public boolean addLaboratory(LabRequestModel lab);
-    public boolean editLab(LabRequestModel lab, int id);
-    public boolean deleteLab(int id);
+    public List<Laboratory> getAllLaboratories(LoginModel credentials);
+    public List<Laboratory> getFilteredLaboratories(String keyword, LoginModel credentials);
+    public Laboratory getLaboratoryById(int id, LoginModel credentials);
+    public boolean addLaboratory(LabRequestModel lab, LoginModel credentials);
+    public boolean editLab(LabRequestModel lab, int id, LoginModel credentials);
+    public boolean deleteLab(int id, LoginModel credentials);
 }

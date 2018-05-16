@@ -3,13 +3,14 @@ package consumerContracts;
 import model.Attendance;
 import model.Laboratory;
 import model.request.AttendanceRequestModel;
+import model.request.LoginModel;
 
 import java.util.List;
 
 public interface IAttendanceConsumer {
-    public List<Attendance> getAllAttendance();
-    public boolean addAttendance(AttendanceRequestModel att);
-    public boolean editAttendance(AttendanceRequestModel att, int id);
-    public boolean deleteAttendance(int id);
-    public List<Attendance> getAttendanceByLabId(int labId);
+    public List<Attendance> getAllAttendance(LoginModel credentials);
+    public boolean addAttendance(AttendanceRequestModel att, LoginModel credentials);
+    public boolean editAttendance(AttendanceRequestModel att, int id, LoginModel credentials);
+    public boolean deleteAttendance(int id, LoginModel credentials);
+    public List<Attendance> getAttendanceByLabId(int labId, LoginModel credentials);
 }

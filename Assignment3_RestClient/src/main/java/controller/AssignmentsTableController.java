@@ -13,6 +13,7 @@ import consumer.AssignmentConsumer;
 import javafx.scene.control.TableView;
 import model.Laboratory;
 import model.request.AssignmentRequestModel;
+import model.request.LoginModel;
 import util.DateUtil;
 import consumerContracts.IAssignmentConsumer;
 
@@ -25,6 +26,8 @@ public class AssignmentsTableController implements Initializable{
     private IAssignmentConsumer assignmentConsumer;
 
     private ILabConsumer labConsumer;
+
+    private LoginModel credentials;
 
     @FXML
     TableView assignmentTable;
@@ -50,7 +53,7 @@ public class AssignmentsTableController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DateUtil.setupDatePicker(deadlinePicker);
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
         refreshTable();
     }
 
@@ -64,7 +67,7 @@ public class AssignmentsTableController implements Initializable{
         AssignmentRequestModel a = getAssignmentFromFields();
         Assignment selAssignment = (Assignment) assignmentTable.getSelectionModel().getSelectedItem();
         if(selAssignment != null){
-            assignmentConsumer.editAssignment(a, selAssignment.getId());
+            assignmentConsumer.editAssignment(a, selAssignment.getId(), credentials);
         }
         refreshTable();
     }
@@ -73,7 +76,7 @@ public class AssignmentsTableController implements Initializable{
     public void deleteBtnClicked(){
         Assignment selectedAssignment = (Assignment) assignmentTable.getSelectionModel().getSelectedItem();
         if(selectedAssignment != null){
-            assignmentConsumer.deleteAssignment(selectedAssignment.getId());
+            assignmentConsumer.deleteAssignment(selectedAssignment.getId(), credentials);
             //System.out.println(selectedAssignment.getId());
         }
         refreshTable();
@@ -82,13 +85,13 @@ public class AssignmentsTableController implements Initializable{
     @FXML
     public void addBtnClicked(){
         AssignmentRequestModel a = getAssignmentFromFields();
-        this.assignmentConsumer.addAssignment(a);
+        this.assignmentConsumer.addAssignment(a, credentials);
         refreshTable();
         clearFields();
     }
 
     private void refreshTable(){
-        assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments()));
+        assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
     }
 
     private AssignmentRequestModel getAssignmentFromFields(){
@@ -108,7 +111,7 @@ public class AssignmentsTableController implements Initializable{
 
     @FXML
     public void updateLabComboBox(){
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
     }
 
     @FXML
@@ -128,7 +131,11 @@ public class AssignmentsTableController implements Initializable{
         Laboratory selLab = labComboBox.getValue();
         if(selLab != null){
             int labId = selLab.getId();
-            this.assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAssignmentsByLabId(labId)));
+            this.assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAssignmentsByLabId(labId, credentials)));
         }
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }

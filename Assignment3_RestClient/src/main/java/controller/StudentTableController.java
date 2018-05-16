@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import model.Student;
 import consumer.StudentConsumer;
 import consumerContracts.IStudentConsumer;
+import model.request.LoginModel;
 import model.request.StudentRequestModel;
 
 import java.net.URL;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 public class StudentTableController implements Initializable{
 
     private IStudentConsumer studentConsumer;
+    private LoginModel credentials;
 
     @FXML
     TableView<Student> studentTable;
@@ -73,7 +75,7 @@ public class StudentTableController implements Initializable{
     public void editBtnClicked(){
         StudentRequestModel stud = getStudentFromFields();
         int id = studentTable.getSelectionModel().getSelectedItem().getId();
-        studentConsumer.editStudent(stud, id);
+        studentConsumer.editStudent(stud, id, credentials);
         //System.out.println(id);
         refreshTable();
         clearFields();
@@ -81,7 +83,7 @@ public class StudentTableController implements Initializable{
 
     @FXML
     public void addBtnClicked(){
-        studentConsumer.addStudent(getStudentFromFields());
+        studentConsumer.addStudent(getStudentFromFields(), credentials);
         refreshTable();
         clearFields();
     }
@@ -127,12 +129,16 @@ public class StudentTableController implements Initializable{
     public void deleteBtnClicked(){
         Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
         if(selectedStudent != null){
-            studentConsumer.deleteStudent(selectedStudent.getId());
+            studentConsumer.deleteStudent(selectedStudent.getId(), credentials);
         }
         refreshTable();
     }
 
     private void refreshTable(){
-        studentTable.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents()));
+        studentTable.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents(credentials)));
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }

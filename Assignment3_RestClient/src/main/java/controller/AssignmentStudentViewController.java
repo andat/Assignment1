@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import model.Laboratory;
+import model.request.LoginModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,8 @@ public class AssignmentStudentViewController implements Initializable{
     private IAssignmentConsumer assignmentConsumer;
 
     private ILabConsumer labConsumer;
+
+    private LoginModel credentials;
 
     @FXML
     TableView assignmentTable;
@@ -32,7 +35,7 @@ public class AssignmentStudentViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
         refreshTable();
     }
 
@@ -42,12 +45,12 @@ public class AssignmentStudentViewController implements Initializable{
     }
 
     private void refreshTable(){
-        assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments()));
+        assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
     }
 
     @FXML
     public void updateLabComboBox(){
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
     }
 
     @FXML
@@ -55,7 +58,11 @@ public class AssignmentStudentViewController implements Initializable{
         Laboratory selLab = labComboBox.getValue();
         if(selLab != null){
             int labId = selLab.getId();
-            this.assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAssignmentsByLabId(labId)));
+            this.assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAssignmentsByLabId(labId, credentials)));
         }
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }

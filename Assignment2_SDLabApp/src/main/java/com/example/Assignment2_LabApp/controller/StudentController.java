@@ -52,7 +52,7 @@ public class StudentController {
         String token = TokenGenerator.generateToken();
         studentService.addStudent(stud, token);
         //TODO change token print
-        return ResponseEntity.ok("New student added. Token is " + token);
+        return ResponseEntity.ok(token);
     }
 
     @RequestMapping(method = PUT, value = "/{id}")

@@ -17,6 +17,7 @@ import model.Laboratory;
 import model.Student;
 import model.request.AttendanceRequestModel;
 import model.request.LabRequestModel;
+import model.request.LoginModel;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class AttendanceController implements Initializable{
     private IAttendanceConsumer attendanceConsumer;
     private IStudentConsumer studentConsumer;
     private ILabConsumer labConsumer;
+    private LoginModel credentials;
 
     @FXML
     TableView<Attendance> attendanceTable;
@@ -52,9 +54,9 @@ public class AttendanceController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
-        this.labComboBox1.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
-        this.studentComboBox.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+        this.labComboBox1.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+        this.studentComboBox.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents(credentials)));
         refreshTable();
     }
 
@@ -81,7 +83,7 @@ public class AttendanceController implements Initializable{
         Attendance a = attendanceTable.getSelectionModel().getSelectedItem();
         if(a != null){
             int id = a.getId();
-            attendanceConsumer.editAttendance(att, id);
+            attendanceConsumer.editAttendance(att, id, credentials);
             refreshTable();
         }
     }
@@ -90,7 +92,7 @@ public class AttendanceController implements Initializable{
     public void deleteBtnClicked(){
         Attendance selectedAttendance = (Attendance) attendanceTable.getSelectionModel().getSelectedItem();
         if(selectedAttendance != null){
-            attendanceConsumer.deleteAttendance(selectedAttendance.getId());
+            attendanceConsumer.deleteAttendance(selectedAttendance.getId(), credentials);
         }
         refreshTable();
     }
@@ -98,7 +100,7 @@ public class AttendanceController implements Initializable{
     @FXML
     public void addBtnClicked(){
         AttendanceRequestModel att = getAttendanceFromFields();
-        attendanceConsumer.addAttendance(att);
+        attendanceConsumer.addAttendance(att,credentials);
         refreshTable();
         presentRadioBtn.setSelected(false);
     }
@@ -106,23 +108,23 @@ public class AttendanceController implements Initializable{
     @FXML
     public void viewAttendanceByLab(){
         int labId = labComboBox1.getValue().getId();
-        List<Attendance> list = this.attendanceConsumer.getAttendanceByLabId(labId);
+        List<Attendance> list = this.attendanceConsumer.getAttendanceByLabId(labId, credentials);
         attendanceTable.setItems(FXCollections.observableArrayList(list));
     }
 
     @FXML
     public void updateLabComboBox(){
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
-        this.labComboBox1.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+        this.labComboBox1.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
     }
 
     @FXML
     public void updateStudComboBox(){
-        this.studentComboBox.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents()));
+        this.studentComboBox.setItems(FXCollections.observableArrayList(studentConsumer.getAllStudents(credentials)));
     }
 
     private void refreshTable(){
-        attendanceTable.setItems(FXCollections.observableArrayList(attendanceConsumer.getAllAttendance()));
+        attendanceTable.setItems(FXCollections.observableArrayList(attendanceConsumer.getAllAttendance(credentials)));
     }
 
     private AttendanceRequestModel getAttendanceFromFields(){
@@ -132,4 +134,7 @@ public class AttendanceController implements Initializable{
         return new AttendanceRequestModel(l.getId(), s.getId(), present);
     }
 
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
+    }
 }

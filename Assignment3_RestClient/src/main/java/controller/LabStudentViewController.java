@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Laboratory;
+import model.request.LoginModel;
 
 
 import java.net.URL;
@@ -17,6 +18,7 @@ import java.util.ResourceBundle;
 public class LabStudentViewController implements Initializable{
 
     private ILabConsumer labConsumer;
+    private LoginModel credentials;
 
     @FXML
     TextField filterField;
@@ -41,10 +43,14 @@ public class LabStudentViewController implements Initializable{
     @FXML
     public void filterBtnClicked(){
         String keyword = filterField.getText();
-        labTable.setItems(FXCollections.observableArrayList(labConsumer.getFilteredLaboratories(keyword)));
+        labTable.setItems(FXCollections.observableArrayList(labConsumer.getFilteredLaboratories(keyword, credentials)));
     }
 
     private void refreshTable(){
-        this.labTable.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        this.labTable.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }

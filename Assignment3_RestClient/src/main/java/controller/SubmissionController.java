@@ -12,6 +12,7 @@ import model.Assignment;
 import model.Submission;
 import consumer.SubmissionConsumer;
 import consumerContracts.ISubmissionConsumer;
+import model.request.LoginModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,6 +21,7 @@ public class SubmissionController implements Initializable{
 
     private ISubmissionConsumer submissionConsumer;
     private IAssignmentConsumer assignmentConsumer;
+    private LoginModel credentials;
 
     @FXML
     TableView<Submission> submissionTable;
@@ -44,7 +46,7 @@ public class SubmissionController implements Initializable{
     public void deleteBtnClicked(){
         Submission s = (Submission) submissionTable.getSelectionModel().getSelectedItem();
         if(s != null)
-            submissionConsumer.deleteSubmission(s.getId());
+            submissionConsumer.deleteSubmission(s.getId(), credentials);
         refreshTable();
     }
 
@@ -62,7 +64,7 @@ public class SubmissionController implements Initializable{
             System.out.println("Please input a number between 1 and 10.");
         }
         if(grade >= 1 && grade <= 10 && id != -1){
-            submissionConsumer.gradeSubmission(id, grade);
+            submissionConsumer.gradeSubmission(id, grade, credentials);
         }
         refreshTable();
     }
@@ -78,22 +80,26 @@ public class SubmissionController implements Initializable{
         Assignment a = (Assignment) assignmentComboBox.getValue();
         if(a != null){
             int id = a.getId();
-            this.submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getSubmissionByAssignmentId(id)));
+            this.submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getSubmissionByAssignmentId(id, credentials)));
         }
     }
 
     @FXML
     public void updateAssignComboBox(){
-        this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments()));
+        this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
     }
 
     private void refreshTable(){
-        submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getAllSubmissions()));
+        submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getAllSubmissions(credentials)));
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments()));
+        this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
         refreshTable();
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }

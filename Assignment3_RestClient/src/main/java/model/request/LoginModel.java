@@ -1,14 +1,16 @@
-package com.example.Assignment2_LabApp.model.login;
+package model.request;
 
-import javax.validation.constraints.NotNull;
 
 public class LoginModel {
-    @NotNull
+
     private String username;
 
-    @NotNull
     private String password;
 
+    public LoginModel( String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public String getUsername() {
         return username;

@@ -8,6 +8,6 @@ public class TokenGenerator {
         SecureRandom random = new SecureRandom();;
         byte bytes[] = new byte[128];
         random.nextBytes(bytes);
-        return bytes.toString();
+        return new String(bytes);
     }
 }

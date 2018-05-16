@@ -18,7 +18,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </HBox.margin>
                 </Label>
-            <Button fx:id="passBtn" mnemonicParsing="false" text="Change Password">
+            <Button fx:id="passBtn" mnemonicParsing="false" onAction="#passBtnClicked" text="Change Password">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" top="10.0" />
                </HBox.margin>

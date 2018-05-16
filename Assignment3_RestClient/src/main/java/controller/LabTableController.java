@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import model.Laboratory;
 import model.request.LabRequestModel;
+import model.request.LoginModel;
 import util.DateUtil;
 import consumer.LabConsumer;
 import consumerContracts.ILabConsumer;
@@ -23,6 +24,7 @@ public class LabTableController implements Initializable{
 
     private ILabConsumer labConsumer;
     private ObservableList<Integer> numbers = FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
+    private LoginModel credentials;
 
     @FXML
     TableView<Laboratory> labTable;
@@ -65,14 +67,14 @@ public class LabTableController implements Initializable{
     @FXML
     public void filterBtnClicked(){
         String keyword = filterField.getText();
-        labTable.setItems(FXCollections.observableArrayList(labConsumer.getFilteredLaboratories(keyword)));
+        labTable.setItems(FXCollections.observableArrayList(labConsumer.getFilteredLaboratories(keyword, credentials)));
     }
 
     @FXML
     public void editBtnClicked(){
         LabRequestModel lab = getLabFromFields();
         int id = labTable.getSelectionModel().getSelectedItem().getId();
-        labConsumer.editLab(lab, id);
+        labConsumer.editLab(lab, id, credentials);
         refreshTable();
         clearFields();
         //System.out.println(id);
@@ -102,7 +104,7 @@ public class LabTableController implements Initializable{
     public void deleteBtnClicked(){
         Laboratory selectedLab = labTable.getSelectionModel().getSelectedItem();
         if(selectedLab != null){
-            labConsumer.deleteLab(selectedLab.getId());
+            labConsumer.deleteLab(selectedLab.getId(), credentials);
         }
         refreshTable();
     }
@@ -110,7 +112,7 @@ public class LabTableController implements Initializable{
     @FXML
     public void addBtnClicked(){
         LabRequestModel lab = getLabFromFields();
-        labConsumer.addLaboratory(lab);
+        labConsumer.addLaboratory(lab, credentials);
         refreshTable();
         clearFields();
     }
@@ -128,12 +130,16 @@ public class LabTableController implements Initializable{
     }
 
     public void refreshTable(){
-        labTable.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories()));
+        labTable.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
     }
 
     private void clearFields(){
         this.titleField.clear();
         this.curriculaField.clear();
         this.descriptionField.clear();
+    }
+
+    public void setCredentials(LoginModel credentials){
+        this.credentials = credentials;
     }
 }
