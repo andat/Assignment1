@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import sun.rmi.runtime.Log;
 
+import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +32,15 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
 
         try {
-            if(userService.login(username, password)){
-                Role role = userService.getRole(username);
-                System.out.println(role);
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(role.toString()));
-                UsernamePasswordAuthenticationToken token =
-                        new UsernamePasswordAuthenticationToken(username, password, authorities);
-                return token;
-            } else
-                throw new Exception("Invalid credentials!");
-        }catch(Exception e) {
-            e.printStackTrace();
+            Role role = userService.login(username, password);
+
+            List<GrantedAuthority> authorities = new ArrayList<>();
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toString()));
+            UsernamePasswordAuthenticationToken token =
+                    new UsernamePasswordAuthenticationToken(username, password, authorities);
+            return token;
+        }catch(LoginException e) {
+            System.out.println(e.getMessage());
         }
         return null;
     }

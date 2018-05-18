@@ -28,26 +28,31 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .csrf().disable()
-                .httpBasic().and().authorizeRequests()
+                .httpBasic()
+                .and()
+                .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/students").hasAnyRole("TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.POST,"/students").hasRole("TEACHER")
                 .antMatchers(HttpMethod.DELETE,"/students").hasRole("TEACHER")
                 .antMatchers(HttpMethod.PUT,"/students").hasRole("TEACHER")
 
-                .antMatchers(HttpMethod.POST, "/labs").hasRole("TEACHER")
-                .antMatchers(HttpMethod.PUT, "/labs/**").hasRole("TEACHER")
-                .antMatchers(HttpMethod.DELETE, "/labs/**").hasRole("TEACHER")
-                .antMatchers(HttpMethod.GET, "/labs").hasAnyRole("TEACHER", "STUDENT")
+                .antMatchers(HttpMethod.POST, "/laboratories").hasRole("TEACHER")
+                .antMatchers(HttpMethod.PUT, "/laboratories/**").hasRole("TEACHER")
+                .antMatchers(HttpMethod.DELETE, "/laboratories/**").hasRole("TEACHER")
+                .antMatchers(HttpMethod.GET, "/laboratories").hasAnyRole("TEACHER", "STUDENT")
 
                 .antMatchers(HttpMethod.GET,"/assignments").hasAnyRole("TEACHER", "STUDENT")
                 .antMatchers(HttpMethod.POST,"/assignments").hasRole("TEACHER")
                 .antMatchers(HttpMethod.PUT,"/assignments").hasRole("TEACHER")
                 .antMatchers(HttpMethod.DELETE,"/assignments").hasRole("TEACHER")
-                .antMatchers("/attendance").hasRole("TEACHER")
+                .antMatchers(HttpMethod.GET,"/attendance").hasRole("TEACHER")
+                .antMatchers(HttpMethod.GET,"/attendance/students/**").hasAnyRole("TEACHER", "STUDENT")
+                .antMatchers(HttpMethod.POST,"/attendance").hasRole("TEACHER")
+                .antMatchers(HttpMethod.PUT,"/attendance").hasRole("TEACHER")
+                .antMatchers(HttpMethod.DELETE,"/attendance").hasRole("TEACHER")
                 .antMatchers("/submissions").hasAnyRole("TEACHER", "STUDENT")
                 .antMatchers("/login").permitAll()
-                .anyRequest().authenticated()
-        ;
+                .anyRequest().authenticated();
 
     }
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-@RequestMapping("/attendances")
+@RequestMapping("/attendance")
 public class AttendanceController {
 
     @Autowired
@@ -85,5 +85,12 @@ public class AttendanceController {
         return attendanceService.getAttendanceByLabId(labId).stream()
                                                             .map(a -> modelMapper.map(a, AttendanceResponseModel.class))
                                                             .collect(Collectors.toList());
+    }
+
+    @RequestMapping(method = GET, value = "/students/{username}")
+    public List<AttendanceResponseModel> getAttendanceByLabId(@PathVariable String username){
+        return attendanceService.getAttendanceByUsername(username).stream()
+                .map(a -> modelMapper.map(a, AttendanceResponseModel.class))
+                .collect(Collectors.toList());
     }
 }

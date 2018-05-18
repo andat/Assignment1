@@ -50,4 +50,9 @@ public class AttendanceService implements IAttendanceService {
     public List<Attendance> getAttendanceByLabId(int labId) {
         return attendanceRepository.getAttendanceByLaboratoryId(labId);
     }
+
+    @Override
+    public List<Attendance> getAttendanceByUsername(String username) {
+        return attendanceRepository.getAttendanceByStudentUsername(username);
+    }
 }

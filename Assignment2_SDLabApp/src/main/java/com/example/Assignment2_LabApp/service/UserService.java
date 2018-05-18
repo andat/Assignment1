@@ -14,16 +14,18 @@ public class UserService implements IUserService{
     @Autowired
     private UserRepository userRepository;
 
-    public boolean login(String username, String password) throws LoginException {
+    public Role login(String username, String password) throws LoginException {
         User user = userRepository.getUserByUsername(username);
         if(user == null)
             throw new LoginException("Invalid username.");
         else
-            return PasswordEncryptionUtil.validatePassword(password, user.getPassword());
+            if(PasswordEncryptionUtil.validatePassword(password, user.getPassword()))
+                return getRole(username);
+            else
+                throw new LoginException("Wrong password.");
     }
 
-    @Override
-    public Role getRole(String username) {
+    private Role getRole(String username) {
         User user = userRepository.getUserByUsername(username);
         if(user.isTeacher())
             return Role.TEACHER;

@@ -4,6 +4,7 @@ import consumerContracts.IStudentConsumer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -24,11 +25,17 @@ public class StudentController implements Initializable{
     @FXML
     TabPane studentTabPane;
 
+
     private AssignmentStudentViewController assignmentStudentViewController;
     private LabStudentViewController labStudentViewController;
     private SubmissionsStudentViewController submissionsStudentViewController;
 
     private LoginModel credentials;
+
+    public StudentController(LoginModel credentials){
+        this.credentials = credentials;
+
+    }
 
 
     @FXML
@@ -61,19 +68,21 @@ public class StudentController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/LabStudentView.fxml"));
+            loader.setController(new LabStudentViewController(credentials));
             Parent root = loader.load();
-            LabStudentViewController controller = loader.getController();
-            controller.setCredentials(credentials);
+            studentTabPane.getTabs().get(0).setContent(root);
+
 
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/AssignmentStudentView.fxml"));
+            loader1.setController(new AssignmentStudentViewController(credentials));
             Parent root1 = loader1.load();
-            AssignmentStudentViewController controller1 = loader1.getController();
-            controller1.setCredentials(credentials);
+            studentTabPane.getTabs().get(1).setContent(root1);
+
 
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/SubmissionsStudentView.fxml"));
+            loader2.setController(new SubmissionsStudentViewController(credentials));
             Parent root2 = loader2.load();
-            SubmissionsStudentViewController controller2 = loader2.getController();
-            controller2.setCredentials(credentials);
+            studentTabPane.getTabs().get(2).setContent(root2);
         } catch (IOException e) {
             e.printStackTrace();
         }

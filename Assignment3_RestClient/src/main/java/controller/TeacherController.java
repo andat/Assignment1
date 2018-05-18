@@ -23,24 +23,13 @@ public class TeacherController implements Initializable{
     Button logOutBtn;
 
     @FXML
-    Tab studentsTab;
-
-    @FXML
-    Tab labsTab;
-
-    @FXML
-    Tab attendanceTab;
-
-    @FXML
-    Tab assignmentsTab;
-
-    @FXML
-    Tab submissionsTab;
-
-    @FXML
     TabPane teacherTabPane;
 
     private LoginModel credentials;
+
+    public TeacherController(LoginModel credentials) {
+        this.credentials = credentials;
+    }
 
     @FXML
     public void logOutBtnClicked(){
@@ -66,30 +55,31 @@ public class TeacherController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AssignmentsTableView.fxml"));
-            Parent root = loader.load();
-            AssignmentsTableController controller = loader.getController();
-            controller.setCredentials(credentials);
-
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/StudentTableView.fxml"));
+            loader1.setController(new StudentTableController(credentials));
             Parent root1 = loader1.load();
-            StudentTableController controller1 = loader1.getController();
-            controller1.setCredentials(credentials);
+            teacherTabPane.getTabs().get(0).setContent(root1);
 
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/LabTableView.fxml"));
+            loader2.setController(new LabTableController(credentials));
             Parent root2 = loader2.load();
-            LabTableController controller2 = loader2.getController();
-            controller2.setCredentials(credentials);
+            teacherTabPane.getTabs().get(1).setContent(root2);
+
 
             FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/AttendanceTableView.fxml"));
+            loader3.setController(new AttendanceController(credentials));
             Parent root3 = loader3.load();
-            AttendanceController controller3 = loader3.getController();
-            controller3.setCredentials(credentials);
+            teacherTabPane.getTabs().get(2).setContent(root3);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AssignmentsTableView.fxml"));
+            loader.setController(new AssignmentsTableController(credentials));
+            Parent root = loader.load();
+            teacherTabPane.getTabs().get(3).setContent(root);
 
             FXMLLoader loader4 = new FXMLLoader(getClass().getResource("/SubmissionTableView.fxml"));
+            loader4.setController(new SubmissionController(credentials));
             Parent root4 = loader4.load();
-            SubmissionController controller4 = loader4.getController();
-            controller4.setCredentials(credentials);
+            teacherTabPane.getTabs().get(4).setContent(root4);
 
 
         } catch (IOException e) {

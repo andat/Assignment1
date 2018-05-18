@@ -52,9 +52,8 @@ public class LoginController implements Initializable{
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudentView.fxml"));
+                loader.setController(new StudentController(credentials));
                 Parent root = loader.load();
-                StudentController studentController = loader.getController();
-                studentController.setCredentials(credentials);
 
                 Stage stage = new Stage();
                 stage.setTitle("SD Lab Application - student");
@@ -69,9 +68,8 @@ public class LoginController implements Initializable{
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/TeacherView.fxml"));
+                loader.setController(new TeacherController(credentials));
                 Parent root = loader.load();
-                TeacherController teacherController = loader.getController();
-                teacherController.setCredentials(credentials);
 
                 Stage stage = new Stage();
                 stage.setTitle("SD Lab Application - teacher");

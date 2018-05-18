@@ -19,7 +19,7 @@ public class AttendanceConsumer implements IAttendanceConsumer {
 
     @Override
     public List<Attendance> getAllAttendance(LoginModel credentials) {
-        String url = "/attendances";
+        String url = "/attendance";
         List<Attendance> attendance = new ArrayList<>();
         try{
             String response = HttpClient.getRequest(url, credentials);
@@ -32,7 +32,7 @@ public class AttendanceConsumer implements IAttendanceConsumer {
 
     public boolean addAttendance(AttendanceRequestModel att, LoginModel credentials){
         boolean added = false;
-        String url = "/attendances";
+        String url = "/attendance";
         try {
             String body = mapper.writeValueAsString(att);
             added = HttpClient.postRequest(url, new StringEntity(body), credentials);
@@ -45,7 +45,7 @@ public class AttendanceConsumer implements IAttendanceConsumer {
     @Override
     public boolean editAttendance(AttendanceRequestModel att, int id, LoginModel credentials) {
         boolean added = false;
-        String url = "/attendances/" + id;
+        String url = "/attendance/" + id;
         try{
             String body = mapper.writeValueAsString(att);
             added = HttpClient.putRequest(url, new StringEntity(body), credentials);
@@ -58,7 +58,7 @@ public class AttendanceConsumer implements IAttendanceConsumer {
     @Override
     public boolean deleteAttendance(int id, LoginModel credentials) {
        boolean deleted = false;
-       String url = "/attendances/" + id;
+       String url = "/attendance/" + id;
        try {
            deleted = HttpClient.deleteRequest(url, credentials);
        } catch (IOException e) {
@@ -69,7 +69,7 @@ public class AttendanceConsumer implements IAttendanceConsumer {
 
     @Override
     public List<Attendance> getAttendanceByLabId(int labId, LoginModel credentials) {
-        String url = "/attendances/labs/" + labId;
+        String url = "/attendance/labs/" + labId;
         List<Attendance> attendance = new ArrayList<>();
         try{
             String response = HttpClient.getRequest(url, credentials);

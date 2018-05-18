@@ -45,16 +45,19 @@ public class AssignmentsTableController implements Initializable{
     ComboBox<Laboratory> labComboBox;
 
 
-    public AssignmentsTableController(){
+    public AssignmentsTableController(LoginModel credentials){
         this.assignmentConsumer = new AssignmentConsumer();
         this.labConsumer = new LabConsumer();
+        this.credentials = credentials;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         DateUtil.setupDatePicker(deadlinePicker);
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
-        refreshTable();
+        if(credentials != null){
+            this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+            refreshTable();
+        }
     }
 
     @FXML

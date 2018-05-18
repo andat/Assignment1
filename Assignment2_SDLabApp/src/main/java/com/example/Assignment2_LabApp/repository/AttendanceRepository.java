@@ -10,4 +10,5 @@ import java.util.List;
 public interface AttendanceRepository extends JpaRepository<Attendance, Integer> {
     public List<Attendance> getAttendanceByLaboratoryId(int labId);
     public Attendance getAttendanceByLaboratoryIdAndStudentId(int labId, int studentId);
+    public List<Attendance> getAttendanceByStudentUsername(String username);
 }

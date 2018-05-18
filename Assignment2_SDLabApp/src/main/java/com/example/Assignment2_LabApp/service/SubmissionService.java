@@ -48,6 +48,11 @@ public class SubmissionService implements ISubmissionService {
         return submissionRepository.getSubmissionsByAssignmentId(assignmentId);
     }
 
+    @Override
+    public List<Submission> getSubmissionsByUsername(String username) {
+        return submissionRepository.getSubmissionsByStudentUsername(username);
+    }
+
 
     @Override
     public boolean checkValidSubmission(Submission submission, java.sql.Date deadline) {

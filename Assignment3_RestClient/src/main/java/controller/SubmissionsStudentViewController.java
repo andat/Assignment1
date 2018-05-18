@@ -17,6 +17,7 @@ import model.Student;
 import model.Submission;
 import model.request.LoginModel;
 import model.request.SubmissionRequestModel;
+import sun.rmi.runtime.Log;
 
 import java.net.URL;
 import java.util.List;
@@ -39,13 +40,22 @@ public class SubmissionsStudentViewController implements Initializable{
     @FXML
     TextArea descriptionArea;
 
-    public SubmissionsStudentViewController(){
+    public SubmissionsStudentViewController(LoginModel credentials){
         this.submissionConsumer = new SubmissionConsumer();
         this.assignmentConsumer = new AssignmentConsumer();
         this.studentConsumer = new StudentConsumer();
-        Student stud = studentConsumer.getAllStudents(credentials).stream().filter(s -> s.getUsername().equals(credentials.getUsername())).findFirst().orElse(null);
-        if(stud != null) {
-            studentId = stud.getId();
+        this.credentials = credentials;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        if(credentials != null) {
+            this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
+            refreshTable();
+            //Student stud = studentConsumer.getAllStudents(credentials).stream().filter(s -> s.getUsername().equals(credentials.getUsername())).findFirst().orElse(null);
+            //if (stud != null) {
+//                studentId = stud.getId();
+//            }
         }
     }
 
@@ -59,7 +69,7 @@ public class SubmissionsStudentViewController implements Initializable{
         Submission s = (Submission) submissionTable.getSelectionModel().getSelectedItem();
         if(s != null)
             submissionConsumer.deleteSubmission(s.getId(), credentials);
-       // refreshTable();
+       refreshTable();
     }
 
     @FXML
@@ -81,11 +91,6 @@ public class SubmissionsStudentViewController implements Initializable{
         submissionTable.setItems(FXCollections.observableArrayList(sList));
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
-        refreshTable();
-    }
 
     public void setCredentials(LoginModel credentials){
         this.credentials = credentials;

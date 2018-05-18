@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox spacing="20.0">
             <children>
@@ -37,24 +37,24 @@
             <tabs>
                 <Tab fx:id="labsTab" text="Laboratory classes">
                     <content>
-                        <fx:include fx:id="labView" source="LabStudentView.fxml" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
                 <Tab fx:id="assignmentsTab" text="Assignments">
                     <content>
-                        <fx:include fx:id="assignmentsView" source="AssignmentStudentView.fxml" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             <Tab text="Submissions">
                 <content>
-                    <fx:include fx:id="submissionsView" source="SubmissionsStudentView.fxml" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                 </content>
             </Tab>
-                <Tab fx:id="attendanceTab" text="Attendance">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                    </content>
-                </Tab>
+                <!--<Tab fx:id="attendanceTab" text="Attendance">-->
+                    <!--<content>-->
+                        <!--<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />-->
+                    <!--</content>-->
+                <!--</Tab>-->
             </tabs>
             <opaqueInsets>
                 <Insets bottom="10.0" left="10.0" right="10.0" />

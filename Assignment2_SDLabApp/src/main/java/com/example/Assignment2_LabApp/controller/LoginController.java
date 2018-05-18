@@ -27,14 +27,10 @@ public class LoginController {
     public ResponseEntity login(@Validated @RequestBody LoginModel l){
         System.out.println(l);
         try {
-            if(userService.login(l.getUsername(), l.getPassword())){
-                Role role = userService.getRole(l.getUsername());
-                return ResponseEntity.ok(role);
-            }
-            else
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials.");
+            Role role = userService.login(l.getUsername(), l.getPassword());
+            return ResponseEntity.ok(role);
         } catch (LoginException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials.");
         }
     }
 }

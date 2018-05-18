@@ -9,7 +9,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TeacherController">
+<?import javafx.scene.layout.AnchorPane?>
+<VBox xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox spacing="20.0">
          <children>
@@ -34,29 +35,29 @@
       <TabPane fx:id="teacherTabPane" prefWidth="459.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="studentsTab" text="Students">
-              <content>
-                  <fx:include fx:id="studentView" source="StudentTableView.fxml" />
-              </content>
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
             </Tab>
           <Tab fx:id="labsTab" text="Laboratory classes">
-            <content>
-                <fx:include fx:id="labView" source="LabTableView.fxml" />
-            </content>
+              <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
           </Tab>
             <Tab fx:id="attendanceTab" text="Attendance">
-              <content>
-                  <fx:include fx:id="attendanceView" source="AttendanceTableView.fxml" />
-              </content>
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
             </Tab>
             <Tab fx:id="assignmentsTab" text="Assignments">
-              <content>
-                  <fx:include fx:id="assignView" source="AssignmentsTableView.fxml" />
-              </content>
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
             </Tab>
             <Tab fx:id="submissionsTab" text="Submissions">
-              <content>
-                  <fx:include fx:id="submissionView" source="SubmissionTableView.fxml" />
-              </content>
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
             </Tab>
         </tabs>
          <opaqueInsets>

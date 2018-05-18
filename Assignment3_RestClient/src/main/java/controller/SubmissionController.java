@@ -32,9 +32,10 @@ public class SubmissionController implements Initializable{
     @FXML
     ComboBox assignmentComboBox;
 
-    public SubmissionController(){
+    public SubmissionController(LoginModel credentials){
         this.submissionConsumer = new SubmissionConsumer();
         this.assignmentConsumer = new AssignmentConsumer();
+        this.credentials = credentials;
     }
 
     @FXML

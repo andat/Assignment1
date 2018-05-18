@@ -47,9 +47,9 @@ public class LabTableController implements Initializable{
     @FXML
     ComboBox numberComboBox;
 
-    public LabTableController(){
+    public LabTableController(LoginModel credentials){
         this.labConsumer = new LabConsumer();
-
+        this.credentials = credentials;
     }
 
     @Override

@@ -46,10 +46,11 @@ public class AttendanceController implements Initializable{
     @FXML
     RadioButton presentRadioBtn;
 
-    public AttendanceController(){
+    public AttendanceController(LoginModel credentials){
         this.attendanceConsumer = new AttendanceConsumer();
         this.labConsumer = new LabConsumer();
         this.studentConsumer = new StudentConsumer();
+        this.credentials = credentials;
     }
 
     @Override

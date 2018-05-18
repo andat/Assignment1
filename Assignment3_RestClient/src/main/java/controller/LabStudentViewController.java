@@ -26,13 +26,15 @@ public class LabStudentViewController implements Initializable{
     @FXML
     TableView<Laboratory> labTable;
 
-    public LabStudentViewController(){
+    public LabStudentViewController(LoginModel credentials) {
         this.labConsumer = new LabConsumer();
+        this.credentials = credentials;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        refreshTable();
+        if(credentials != null)
+            refreshTable();
     }
 
     @FXML
@@ -47,6 +49,7 @@ public class LabStudentViewController implements Initializable{
     }
 
     private void refreshTable(){
+        System.out.println(credentials);
         this.labTable.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
     }
 

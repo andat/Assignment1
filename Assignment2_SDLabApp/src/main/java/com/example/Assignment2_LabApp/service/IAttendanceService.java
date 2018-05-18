@@ -12,4 +12,5 @@ public interface IAttendanceService {
     public void deleteAttendance(int id);
     public boolean checkIfAlreadyExists(Attendance attendance);
     public List<Attendance> getAttendanceByLabId(int labId);
+    public List<Attendance> getAttendanceByUsername(String username);
 }

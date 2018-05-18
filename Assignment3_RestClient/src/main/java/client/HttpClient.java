@@ -1,6 +1,7 @@
 package client;
 
 import model.request.LoginModel;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpDelete;
@@ -16,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 public class HttpClient{
@@ -24,14 +26,15 @@ public class HttpClient{
     public static String getRequest(String url, LoginModel credentials) throws IOException{
             try(CloseableHttpClient client = HttpClients.createDefault()){
                 HttpGet httpGet = new HttpGet(host + url);
-                HttpResponse response = client.execute(httpGet);
 
                 String authStr = credentials.getUsername() + ":" + credentials.getPassword();
-                String authEncoded = Base64.getEncoder().encodeToString((authStr).getBytes());
-                httpGet.setHeader("Authorization", "Basic " + authEncoded);
+                String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+                httpGet.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
 
-                ResponseHandler<String> responseHandler=new BasicResponseHandler();
-                String responseBody = client.execute(httpGet, responseHandler);
+                HttpResponse response = client.execute(httpGet);
+
+                //ResponseHandler<String> responseHandler=new BasicResponseHandler();
+                String responseBody = EntityUtils.toString(client.execute(httpGet).getEntity());
                 return responseBody;
             }
     }
@@ -42,8 +45,8 @@ public class HttpClient{
             httpPost.setEntity(body);
 
             String authStr = credentials.getUsername() + ":" + credentials.getPassword();
-            String authEncoded = Base64.getEncoder().encodeToString((authStr).getBytes());
-            httpPost.setHeader("Authorization", "Basic " + authEncoded);
+            String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+            httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
 
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPost);
@@ -80,8 +83,8 @@ public class HttpClient{
             httpPut.setEntity(body);
 
             String authStr = credentials.getUsername() + ":" + credentials.getPassword();
-            String authEncoded = Base64.getEncoder().encodeToString((authStr).getBytes());
-            httpPut.setHeader("Authorization", "Basic " + authEncoded);
+            String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+            httpPut.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
 
             httpPut.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPut);
@@ -99,8 +102,8 @@ public class HttpClient{
             HttpPut httpPut = new HttpPut(host + url);
 
             String authStr = credentials.getUsername() + ":" + credentials.getPassword();
-            String authEncoded = Base64.getEncoder().encodeToString((authStr).getBytes());
-            httpPut.setHeader("Authorization", "Basic " + authEncoded);
+            String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+            httpPut.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
 
             httpPut.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPut);
@@ -120,8 +123,8 @@ public class HttpClient{
             HttpResponse response = client.execute(httpDelete);
 
             String authStr = credentials.getUsername() + ":" + credentials.getPassword();
-            String authEncoded = Base64.getEncoder().encodeToString((authStr).getBytes());
-            httpDelete.setHeader("Authorization", "Basic " + authEncoded);
+            String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+            httpDelete.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
 
             System.out.println("DELETE - response: " + response.getStatusLine());
             if(response.getStatusLine().getStatusCode() == 200)

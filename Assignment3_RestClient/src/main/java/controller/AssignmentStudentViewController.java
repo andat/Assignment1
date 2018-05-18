@@ -9,10 +9,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import model.Assignment;
 import model.Laboratory;
 import model.request.LoginModel;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AssignmentStudentViewController implements Initializable{
@@ -28,15 +30,18 @@ public class AssignmentStudentViewController implements Initializable{
     @FXML
     ComboBox<Laboratory> labComboBox;
 
-    public AssignmentStudentViewController(){
+    public AssignmentStudentViewController(LoginModel credentials){
         this.assignmentConsumer = new AssignmentConsumer();
         this.labConsumer = new LabConsumer();
+        this.credentials = credentials;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
-        refreshTable();
+        if(credentials != null) {
+            this.labComboBox.setItems(FXCollections.observableArrayList(labConsumer.getAllLaboratories(credentials)));
+            refreshTable();
+        }
     }
 
     @FXML
@@ -45,7 +50,10 @@ public class AssignmentStudentViewController implements Initializable{
     }
 
     private void refreshTable(){
-        assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
+        if(credentials != null) {
+            List<Assignment> list = assignmentConsumer.getAllAssignments(credentials);
+            assignmentTable.setItems(FXCollections.observableArrayList(list));
+        }
     }
 
     @FXML

@@ -13,6 +13,7 @@ public interface ISubmissionService {
     public void gradeSubmission(Submission submission, int grade);
     public void deleteSubmission(int id);
     public List<Submission> getSubmissionsByAssignmentId(int assignmentId);
+    public List<Submission> getSubmissionsByUsername(String username);
     public boolean checkValidSubmission(Submission submission, Date deadline);
     public boolean checkMaxNoOfSubmissionsReached(Submission submission, int max);
 }

@@ -9,6 +9,7 @@ import model.request.LoginModel;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class AssignmentConsumer implements IAssignmentConsumer {
     @Override
     public List<Assignment> getAllAssignments(LoginModel credentials) {
         String url = "/assignments";
-        List<Assignment> assignmentList = null;
+        List<Assignment> assignmentList = new ArrayList<>();
         try{
             String response = HttpClient.getRequest(url, credentials);
             Assignment[] assignments = objectMapper.readValue(response, Assignment[].class);

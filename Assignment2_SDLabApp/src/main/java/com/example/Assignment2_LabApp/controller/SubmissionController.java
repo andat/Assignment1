@@ -111,4 +111,11 @@ public class SubmissionController {
                                                                            .map(s -> modelMapper.map(s, SubmissionResponseModel.class))
                                                                            .collect(Collectors.toList());
     }
+
+    @RequestMapping(method = GET, value = "/students/{username}")
+    public List<SubmissionResponseModel> getSubmissionsByAssignmentId(@PathVariable String username){
+        return submissionService.getSubmissionsByUsername(username).stream()
+                .map(s -> modelMapper.map(s, SubmissionResponseModel.class))
+                .collect(Collectors.toList());
+    }
 }

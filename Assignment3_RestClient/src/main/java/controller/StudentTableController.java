@@ -55,15 +55,18 @@ public class StudentTableController implements Initializable{
     @FXML
     TextField hobbyField;
 
-    public StudentTableController(){
+    public StudentTableController(LoginModel credentials){
         this.studentConsumer = new StudentConsumer();
+        this.credentials = credentials;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ObservableList<String> groups = FXCollections.observableArrayList("30431", "30432", "30433", "30434");
-        this.groupComboBox.setItems(groups);
-        refreshTable();
+        if(credentials != null){
+            ObservableList<String> groups = FXCollections.observableArrayList("30431", "30432", "30433", "30434");
+            this.groupComboBox.setItems(groups);
+            refreshTable();
+        }
     }
 
     @FXML
