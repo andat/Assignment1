@@ -48,16 +48,16 @@ public class LabConsumer implements ILabConsumer {
     }
 
     @Override
-    public boolean addLaboratory(LabRequestModel lab, LoginModel credentials){
-        boolean added = false;
+    public int addLaboratory(LabRequestModel lab, LoginModel credentials){
         String url = "/laboratories";
         try{
             String body = mapper.writeValueAsString(lab);
-            added = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            int responseCode = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            return responseCode;
         } catch(IOException e){
             e.printStackTrace();
         }
-        return added;
+        return -1;
     }
 
     public boolean editLab(LabRequestModel lab, int id, LoginModel credentials){

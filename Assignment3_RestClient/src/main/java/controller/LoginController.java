@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.request.LoginModel;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class LoginController implements Initializable{
         String password = passField.getText();
 
         String role = this.loginConsumer.login(username, password);
+
         LoginModel credentials = new LoginModel(username, password);
         if(role == null){
             AlertBox.display("InvalidCredentials", "Wrong username or password!");

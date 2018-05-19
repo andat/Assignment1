@@ -74,10 +74,12 @@ public class LabTableController implements Initializable{
     public void editBtnClicked(){
         LabRequestModel lab = getLabFromFields();
         int id = labTable.getSelectionModel().getSelectedItem().getId();
-        labConsumer.editLab(lab, id, credentials);
-        refreshTable();
-        clearFields();
-        //System.out.println(id);
+        if(lab != null){
+            labConsumer.editLab(lab, id, credentials);
+            refreshTable();
+            clearFields();
+            //System.out.println(id);
+        }
     }
 
     @FXML
@@ -112,21 +114,33 @@ public class LabTableController implements Initializable{
     @FXML
     public void addBtnClicked(){
         LabRequestModel lab = getLabFromFields();
-        labConsumer.addLaboratory(lab, credentials);
-        refreshTable();
-        clearFields();
+        if(lab != null){
+            if(labConsumer.addLaboratory(lab, credentials) == 500){
+                AlertBox.display("An error occurred", "A laboratory with that number already exists.");
+            }
+            refreshTable();
+            clearFields();
+        } else{
+            AlertBox.display("Empty fields", "Some fields that are required are empty.");
+        }
     }
 
     private LabRequestModel getLabFromFields(){
         String title = this.titleField.getText();
         String curricula = this.curriculaField.getText();
-        String descripption = this.descriptionField.getText();
-        int number = (int) numberComboBox.getValue();
-        Date date = java.sql.Date.valueOf(datePicker.getValue());
+        String description = this.descriptionField.getText();
+        int number = 0;
+        if(numberComboBox.getValue() != null)
+            number = (int) numberComboBox.getValue();
+        Date date = null;
+        if(datePicker.getValue() != null)
+            date = java.sql.Date.valueOf(datePicker.getValue());
 
-        //TODO validate fields
-        LabRequestModel lab = new LabRequestModel(number, date, title, curricula, descripption);
-        return lab;
+        if(number != 0 || date != null) {
+            LabRequestModel lab = new LabRequestModel(number, date, title, curricula, description);
+            return lab;
+        } else
+            return null;
     }
 
     public void refreshTable(){

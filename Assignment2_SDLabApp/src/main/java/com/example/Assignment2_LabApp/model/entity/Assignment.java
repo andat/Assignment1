@@ -29,7 +29,7 @@ public class Assignment {
     @JsonManagedReference
     private Laboratory laboratory;
 
-    @OneToMany(mappedBy="assignment")
+    @OneToMany(mappedBy="assignment", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Submission> submissions;
 

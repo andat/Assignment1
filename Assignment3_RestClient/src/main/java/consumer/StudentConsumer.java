@@ -30,16 +30,15 @@ public class StudentConsumer implements IStudentConsumer {
        return students;
     }
 
-    public boolean addStudent(StudentRequestModel stud, LoginModel credentials){
-        boolean added = false;
+    public int addStudent(StudentRequestModel stud, LoginModel credentials){
         String url = "/students";
         try {
             String body = objectMapper.writeValueAsString(stud);
-            added = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            return HttpClient.postRequest(url, new StringEntity(body), credentials);
         } catch (IOException e){
             e.printStackTrace();
         }
-        return added;
+        return -1;
     }
 
     public boolean editStudent(StudentRequestModel stud, int id, LoginModel credentials){

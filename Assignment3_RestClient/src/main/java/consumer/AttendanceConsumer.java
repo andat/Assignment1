@@ -30,16 +30,15 @@ public class AttendanceConsumer implements IAttendanceConsumer {
         return attendance;
     }
 
-    public boolean addAttendance(AttendanceRequestModel att, LoginModel credentials){
-        boolean added = false;
+    public int addAttendance(AttendanceRequestModel att, LoginModel credentials){
         String url = "/attendance";
         try {
             String body = mapper.writeValueAsString(att);
-            added = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            return HttpClient.postRequest(url, new StringEntity(body), credentials);
         } catch (IOException e){
             e.printStackTrace();
         }
-        return added;
+        return -1;
     }
 
     @Override

@@ -73,6 +73,7 @@ public class AssignmentsTableController implements Initializable{
             assignmentConsumer.editAssignment(a, selAssignment.getId(), credentials);
         }
         refreshTable();
+        clearFields();
     }
 
     @FXML
@@ -83,14 +84,21 @@ public class AssignmentsTableController implements Initializable{
             //System.out.println(selectedAssignment.getId());
         }
         refreshTable();
+        clearFields();
     }
 
     @FXML
     public void addBtnClicked(){
         AssignmentRequestModel a = getAssignmentFromFields();
-        this.assignmentConsumer.addAssignment(a, credentials);
-        refreshTable();
-        clearFields();
+        if(a != null) {
+            this.assignmentConsumer.addAssignment(a, credentials);
+            refreshTable();
+            clearFields();
+        } else{
+            AlertBox.display("Empty fields", "Some fields that are required are empty.");
+        }
+
+
     }
 
     private void refreshTable(){
@@ -98,13 +106,19 @@ public class AssignmentsTableController implements Initializable{
     }
 
     private AssignmentRequestModel getAssignmentFromFields(){
-        //TODO validate
         String name = this.nameField.getText();
         String description = this.descriptionField.getText();
-        Date deadline = java.sql.Date.valueOf(this.deadlinePicker.getValue());
-        Laboratory lab = this.labComboBox.getValue();
+        Date deadline = null;
+        if(this.deadlinePicker.getValue() != null)
+            java.sql.Date.valueOf(this.deadlinePicker.getValue());
+        Laboratory lab = null;
+        if(this.labComboBox.getValue() != null)
+            lab = this.labComboBox.getValue();
 
-        return new AssignmentRequestModel(name, deadline, description, lab.getId());
+        if(lab != null && deadline != null && !name.isEmpty())
+            return new AssignmentRequestModel(name, deadline, description, lab.getId());
+
+        return null;
     }
 
     private void clearFields(){
@@ -135,6 +149,8 @@ public class AssignmentsTableController implements Initializable{
         if(selLab != null){
             int labId = selLab.getId();
             this.assignmentTable.setItems(FXCollections.observableArrayList(assignmentConsumer.getAssignmentsByLabId(labId, credentials)));
+        } else {
+            AlertBox.display("No laboratory selected", "Please select a laboratory.");
         }
     }
 

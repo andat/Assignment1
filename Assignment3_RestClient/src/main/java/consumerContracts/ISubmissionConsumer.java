@@ -12,4 +12,5 @@ public interface ISubmissionConsumer {
     public boolean addSubmission(SubmissionRequestModel submission, LoginModel credentials);
     public boolean gradeSubmission(int id, int grade, LoginModel credentials);
     public boolean deleteSubmission(int id, LoginModel credentials);
+    public List<Submission> getSubmissionsByUsername(String username, LoginModel credentials);
 }

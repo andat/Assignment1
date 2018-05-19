@@ -49,7 +49,8 @@ public class AssignmentConsumer implements IAssignmentConsumer {
         String url = "/assignments";
         try {
             String body = objectMapper.writeValueAsString(assign);
-            added = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            if(HttpClient.postRequest(url, new StringEntity(body), credentials) == 200)
+                added = true;
         } catch (IOException e){
             e.printStackTrace();
         }

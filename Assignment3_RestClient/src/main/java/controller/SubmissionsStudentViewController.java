@@ -50,12 +50,14 @@ public class SubmissionsStudentViewController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if(credentials != null) {
-            this.assignmentComboBox.setItems(FXCollections.observableArrayList(assignmentConsumer.getAllAssignments(credentials)));
+            List<Submission> submissions = submissionConsumer.getSubmissionsByUsername(credentials.getUsername(), credentials);
+            this.assignmentComboBox.setItems(FXCollections.observableArrayList(submissions));
             refreshTable();
-            //Student stud = studentConsumer.getAllStudents(credentials).stream().filter(s -> s.getUsername().equals(credentials.getUsername())).findFirst().orElse(null);
-            //if (stud != null) {
-//                studentId = stud.getId();
-//            }
+            int studentId = studentConsumer.getAllStudents(credentials)
+                                              .stream()
+                                              .filter(s -> s.getUsername().equals(credentials.getUsername()))
+                                              .findFirst().get().getId();
+
         }
     }
 
@@ -81,8 +83,9 @@ public class SubmissionsStudentViewController implements Initializable{
     public void submitBtnClicked(){
         Assignment a = (Assignment) assignmentComboBox.getValue();
         if(a != null){
-            int id = studentId;
-            submissionConsumer.addSubmission(new SubmissionRequestModel(a.getId(), id, descriptionArea.getText()), credentials);
+            submissionConsumer.addSubmission(new SubmissionRequestModel(a.getId(), studentId, descriptionArea.getText()), credentials);
+        } else {
+            AlertBox.display("No assignment selected", "Please select an assignment");
         }
     }
 

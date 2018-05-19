@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface IStudentConsumer {
     public List<Student> getAllStudents(LoginModel credentials);
-    public boolean addStudent(StudentRequestModel stud, LoginModel credentials);
+    public int addStudent(StudentRequestModel stud, LoginModel credentials);
     public boolean editStudent(StudentRequestModel stud, int id, LoginModel credentials);
     public boolean deleteStudent(int id, LoginModel credentials);
     public boolean changePassword(String password, LoginModel credentials);

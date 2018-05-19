@@ -39,7 +39,7 @@ public class HttpClient{
             }
     }
 
-    public static boolean postRequest(String url, StringEntity body, LoginModel credentials) throws IOException{
+    public static int postRequest(String url, StringEntity body, LoginModel credentials) throws IOException{
         try(CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(host + url);
             httpPost.setEntity(body);
@@ -51,12 +51,8 @@ public class HttpClient{
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPost);
 
-            //TODO comment out
             System.out.println("POST - response code: " + response.getStatusLine().getStatusCode());
-            if(response.getStatusLine().getStatusCode() == 200)
-                return true;
-            else
-                return false;
+            return response.getStatusLine().getStatusCode();
         }
     }
 
@@ -120,11 +116,12 @@ public class HttpClient{
     public static boolean deleteRequest(String url, LoginModel credentials) throws IOException {
         try(CloseableHttpClient client = HttpClients.createDefault()) {
             HttpDelete httpDelete = new HttpDelete(host + url);
-            HttpResponse response = client.execute(httpDelete);
 
             String authStr = credentials.getUsername() + ":" + credentials.getPassword();
             String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
             httpDelete.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
+
+            HttpResponse response = client.execute(httpDelete);
 
             System.out.println("DELETE - response: " + response.getStatusLine());
             if(response.getStatusLine().getStatusCode() == 200)

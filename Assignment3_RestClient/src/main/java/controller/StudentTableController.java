@@ -78,17 +78,24 @@ public class StudentTableController implements Initializable{
     public void editBtnClicked(){
         StudentRequestModel stud = getStudentFromFields();
         int id = studentTable.getSelectionModel().getSelectedItem().getId();
-        studentConsumer.editStudent(stud, id, credentials);
-        //System.out.println(id);
-        refreshTable();
-        clearFields();
+        if(stud != null) {
+            studentConsumer.editStudent(stud, id, credentials);
+            //System.out.println(id);
+            refreshTable();
+            clearFields();
+        }
     }
 
     @FXML
     public void addBtnClicked(){
-        studentConsumer.addStudent(getStudentFromFields(), credentials);
-        refreshTable();
-        clearFields();
+        StudentRequestModel s = getStudentFromFields();
+        if(s != null) {
+            if(studentConsumer.addStudent(s, credentials) == 500){
+                AlertBox.display("An error occurred", "A laboratory with that number already exists.");
+            }
+            refreshTable();
+            clearFields();
+        }
     }
 
     private void clearFields(){
@@ -105,8 +112,14 @@ public class StudentTableController implements Initializable{
         String hobby = hobbyField.getText();
         String group = (String) groupComboBox.getValue();
 
-        //TODO validate fields
-        return new StudentRequestModel(username, name, email, group, hobby);
+        if(username.isEmpty() || group == null || email.isEmpty())
+            AlertBox.display("Empty fields", "Some fields that are required are empty.");
+        else if(!email.matches("^[A-Za-z0-9._-]+@[a-z0-9.]+\\.[a-z]{2,6}$"))
+            AlertBox.display("Wrong email format", "Please check that the email is correctly written.");
+        else
+            return new StudentRequestModel(username, name, email, group, hobby);
+
+        return null;
     }
 
     @FXML

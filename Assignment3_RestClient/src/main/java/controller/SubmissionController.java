@@ -55,19 +55,21 @@ public class SubmissionController implements Initializable{
     @FXML
     public void gradeBtnClicked(){
         Submission s  = submissionTable.getSelectionModel().getSelectedItem();
-        int id = -1;
-        if(s != null)
-            id = s.getId();
-        int grade = 0;
-        try {
-            grade = Integer.parseInt(gradeField.getText());
-        } catch(NumberFormatException e){
-            System.out.println("Please input a number between 1 and 10.");
+        if(s != null) {
+            int id = s.getId();
+            String gradeString = gradeField.getText();
+            int grade = 0;
+            if (gradeString.matches("[1-9]{1,2}")) {
+                grade = Integer.parseInt(gradeString);
+                if (grade >= 1 && grade <= 10)
+                    submissionConsumer.gradeSubmission(id, grade, credentials);
+            } else {
+                AlertBox.display("Wrong grade format", "Please input the grade as a number between 1 and 10.");
+            }
+            refreshTable();
+        } else {
+            AlertBox.display("No submission selected", "Please select a submission to grade.");
         }
-        if(grade >= 1 && grade <= 10 && id != -1){
-            submissionConsumer.gradeSubmission(id, grade, credentials);
-        }
-        refreshTable();
     }
 
     @FXML
@@ -82,7 +84,8 @@ public class SubmissionController implements Initializable{
         if(a != null){
             int id = a.getId();
             this.submissionTable.setItems(FXCollections.observableArrayList(submissionConsumer.getSubmissionByAssignmentId(id, credentials)));
-        }
+        } else
+            AlertBox.display("No assignment selected", "Please select an assignment.");
     }
 
     @FXML

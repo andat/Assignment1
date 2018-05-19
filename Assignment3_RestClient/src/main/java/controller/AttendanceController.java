@@ -101,16 +101,24 @@ public class AttendanceController implements Initializable{
     @FXML
     public void addBtnClicked(){
         AttendanceRequestModel att = getAttendanceFromFields();
-        attendanceConsumer.addAttendance(att,credentials);
-        refreshTable();
+        if(att != null) {
+            if (attendanceConsumer.addAttendance(att, credentials) == 400)
+                AlertBox.display("Invalid operation", "A person can have only one attendance per laboratory.");
+                refreshTable();
+        }
         presentRadioBtn.setSelected(false);
     }
 
     @FXML
     public void viewAttendanceByLab(){
-        int labId = labComboBox1.getValue().getId();
-        List<Attendance> list = this.attendanceConsumer.getAttendanceByLabId(labId, credentials);
-        attendanceTable.setItems(FXCollections.observableArrayList(list));
+        if(labComboBox1.getValue() != null){
+            int labId = labComboBox1.getValue().getId();
+            List<Attendance> list = this.attendanceConsumer.getAttendanceByLabId(labId, credentials);
+            attendanceTable.setItems(FXCollections.observableArrayList(list));
+        } else {
+            AlertBox.display("No laboratory selected", "Please select a laboratory.");
+        }
+
     }
 
     @FXML
@@ -129,10 +137,19 @@ public class AttendanceController implements Initializable{
     }
 
     private AttendanceRequestModel getAttendanceFromFields(){
-        Student s = studentComboBox.getValue();
-        Laboratory l = labComboBox.getValue();
+        Student s = null;
+        if(studentComboBox.getValue() != null)
+            s = studentComboBox.getValue();
+        Laboratory l = null;
+        if(labComboBox.getValue() != null)
+            l = labComboBox.getValue();
         boolean present = presentRadioBtn.isSelected();
-        return new AttendanceRequestModel(l.getId(), s.getId(), present);
+        if( s!= null && l != null)
+            return new AttendanceRequestModel(l.getId(), s.getId(), present);
+        else{
+            AlertBox.display("Empty fields", "Please select a student and a laboratory.");
+            return null;
+        }
     }
 
     public void setCredentials(LoginModel credentials){

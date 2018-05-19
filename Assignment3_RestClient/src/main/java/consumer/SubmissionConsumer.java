@@ -55,16 +55,16 @@ public class SubmissionConsumer implements ISubmissionConsumer {
         return graded;
     }
 
-    public boolean addSubmission(SubmissionRequestModel sub, LoginModel credentials){
-        boolean added = false;
+    public String addSubmission(SubmissionRequestModel sub, LoginModel credentials){
+        String response = null;
         String url = "/submissions";
         try {
             String body = objectMapper.writeValueAsString(sub);
-            added = HttpClient.postRequest(url, new StringEntity(body), credentials);
+            response = HttpClient.postRequestWithResponse(url, new StringEntity(body));
         } catch (IOException e){
             e.printStackTrace();
         }
-        return added;
+        return response;
     }
 
     @Override
@@ -77,5 +77,18 @@ public class SubmissionConsumer implements ISubmissionConsumer {
             e.printStackTrace();
         }
         return deleted;
+    }
+
+    @Override
+    public List<Submission> getSubmissionsByUsername(String username, LoginModel credentials) {
+        String url = "/submissions/students/" + username;
+        List<Submission> submissions = new ArrayList<>();
+        try{
+            String response = HttpClient.getRequest(url, credentials);
+            submissions = Arrays.asList(objectMapper.readValue(response, Submission[].class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return submissions;
     }
 }

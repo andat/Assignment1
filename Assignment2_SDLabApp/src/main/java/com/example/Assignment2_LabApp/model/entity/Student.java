@@ -19,7 +19,7 @@ public class Student extends User{
     @JsonBackReference
     private List<Attendance> attendances;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Submission> submissions;
 
