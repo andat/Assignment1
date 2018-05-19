@@ -55,16 +55,16 @@ public class SubmissionConsumer implements ISubmissionConsumer {
         return graded;
     }
 
-    public String addSubmission(SubmissionRequestModel sub, LoginModel credentials){
-        String response = null;
+    public int addSubmission(SubmissionRequestModel sub, LoginModel credentials){
+        int code = 0;
         String url = "/submissions";
         try {
             String body = objectMapper.writeValueAsString(sub);
-            response = HttpClient.postRequestWithResponse(url, new StringEntity(body));
+            code = HttpClient.postRequest(url, new StringEntity(body), credentials);
         } catch (IOException e){
             e.printStackTrace();
         }
-        return response;
+        return code;
     }
 
     @Override

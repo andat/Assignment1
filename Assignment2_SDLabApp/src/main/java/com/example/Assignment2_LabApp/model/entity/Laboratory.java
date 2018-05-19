@@ -31,12 +31,12 @@ public class Laboratory {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy="laboratory", orphanRemoval = true, cascade = CascadeType.PERSIST)
     @JsonBackReference
+    @OneToMany(mappedBy="laboratory", orphanRemoval = true)//cascade = CascadeType.ALL;
     private List<Assignment> assignments;
 
-    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
     @JsonBackReference
+    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
     private List<Attendance> attendance;
 
     public int getId() {
@@ -96,8 +96,7 @@ public class Laboratory {
     }
 
     public void setAssignments(List<Assignment> assignments) {
-        this.assignments.clear();
-        this.assignments.addAll(assignments);
+        this.assignments = assignments;
     }
 
     public void setAttendance(List<Attendance> attendance) {

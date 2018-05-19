@@ -90,9 +90,11 @@ public class StudentTableController implements Initializable{
     public void addBtnClicked(){
         StudentRequestModel s = getStudentFromFields();
         if(s != null) {
-            if(studentConsumer.addStudent(s, credentials) == 500){
-                AlertBox.display("An error occurred", "A laboratory with that number already exists.");
-            }
+//            if(studentConsumer.addStudent(s, credentials) == 500){
+//                AlertBox.display("An error occurred", "A laboratory with that number already exists.");
+//            }
+            String message = studentConsumer.addStudent(s, credentials);
+            System.out.println(message);
             refreshTable();
             clearFields();
         }
@@ -117,7 +119,7 @@ public class StudentTableController implements Initializable{
         else if(!email.matches("^[A-Za-z0-9._-]+@[a-z0-9.]+\\.[a-z]{2,6}$"))
             AlertBox.display("Wrong email format", "Please check that the email is correctly written.");
         else
-            return new StudentRequestModel(username, name, email, group, hobby);
+            return new StudentRequestModel(username, name, email, group, hobby, false);
 
         return null;
     }
@@ -146,6 +148,7 @@ public class StudentTableController implements Initializable{
         Student selectedStudent = studentTable.getSelectionModel().getSelectedItem();
         if(selectedStudent != null){
             studentConsumer.deleteStudent(selectedStudent.getId(), credentials);
+            clearFields();
         }
         refreshTable();
     }

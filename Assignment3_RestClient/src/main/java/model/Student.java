@@ -13,6 +13,8 @@ public class Student {
 
     private String hobby;
 
+    private boolean passwordSet;
+
     public int getId() {
         return id;
     }
@@ -59,6 +61,14 @@ public class Student {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public boolean isPasswordSet() {
+        return passwordSet;
+    }
+
+    public void setPasswordSet(boolean passwordSet) {
+        this.passwordSet = passwordSet;
     }
 
     public String toString(){

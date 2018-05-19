@@ -30,15 +30,15 @@ public class StudentConsumer implements IStudentConsumer {
        return students;
     }
 
-    public int addStudent(StudentRequestModel stud, LoginModel credentials){
+    public String addStudent(StudentRequestModel stud, LoginModel credentials){
         String url = "/students";
         try {
             String body = objectMapper.writeValueAsString(stud);
-            return HttpClient.postRequest(url, new StringEntity(body), credentials);
+            return HttpClient.postRequestWithResponse(url, new StringEntity(body), credentials);
         } catch (IOException e){
             e.printStackTrace();
         }
-        return -1;
+        return null;
     }
 
     public boolean editStudent(StudentRequestModel stud, int id, LoginModel credentials){
@@ -68,8 +68,7 @@ public class StudentConsumer implements IStudentConsumer {
     @Override
     public boolean changePassword(String password, LoginModel credentials) {
         boolean changed = false;
-        //TODO put username
-        int id = -1;
+        int id = findByUsername(credentials.getUsername(), credentials).getId();
         String url = "/students/" + id + "/password";
         try{
             String body = objectMapper.writeValueAsString(new PasswordModel(password));
@@ -78,5 +77,13 @@ public class StudentConsumer implements IStudentConsumer {
             e.printStackTrace();
         }
         return changed;
+    }
+
+    public Student findByUsername(String username, LoginModel credentials){
+       Student student = getAllStudents(credentials)
+                .stream()
+                .filter(s -> s.getUsername().equals(credentials.getUsername()))
+                .findFirst().get();
+        return student;
     }
 }

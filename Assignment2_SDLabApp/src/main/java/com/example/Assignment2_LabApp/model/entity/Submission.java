@@ -15,18 +15,17 @@ public class Submission {
 
     @ManyToOne
     @JoinColumn(name = "assignment_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Assignment assignment;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Student student;
 
     @Min(0) @Max(10)
     @Column(name = "grade")
     private int grade;
-
 
     @Column(name = "date")
     private Date date;

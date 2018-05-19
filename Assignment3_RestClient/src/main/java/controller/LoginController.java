@@ -2,7 +2,9 @@ package controller;
 
 import client.HttpClient;
 import consumer.LoginConsumer;
+import consumer.StudentConsumer;
 import consumerContracts.ILoginConsumer;
+import consumerContracts.IStudentConsumer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +25,7 @@ import java.util.ResourceBundle;
 public class LoginController implements Initializable{
 
     private ILoginConsumer loginConsumer;
+    private IStudentConsumer studentConsumer;
 
     @FXML
     Button loginBtn;
@@ -36,6 +39,7 @@ public class LoginController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.loginConsumer = new LoginConsumer();
+        this.studentConsumer = new StudentConsumer();
     }
 
     @FXML
@@ -51,9 +55,15 @@ public class LoginController implements Initializable{
         } else if(role.equals("\"STUDENT\"")){
             Stage stage1 = (Stage) loginBtn.getScene().getWindow();
             stage1.close();
+            String newPass = password;
+
+            if(!studentConsumer.findByUsername(username, credentials).isPasswordSet()){
+                newPass = PasswordBox.display("First time login", "Please set a password", credentials);
+            };
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/StudentView.fxml"));
+                credentials.setPassword(newPass);
                 loader.setController(new StudentController(credentials));
                 Parent root = loader.load();
 

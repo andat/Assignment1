@@ -26,11 +26,11 @@ public class Assignment {
 
     @ManyToOne
     @JoinColumn(name="lab_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Laboratory laboratory;
 
-    @OneToMany(mappedBy="assignment", cascade = CascadeType.ALL)
     @JsonBackReference
+    @OneToMany(mappedBy="assignment", cascade = CascadeType.ALL)
     private List<Submission> submissions;
 
     public int getId() {

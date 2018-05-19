@@ -11,12 +11,15 @@ public class StudentRequestModel {
 
     private String hobby;
 
-    public StudentRequestModel(String username, String fullName, String email, String groupName, String hobby) {
+    private boolean passwordSet;
+
+    public StudentRequestModel(String username, String fullName, String email, String groupName, String hobby, boolean passwordSet) {
         this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.groupName = groupName;
         this.hobby = hobby;
+        this.passwordSet = passwordSet;
     }
 
     public String getUsername() {
@@ -57,5 +60,13 @@ public class StudentRequestModel {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public boolean isPasswordSet() {
+        return passwordSet;
+    }
+
+    public void setPasswordSet(boolean passwordSet) {
+        this.passwordSet = passwordSet;
     }
 }

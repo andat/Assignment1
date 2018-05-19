@@ -56,10 +56,32 @@ public class HttpClient{
         }
     }
 
+    public static String postRequestWithResponse(String url, StringEntity body, LoginModel credentials) throws IOException{
+        try(CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpPost httpPost = new HttpPost(host + url);
+            httpPost.setEntity(body);
+
+            String authStr = credentials.getUsername() + ":" + credentials.getPassword();
+            String authHeader = Base64.getEncoder().encodeToString((authStr).getBytes());
+            httpPost.setHeader(HttpHeaders.AUTHORIZATION, "Basic " + authHeader);
+
+            httpPost.setHeader("Content-type", "application/json");
+            HttpResponse response = client.execute(httpPost);
+
+            //TODO comment out
+            System.out.println("POST - response code: " + response.getStatusLine().getStatusCode());
+            if(response.getStatusLine().getStatusCode() == 200)
+                return EntityUtils.toString(response.getEntity());
+            else
+                return null;
+        }
+    }
+
     public static String postRequestWithResponse(String url, StringEntity body) throws IOException{
         try(CloseableHttpClient client = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(host + url);
             httpPost.setEntity(body);
+
 
             httpPost.setHeader("Content-type", "application/json");
             HttpResponse response = client.execute(httpPost);

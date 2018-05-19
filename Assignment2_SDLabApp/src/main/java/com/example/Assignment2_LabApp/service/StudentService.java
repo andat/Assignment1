@@ -7,6 +7,7 @@ import com.example.Assignment2_LabApp.util.PasswordEncryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.InternetAddress;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,6 +44,7 @@ public class StudentService implements IStudentService{
     @Override
     public void changePassword(Student student, String password) {
        student.setPassword(PasswordEncryptionUtil.encryptPasswordSHA256(password));
+       student.setPasswordSet(true);
        studentRepository.save(student);
     }
 }

@@ -13,12 +13,12 @@ public class Attendance {
 
     @ManyToOne
     @JoinColumn(name="lab_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Laboratory laboratory;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    @JsonManagedReference
+    //@JsonManagedReference
     private Student student;
 
     @Column(name = "present")

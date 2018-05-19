@@ -46,6 +46,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>it.ozimov</groupId>
+			<artifactId>spring-boot-email-core</artifactId>
+			<version>0.5.0</version>
+		</dependency>
+
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>

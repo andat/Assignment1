@@ -5,6 +5,7 @@ import com.example.Assignment2_LabApp.model.request.StudentRequestModel;
 import com.example.Assignment2_LabApp.model.response.StudentResponseModel;
 import com.example.Assignment2_LabApp.model.entity.Student;
 import com.example.Assignment2_LabApp.service.IStudentService;
+import com.example.Assignment2_LabApp.util.CustomEmailService;
 import com.example.Assignment2_LabApp.util.TokenGenerator;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,9 @@ public class StudentController {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    CustomEmailService emailService;
 
     @RequestMapping(method = GET)
     public List<StudentResponseModel> getAllStudents(){
@@ -48,10 +53,16 @@ public class StudentController {
     public ResponseEntity addStudent(@Validated @RequestBody StudentRequestModel student){
         Student stud = modelMapper.map(student, Student.class);
         stud.setIsTeacher(false);
+        stud.setPasswordSet(false);
         //generate token for authenticating
         String token = TokenGenerator.generateToken();
         studentService.addStudent(stud, token);
-        //TODO change token print
+        try {
+            emailService.sendTokenEmail(stud.getEmail(), stud.getFullName(), token);
+        } catch (UnsupportedEncodingException e){
+            System.out.println("Unsupported encoding");
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(token);
     }
 

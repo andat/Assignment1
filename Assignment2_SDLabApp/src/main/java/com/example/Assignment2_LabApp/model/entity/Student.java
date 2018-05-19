@@ -15,13 +15,17 @@ public class Student extends User{
     @Column(name = "hobby")
     private String hobby;
 
-    @OneToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Attendance> attendances;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Submission> submissions;
+
+    @Column(name = "password_set")
+
+    private boolean passwordSet;
 
     public String getGroupName() {
         return groupName;
@@ -53,5 +57,13 @@ public class Student extends User{
 
     public void setSubmissions(List<Submission> submissions) {
         this.submissions = submissions;
+    }
+
+    public boolean isPasswordSet() {
+        return passwordSet;
+    }
+
+    public void setPasswordSet(boolean passwordSet) {
+        this.passwordSet = passwordSet;
     }
 }

@@ -13,6 +13,8 @@ public class StudentResponseModel {
 
     private String hobby;
 
+    private boolean passwordSet;
+
     public int getId() {
         return id;
     }
@@ -59,5 +61,13 @@ public class StudentResponseModel {
 
     public void setHobby(String hobby) {
         this.hobby = hobby;
+    }
+
+    public boolean isPasswordSet() {
+        return passwordSet;
+    }
+
+    public void setPasswordSet(boolean passwordSet) {
+        this.passwordSet = passwordSet;
     }
 }

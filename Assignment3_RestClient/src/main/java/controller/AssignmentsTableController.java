@@ -110,15 +110,14 @@ public class AssignmentsTableController implements Initializable{
         String description = this.descriptionField.getText();
         Date deadline = null;
         if(this.deadlinePicker.getValue() != null)
-            java.sql.Date.valueOf(this.deadlinePicker.getValue());
+            deadline = java.sql.Date.valueOf(this.deadlinePicker.getValue());
         Laboratory lab = null;
         if(this.labComboBox.getValue() != null)
             lab = this.labComboBox.getValue();
-
         if(lab != null && deadline != null && !name.isEmpty())
             return new AssignmentRequestModel(name, deadline, description, lab.getId());
-
-        return null;
+        else
+            return null;
     }
 
     private void clearFields(){

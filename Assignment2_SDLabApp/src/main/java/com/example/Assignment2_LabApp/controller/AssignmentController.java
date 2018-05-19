@@ -4,6 +4,8 @@ import com.example.Assignment2_LabApp.model.request.AssignmentRequestModel;
 import com.example.Assignment2_LabApp.model.response.AssignmentResponseModel;
 import com.example.Assignment2_LabApp.model.entity.Assignment;
 import com.example.Assignment2_LabApp.service.IAssignmentService;
+import com.example.Assignment2_LabApp.service.IStudentService;
+import com.example.Assignment2_LabApp.util.CustomEmailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,12 @@ public class AssignmentController {
 
     @Autowired
     private IAssignmentService assignmentService;
+
+    @Autowired
+    private IStudentService studentService;
+
+    @Autowired
+    private CustomEmailService emailService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -49,6 +58,12 @@ public class AssignmentController {
     public ResponseEntity addAssignment(@Valid @RequestBody AssignmentRequestModel a){
         Assignment assignment = modelMapper.map(a, Assignment.class);
         assignmentService.addAssignment(assignment);
+        try{
+            emailService.sendAssignmentAddedEmail(studentService.getAllStudents());
+        } catch (UnsupportedEncodingException e){
+            System.out.println("Unsupported encoding");
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok().body("New assignment added.");
     }
 

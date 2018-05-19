@@ -20,6 +20,8 @@ import model.request.SubmissionRequestModel;
 import sun.rmi.runtime.Log;
 
 import java.net.URL;
+import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -53,10 +55,7 @@ public class SubmissionsStudentViewController implements Initializable{
             List<Submission> submissions = submissionConsumer.getSubmissionsByUsername(credentials.getUsername(), credentials);
             this.assignmentComboBox.setItems(FXCollections.observableArrayList(submissions));
             refreshTable();
-            int studentId = studentConsumer.getAllStudents(credentials)
-                                              .stream()
-                                              .filter(s -> s.getUsername().equals(credentials.getUsername()))
-                                              .findFirst().get().getId();
+            this.studentId = studentConsumer.findByUsername(credentials.getUsername(), credentials).getId();
 
         }
     }
@@ -83,7 +82,14 @@ public class SubmissionsStudentViewController implements Initializable{
     public void submitBtnClicked(){
         Assignment a = (Assignment) assignmentComboBox.getValue();
         if(a != null){
-            submissionConsumer.addSubmission(new SubmissionRequestModel(a.getId(), studentId, descriptionArea.getText()), credentials);
+            if(a.getDeadline().after(new Date())) {
+                int code = submissionConsumer.addSubmission(new SubmissionRequestModel(a.getId(), studentId, descriptionArea.getText()), credentials);
+                if(code == 400)
+                    AlertBox.display("Invalid operation", "Maximum number of submissions exceeded.");
+                refreshTable();
+            } else {
+                AlertBox.display("Deadline passed", "Assignment deadline passed.\nYou can no longer make submissions to this assignment.");
+            }
         } else {
             AlertBox.display("No assignment selected", "Please select an assignment");
         }

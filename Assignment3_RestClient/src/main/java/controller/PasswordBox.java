@@ -18,7 +18,7 @@ import java.util.Collection;
 
 public class PasswordBox {
 
-    public static void display(String title, String message, LoginModel credentials){
+    public static String display(String title, String message, LoginModel credentials){
         Stage window = new Stage();
         StudentConsumer studentConsumer = new StudentConsumer();
 
@@ -33,7 +33,13 @@ public class PasswordBox {
         newPassField.setMaxWidth(200);
 
         Button changeBtn = new Button("Change password");
-        changeBtn.setOnAction(e -> studentConsumer.changePassword(newPassField.getText(), credentials));
+        changeBtn.setOnAction(e ->
+            {
+                if (studentConsumer.changePassword(newPassField.getText(), credentials)) {
+                    label.setText("Password changed.");
+                } else
+                    label.setText("An error occurred when changing password");
+            });
 
         VBox layout = new VBox(10);
         layout.getChildren().add(label);
@@ -44,5 +50,6 @@ public class PasswordBox {
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
+        return newPassField.getText();
     }
 }
