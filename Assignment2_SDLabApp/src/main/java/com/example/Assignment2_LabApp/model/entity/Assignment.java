@@ -30,7 +30,7 @@ public class Assignment {
     private Laboratory laboratory;
 
     @JsonBackReference
-    @OneToMany(mappedBy="assignment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="assignment")
     private Set<Submission> submissions;
 
     public int getId() {
