@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Laboratory {
@@ -32,12 +33,12 @@ public class Laboratory {
     private String description;
 
     @JsonBackReference
-    @OneToMany(mappedBy="laboratory", orphanRemoval = true)//cascade = CascadeType.ALL;
-    private List<Assignment> assignments;
+    @OneToMany(mappedBy="laboratory")
+    private Set<Assignment> assignments;
 
     @JsonBackReference
-    @OneToMany(mappedBy="laboratory", cascade = CascadeType.ALL)
-    private List<Attendance> attendance;
+    @OneToMany(mappedBy="laboratory")
+    private Set<Attendance> attendance;
 
     public int getId() {
         return id;
@@ -63,11 +64,11 @@ public class Laboratory {
         return description;
     }
 
-    public List<Assignment> getAssignments() {
+    public Set<Assignment> getAssignments() {
         return assignments;
     }
 
-    public List<Attendance> getAttendance() {
+    public Set<Attendance> getAttendance() {
         return attendance;
     }
 
@@ -95,11 +96,11 @@ public class Laboratory {
         this.description = description;
     }
 
-    public void setAssignments(List<Assignment> assignments) {
+    public void setAssignments(Set<Assignment> assignments) {
         this.assignments = assignments;
     }
 
-    public void setAttendance(List<Attendance> attendance) {
+    public void setAttendance(Set<Attendance> attendance) {
         this.attendance = attendance;
     }
 }

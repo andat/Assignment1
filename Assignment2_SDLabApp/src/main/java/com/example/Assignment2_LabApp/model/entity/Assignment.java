@@ -31,7 +31,7 @@ public class Assignment {
 
     @JsonBackReference
     @OneToMany(mappedBy="assignment", cascade = CascadeType.ALL)
-    private List<Submission> submissions;
+    private Set<Submission> submissions;
 
     public int getId() {
         return id;
@@ -73,11 +73,11 @@ public class Assignment {
         this.laboratory = laboratory;
     }
 
-    public List<Submission> getSubmissions() {
+    public Set<Submission> getSubmissions() {
         return submissions;
     }
 
-    public void setSubmissions(List<Submission> submissions) {
+    public void setSubmissions(Set<Submission> submissions) {
         this.submissions = submissions;
     }
 }

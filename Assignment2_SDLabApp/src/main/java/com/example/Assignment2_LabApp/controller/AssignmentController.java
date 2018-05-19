@@ -58,12 +58,12 @@ public class AssignmentController {
     public ResponseEntity addAssignment(@Valid @RequestBody AssignmentRequestModel a){
         Assignment assignment = modelMapper.map(a, Assignment.class);
         assignmentService.addAssignment(assignment);
-        try{
-            emailService.sendAssignmentAddedEmail(studentService.getAllStudents());
-        } catch (UnsupportedEncodingException e){
-            System.out.println("Unsupported encoding");
-            return ResponseEntity.badRequest().build();
-        }
+//        try{
+//            emailService.sendAssignmentAddedEmail(studentService.getAllStudents());
+//        } catch (UnsupportedEncodingException e){
+//            System.out.println("Unsupported encoding");
+//            return ResponseEntity.badRequest().build();
+//        }
         return ResponseEntity.ok().body("New assignment added.");
     }
 

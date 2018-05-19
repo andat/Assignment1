@@ -14,12 +14,12 @@ public class Submission {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "assignment_id")
+    @JoinColumn(name = "assignment_id", updatable = false)
     //@JsonManagedReference
     private Assignment assignment;
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn(name = "student_id", updatable = false)
     //@JsonManagedReference
     private Student student;
 

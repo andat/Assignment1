@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @PrimaryKeyJoinColumn(name = "id")
@@ -15,13 +16,13 @@ public class Student extends User{
     @Column(name = "hobby")
     private String hobby;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student")
     @JsonBackReference
     private List<Attendance> attendances;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student")
     @JsonBackReference
-    private List<Submission> submissions;
+    private Set<Submission> submissions;
 
     @Column(name = "password_set")
 
@@ -39,7 +40,7 @@ public class Student extends User{
         return attendances;
     }
 
-    public List<Submission> getSubmissions() {
+    public Set<Submission> getSubmissions() {
         return submissions;
     }
 
@@ -55,7 +56,7 @@ public class Student extends User{
         this.attendances = attendances;
     }
 
-    public void setSubmissions(List<Submission> submissions) {
+    public void setSubmissions(Set<Submission> submissions) {
         this.submissions = submissions;
     }
 
