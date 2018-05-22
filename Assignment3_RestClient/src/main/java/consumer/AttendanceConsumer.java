@@ -78,4 +78,17 @@ public class AttendanceConsumer implements IAttendanceConsumer {
         }
         return attendance;
     }
+
+    @Override
+    public List<Attendance> getAttendanceByUsername(LoginModel credentials) {
+        String url = "/attendance/students/" + credentials.getUsername();
+        List<Attendance> attendance = new ArrayList<>();
+        try{
+            String response = HttpClient.getRequest(url, credentials);
+            attendance = Arrays.asList(mapper.readValue(response, Attendance[].class));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return attendance;
+    }
 }

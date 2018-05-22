@@ -13,4 +13,5 @@ public interface IAttendanceConsumer {
     public boolean editAttendance(AttendanceRequestModel att, int id, LoginModel credentials);
     public boolean deleteAttendance(int id, LoginModel credentials);
     public List<Attendance> getAttendanceByLabId(int labId, LoginModel credentials);
+    public List<Attendance> getAttendanceByUsername(LoginModel credentials);
 }

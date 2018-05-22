@@ -83,6 +83,11 @@ public class StudentController implements Initializable{
             loader2.setController(new SubmissionsStudentViewController(credentials));
             Parent root2 = loader2.load();
             studentTabPane.getTabs().get(2).setContent(root2);
+
+            FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/AttendanceStudentView.fxml"));
+            loader3.setController(new AttendanceStudentController(credentials));
+            Parent root3 = loader3.load();
+            studentTabPane.getTabs().get(3).setContent(root3);
         } catch (IOException e) {
             e.printStackTrace();
         }
